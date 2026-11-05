@@ -1,0 +1,131 @@
+:host {
+  .legend small {
+    font-size: x-small;
+  }
+}
+
+// Tráfego card header: title left, segmented control + download right; stacks under 576px.
+.traffic-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .75rem 1rem;
+}
+
+.traffic-heading {
+  min-width: 0;
+}
+
+.traffic-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+
+  form {
+    display: inline-flex;
+  }
+}
+
+// Tráfego legend: each item toggles the highlight of its series in the chart.
+.traffic-legend-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: .5rem .625rem;
+  color: var(--brand-content-high);
+  text-align: inherit;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--brand-radius-sm);
+  cursor: pointer;
+  transition: opacity .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+
+  strong {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &:hover {
+    background-color: var(--brand-surface-mid);
+  }
+
+  &.is-active {
+    background-color: var(--brand-primary-low);
+    border-color: rgba(var(--brand-primary-rgb), .35);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+
+  &.is-dimmed {
+    opacity: .45;
+  }
+}
+
+.traffic-legend-key {
+  display: inline-block;
+  width: 1rem;
+  margin-right: .375rem;
+  vertical-align: middle;
+  border-top: 3px solid;
+  border-radius: var(--brand-radius-pill);
+
+  &--dashed {
+    border-top-width: 2px;
+    border-top-style: dashed;
+    border-radius: 0;
+  }
+}
+
+.traffic-legend-bar {
+  margin-top: auto;
+}
+
+// Page filter notice (segment cards "a classificar"): tinted primary strip, tokens only
+.segment-filter-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem .75rem;
+  padding: .625rem 1rem;
+  font-size: .875rem;
+  color: var(--brand-content-high);
+  background-color: var(--brand-primary-low);
+  border: 1px solid rgba(var(--brand-primary-rgb), .25);
+  border-radius: var(--brand-radius-sm);
+
+  > svg {
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
+    color: var(--brand-primary);
+  }
+
+  > span {
+    flex: 1 1 16rem;
+  }
+}
+
+// Tráfego table view: dimmed columns follow the legend highlight / segment filter
+.traffic-table {
+  .is-dimmed {
+    opacity: .45;
+  }
+
+  tfoot th,
+  tfoot td {
+    border-top: 2px solid var(--brand-border);
+  }
+}
+
+.traffic-export {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  border-radius: var(--brand-radius-pill);
+}

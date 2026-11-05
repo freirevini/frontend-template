@@ -1,0 +1,26 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Streamlit: secrets never versioned (R6); config.toml is versioned
+.streamlit/secrets.toml
+
+# Local environment and generated files
+.env
+.env.*
+shots/
+*.log
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Regras locais (não versionadas)
+.rules/local.md

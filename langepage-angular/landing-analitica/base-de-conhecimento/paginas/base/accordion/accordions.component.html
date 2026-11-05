@@ -1,0 +1,121 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <app-docs-callout name="Acordeão"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Acordeão Angular</strong>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Clique nos acordeões abaixo para expandir/recolher o conteúdo de cada item.
+        </p>
+        <app-docs-example>
+          <c-accordion [alwaysOpen]="false" [flush]="false" class="shadow rounded-2">
+            <c-accordion-item #item0="cAccordionItem" [visible]="false">
+              <ng-template cTemplateId="accordionHeaderTemplate">
+                <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton cBgColor="info">
+                  Item do acordeão #0
+                </button>
+              </ng-template>
+              <ng-template cTemplateId="accordionBodyTemplate">
+                <div [innerHTML]="getAccordionBodyText('primeiro')" cBgColor="info" class="accordion-body"></div>
+              </ng-template>
+            </c-accordion-item>
+            <c-accordion-item #item1="cAccordionItem" [visible]="false">
+              <ng-template cTemplateId="accordionHeaderTemplate">
+                <button (click)="item1.toggleItem()" [collapsed]="!item1.visible" cAccordionButton>
+                  Item do acordeão #1
+                </button>
+              </ng-template>
+              <ng-template cTemplateId="accordionBodyTemplate">
+                <div class="accordion-body">
+                  <strong>Este é o corpo do item
+                    <mark>#segundo</mark>
+                    do acordeão.</strong> Ele fica oculto por
+                  padrão, até que o plugin de recolhimento adicione as classes apropriadas que usamos para
+                  estilizar cada elemento. Essas classes controlam a aparência geral, assim como
+                  a exibição e a ocultação por meio de transições CSS. Você pode modificar tudo isso com
+                  CSS personalizado ou sobrescrevendo nossas variáveis padrão. Também vale destacar
+                  que praticamente qualquer HTML pode ser colocado dentro de <code>.accordion-body</code>,
+                  embora a transição limite o transbordamento.
+                </div>
+              </ng-template>
+            </c-accordion-item>
+            <c-accordion-item #item2="cAccordionItem" [visible]="false">
+              <ng-template cTemplateId="accordionHeaderTemplate">
+                <button (click)="item2.toggleItem()" [collapsed]="!item2.visible" cAccordionButton>
+                  Item do acordeão #2
+                </button>
+              </ng-template>
+              <ng-template cTemplateId="accordionBodyTemplate">
+                <div class="accordion-body">
+                  <span [innerHTML]="getAccordionBodyText('terceiro')"></span>
+                </div>
+              </ng-template>
+            </c-accordion-item>
+          </c-accordion>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Acordeão Angular</strong> flush
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Clique nos acordeões abaixo para expandir/recolher o conteúdo de cada item.
+        </p>
+        <app-docs-example>
+          <c-accordion [flush]="true">
+            <c-accordion-item visible>
+              <ng-template cTemplateId="accordionHeader">
+                Item do acordeão #0
+              </ng-template>
+              <ng-template cTemplateId="accordionBody">
+                <span [innerHTML]="getAccordionBodyText('primeiro')"></span>
+              </ng-template>
+            </c-accordion-item>
+            <c-accordion-item [visible]="false">
+              <ng-template cTemplateId="accordionHeader">
+                Item do acordeão #1
+              </ng-template>
+              <ng-template cTemplateId="accordionBody">
+                <span [innerHTML]="getAccordionBodyText('segundo')"></span>
+              </ng-template>
+            </c-accordion-item>
+            <c-accordion-item [visible]="false">
+              <ng-template cTemplateId="accordionHeader">
+                Item do acordeão #2
+              </ng-template>
+              <ng-template cTemplateId="accordionBody">
+                <span [innerHTML]="getAccordionBodyText('terceiro')"></span>
+              </ng-template>
+            </c-accordion-item>
+          </c-accordion>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Acordeão Angular</strong> alwaysOpen
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <c-accordion [alwaysOpen]="true" class="shadow accordion-custom rounded-2">
+            <c-accordion-item *ngFor="let item of items; let i = index;" [visible]="i===1">
+              <ng-template cTemplateId="accordionHeader">
+                Item personalizado do acordeão #{{i}}
+              </ng-template>
+              <ng-template cTemplateId="accordionBody">
+                <small><i>{{i}}.</i></small>
+                <span [innerHTML]="getAccordionBodyText(i.toString())"></span>
+              </ng-template>
+            </c-accordion-item>
+          </c-accordion>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

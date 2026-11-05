@@ -1,0 +1,380 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <app-docs-callout name="Navegação"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Navegação Angular</strong> <small>Navegação base</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          O componente base <code>c-nav</code> é construído com flexbox e oferece uma base sólida
+          para criar todos os tipos de componentes de navegação. Ele inclui algumas sobrescritas de
+          estilo (para trabalhar com listas), espaçamento interno nos links para áreas de clique maiores e
+          estilização básica de [disabled]="true".
+        </p>
+        <app-docs-example>
+          <c-nav>
+            <c-nav-item>
+              <a [active]="true" cNavLink routerLink="./">
+                Ativo
+              </a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a [disabled]="true" cNavLink routerLink="./">
+                Desabilitado
+              </a>
+            </c-nav-item>
+          </c-nav>
+        </app-docs-example>
+        <p class="text-medium-emphasis small mt-3">
+          As classes são usadas em toda parte, então sua marcação pode ser bem flexível. Use
+          <code>c-nav-item</code> como acima, ou monte a sua própria com um elemento <code>&lt;c-nav&gt;</code>. Como
+          o <code>.nav</code> usa <code>display: flex</code>, o <code>cNavLink</code> se comporta da mesma forma que o <code>c-nav-item</code> se comportaria, mas
+          sem a marcação extra.
+        </p>
+        <app-docs-example>
+          <c-nav role="navigation">
+            <a [active]="true" cNavLink routerLink="./">
+              Ativo
+            </a>
+            <a cNavLink routerLink="./">Link</a>
+            <a cNavLink routerLink="./">Link</a>
+            <a [disabled]="true" cNavLink routerLink="./">
+              Desabilitado
+            </a>
+          </c-nav>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Navegação Angular</strong> <small>Alinhamento horizontal</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Altere o alinhamento horizontal da sua navegação com os
+          
+            utilitários de flexbox
+          
+          . Por padrão, a navegação é alinhada à esquerda, mas você pode facilmente centralizá-la ou
+          alinhá-la à direita.
+        </p>
+        <p class="text-medium-emphasis small">
+          Centralizado com <code>.justify-content-center</code>:
+        </p>
+        <app-docs-example>
+          <c-nav class="justify-content-center">
+            <c-nav-item>
+              <a [active]="true" cNavLink routerLink="./">
+                Ativo
+              </a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a [disabled]="true" cNavLink routerLink="./">
+                Desabilitado
+              </a>
+            </c-nav-item>
+          </c-nav>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Alinhado à direita com <code>.justify-content-end</code>:
+        </p>
+        <app-docs-example>
+          <c-nav class="justify-content-end">
+            <c-nav-item>
+              <a [active]="true" cNavLink routerLink="./">
+                Ativo
+              </a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a [disabled]="true" cNavLink routerLink="./">
+                Desabilitado
+              </a>
+            </c-nav-item>
+          </c-nav>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Navegação Angular</strong> <small>Vertical</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Empilhe sua navegação alterando a direção dos itens flex com o utilitário
+          <code>.flex-column</code>. Precisa empilhá-los em algumas telas, mas não
+          em outras? Use as versões responsivas (ex.: <code>.flex-sm-column</code>).
+        </p>
+        <app-docs-example>
+          <c-nav class="flex-column">
+            <c-nav-item>
+              <a [active]="true" cNavLink routerLink="./">
+                Ativo
+              </a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a [disabled]="true" cNavLink routerLink="./">
+                Desabilitado
+              </a>
+            </c-nav-item>
+          </c-nav>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Navegação Angular</strong> <small>Abas</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Pegue a navegação básica acima e adicione a classe <code>variant=&#34;tabs&#34;</code>
+          para gerar uma interface com abas
+        </p>
+        <app-docs-example>
+          <c-nav variant="tabs">
+            <c-nav-item>
+              <a [active]="true" cNavLink routerLink="./">
+                Ativo
+              </a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a [disabled]="true" cNavLink routerLink="./">
+                Desabilitado
+              </a>
+            </c-nav-item>
+          </c-nav>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Navegação Angular</strong> <small>Pílulas</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Use o mesmo HTML, mas com <code>variant=&#34;pills&#34;</code>:
+        </p>
+        <app-docs-example>
+          <c-nav variant="pills">
+            <c-nav-item>
+              <a [active]="true" cNavLink routerLink="./">
+                Ativo
+              </a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a [disabled]="true" cNavLink routerLink="./">
+                Desabilitado
+              </a>
+            </c-nav-item>
+          </c-nav>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Navegação Angular</strong> <small>Preencher e justificar</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Faça o conteúdo do seu <code>.nav</code> ocupar toda a largura disponível com uma das
+          duas classes modificadoras. Para preencher proporcionalmente todo o espaço disponível com seus elementos
+          <code>.nav-item</code>, use <code>layout=&#34;fill&#34;</code>. Observe que todo o
+          espaço horizontal é ocupado, mas nem todo item de navegação tem a mesma largura.
+        </p>
+        <app-docs-example>
+          <c-nav layout="fill" variant="pills">
+            <c-nav-item>
+              <a [active]="true" cNavLink routerLink="./">
+                Ativo
+              </a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a [disabled]="true" cNavLink routerLink="./">
+                Desabilitado
+              </a>
+            </c-nav-item>
+          </c-nav>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Para elementos de largura igual, use <code>layout=&#34;justified&#34;</code>. Todo o espaço
+          horizontal será ocupado pelos links de navegação, mas, diferentemente do .nav-fill acima, todo item de
+          navegação terá a mesma largura.
+        </p>
+        <app-docs-example>
+          <c-nav layout="justified" variant="pills">
+            <c-nav-item>
+              <a [active]="true" cNavLink routerLink="./">
+                Ativo
+              </a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a [disabled]="true" cNavLink routerLink="./">
+                Desabilitado
+              </a>
+            </c-nav-item>
+          </c-nav>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Navegação Angular</strong> <small>Trabalhando com utilitários flex</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Se precisar de variações responsivas da navegação, considere usar uma série de
+          utilitários de flexbox. Embora mais
+          verbosos, esses utilitários oferecem maior personalização entre os breakpoints responsivos. No
+          exemplo abaixo, a navegação fica empilhada no menor breakpoint e depois se adapta a um
+          layout horizontal que preenche a largura disponível a partir do breakpoint pequeno (sm).
+        </p>
+        <app-docs-example>
+          <c-nav class="flex-column flex-sm-row" role="navigation" variant="pills">
+            <a [active]="true" cNavLink routerLink="./">
+              Ativo
+            </a>
+            <a cNavLink routerLink="./">Link</a>
+            <a cNavLink routerLink="./">Link</a>
+            <a [disabled]="true" cNavLink routerLink="./">
+              Desabilitado
+            </a>
+          </c-nav>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Navegação Angular</strong> <small>Abas com menus suspensos</small>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <c-nav variant="tabs">
+            <c-nav-item>
+              <a [active]="true" cNavLink routerLink="./">
+                Ativo
+              </a>
+            </c-nav-item>
+            <c-dropdown variant="nav-item">
+              <a cDropdownToggle href>
+                Botão de menu
+              </a>
+              <ul cDropdownMenu>
+                <li><a cDropdownItem routerLink="./">Ação</a></li>
+                <li><a cDropdownItem routerLink="./">Outra ação</a></li>
+                <li><a cDropdownItem routerLink="./">Outra opção aqui</a></li>
+              </ul>
+            </c-dropdown>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a [disabled]="true" cNavLink routerLink="./">
+                Desabilitado
+              </a>
+            </c-nav-item>
+          </c-nav>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Navegação Angular</strong> <small>Pílulas com menus suspensos</small>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <c-nav variant="pills">
+            <c-nav-item>
+              <a [active]="true" cNavLink routerLink="./">
+                Ativo
+              </a>
+            </c-nav-item>
+            <c-dropdown variant="nav-item">
+              <a cDropdownToggle href>
+                Botão de menu
+              </a>
+              <ul cDropdownMenu>
+                <li><a cDropdownItem routerLink="./">Ação</a></li>
+                <li><a cDropdownItem routerLink="./">Outra ação</a></li>
+                <li><a cDropdownItem routerLink="./">Outra opção aqui</a></li>
+              </ul>
+            </c-dropdown>
+            <c-nav-item>
+              <a cNavLink routerLink="./">Link</a>
+            </c-nav-item>
+            <c-nav-item>
+              <a [disabled]="true" cNavLink routerLink="./">
+                Desabilitado
+              </a>
+            </c-nav-item>
+          </c-nav>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

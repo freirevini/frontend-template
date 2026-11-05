@@ -1,0 +1,506 @@
+<c-row>
+  <c-col xs="12">
+    <app-docs-callout name="Menu suspenso"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Menu suspenso Angular</strong> <small>Botão único</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Veja como colocá-los para funcionar com elementos <code>&lt;button&gt;</code>:
+        </p>
+        <app-docs-example>
+          <c-dropdown>
+            <button cButton cDropdownToggle color="secondary">
+              Botão de menu
+            </button>
+            <ul cDropdownMenu>
+              <li><h6 cDropdownHeader>Cabeçalho</h6></li>
+              <li><a routerLink="./" cDropdownItem>Ação</a></li>
+              <li><a routerLink="./" cDropdownItem>Outra ação</a></li>
+              <li><a routerLink="./" cDropdownItem>Outra opção aqui</a></li>
+              <li>
+                <hr cDropdownDivider>
+              </li>
+              <li>
+                <button [routerLink]="'/buttons'" cDropdownItem>Link separado</button>
+              </li>
+            </ul>
+          </c-dropdown>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          A melhor parte é que você também pode fazer isso com qualquer variante de botão:
+        </p>
+        <app-docs-example>
+          <c-dropdown *ngFor="let color of colors; index as i;" variant="btn-group">
+            <button [color]="color" cButton cDropdownToggle>
+              {{colorLabels[color]}}
+            </button>
+            <ul cDropdownMenu>
+              <li>
+                <button routerLink="./" cDropdownItem>Ação</button>
+              </li>
+              <li>
+                <button routerLink="./" cDropdownItem>Outra ação</button>
+              </li>
+              <li>
+                <button routerLink="./" cDropdownItem>Outra opção aqui</button>
+              </li>
+              <li>
+                <hr cDropdownDivider>
+              </li>
+              <li>
+                <button cDropdownItem>Link separado</button>
+              </li>
+            </ul>
+          </c-dropdown>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Menu suspenso Angular</strong> <small>Botão dividido</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Da mesma forma, crie menus suspensos com botão dividido usando praticamente a mesma marcação dos
+          menus suspensos de botão único, mas adicionando a propriedade booleana <code>split</code> para o
+          espaçamento adequado em torno do indicador do menu.
+        </p>
+        <p class="text-medium-emphasis small">
+          Usamos essa classe extra para reduzir em 25% o <code>padding</code> horizontal de cada lado
+          do indicador e remover o <code>margin-left</code> aplicado aos
+          menus suspensos de botão comuns. Essas alterações mantêm o indicador centralizado no botão
+          dividido e criam uma área de clique de tamanho mais adequado ao lado do botão principal.
+        </p>
+        <app-docs-example>
+          <c-dropdown *ngFor="let color of colors; index as i;" placement="bottom-start" variant="btn-group">
+            <button [color]="color" cButton>
+              {{colorLabels[color]}}
+            </button>
+            <button [color]="color" cButton cDropdownToggle split>
+              <span class="visually-hidden">Alternar menu suspenso</span>
+            </button>
+            <ul cDropdownMenu>
+              <li>
+                <button routerLink="./" cDropdownItem>Ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra opção aqui</button>
+              </li>
+              <li>
+                <hr cDropdownDivider>
+              </li>
+              <li>
+                <button cDropdownItem>Link separado</button>
+              </li>
+            </ul>
+          </c-dropdown>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Menu suspenso Angular</strong> <small>Tamanhos</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Os menus suspensos de botão funcionam com botões de todos os tamanhos, incluindo botões
+          padrão e botões divididos.
+        </p>
+        <app-docs-example>
+          <c-dropdown variant="btn-group">
+            <button cButton cDropdownToggle color="secondary" size="lg">
+              Botão grande
+            </button>
+            <ul cDropdownMenu>
+              <li>
+                <button cDropdownItem>Ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra opção aqui</button>
+              </li>
+              <li>
+                <hr cDropdownDivider>
+              </li>
+              <li>
+                <button cDropdownItem>Link separado</button>
+              </li>
+            </ul>
+          </c-dropdown>
+          <c-dropdown variant="btn-group">
+            <button cButton color="secondary" size="lg">
+              Botão dividido grande
+            </button>
+            <button cButton cDropdownToggle color="secondary" size="lg" split>
+              <span class="visually-hidden">Alternar menu suspenso</span>
+            </button>
+            <ul cDropdownMenu>
+              <li>
+                <button routerLink="./" cDropdownItem>Ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra opção aqui</button>
+              </li>
+              <li>
+                <hr cDropdownDivider>
+              </li>
+              <li>
+                <button cDropdownItem>Link separado</button>
+              </li>
+            </ul>
+          </c-dropdown>
+        </app-docs-example>
+        <app-docs-example>
+          <c-dropdown variant="btn-group">
+            <button cButton cDropdownToggle color="secondary" size="sm">
+              Botão pequeno
+            </button>
+            <ul cDropdownMenu>
+              <li>
+                <button cDropdownItem>Ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra opção aqui</button>
+              </li>
+              <li>
+                <hr cDropdownDivider>
+              </li>
+              <li>
+                <button cDropdownItem>Link separado</button>
+              </li>
+            </ul>
+          </c-dropdown>
+          <c-dropdown variant="btn-group">
+            <button cButton color="secondary" size="sm">
+              Botão dividido pequeno
+            </button>
+            <button cButton cDropdownToggle color="secondary" size="sm" split>
+              <span class="visually-hidden">Alternar menu suspenso</span>
+            </button>
+            <ul cDropdownMenu>
+              <li>
+                <button routerLink="./" cDropdownItem>Ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra opção aqui</button>
+              </li>
+              <li>
+                <hr cDropdownDivider>
+              </li>
+              <li>
+                <button cDropdownItem>Link separado</button>
+              </li>
+            </ul>
+          </c-dropdown>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Menu suspenso Angular</strong> <small>escuro</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Opte por menus suspensos mais escuros, combinando com uma barra de navegação escura ou um estilo personalizado, definindo a
+          propriedade <code>dark</code>. Nenhuma alteração é necessária nos itens do menu.
+        </p>
+        <app-docs-example>
+          <c-dropdown>
+            <button cButton cDropdownToggle color="secondary">
+              Botão de menu
+            </button>
+            <ul cDropdownMenu dark>
+              <li>
+                <button cDropdownItem>Ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra opção aqui</button>
+              </li>
+              <li>
+                <hr cDropdownDivider>
+              </li>
+              <li>
+                <button cDropdownItem>Link separado</button>
+              </li>
+            </ul>
+          </c-dropdown>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">E usando-o em uma barra de navegação:</p>
+        <app-docs-example>
+          <c-navbar class="bg-dark" colorScheme="dark" expand="lg">
+            <c-container [fluid]="true">
+              <a cNavbarBrand href="#/triagent">
+                Navbar
+              </a>
+              <button [cNavbarToggler]="collapseRef" ariaLabel="Alternar navegação"></button>
+              <div #collapseRef="cCollapse" [navbar]="true" cCollapse>
+                <c-navbar-nav class="me-auto mb-2 mb-lg-0">
+                  <c-nav-item>
+                    <a [active]="true" routerLink="./" cNavLink>Início</a>
+                  </c-nav-item>
+                  <c-nav-item>
+                    <a routerLink="./" cNavLink>Link</a>
+                  </c-nav-item>
+                  <c-nav-item>
+                    <c-dropdown variant="nav-item" [popper]="false">
+                      <a routerLink="./" cDropdownToggle>
+                        Menu suspenso
+                      </a>
+                      <ul cDropdownMenu dark>
+                        <li>
+                          <button cDropdownItem>Ação</button>
+                        </li>
+                        <li>
+                          <button cDropdownItem>Outra ação</button>
+                        </li>
+                        <li>
+                          <button cDropdownItem>Outra opção aqui</button>
+                        </li>
+                        <li>
+                          <hr cDropdownDivider>
+                        </li>
+                        <li>
+                          <button cDropdownItem>Link separado</button>
+                        </li>
+                      </ul>
+                    </c-dropdown>
+                  </c-nav-item>
+                  <c-nav-item>
+                    <a cNavLink disabled>Desabilitado</a>
+                  </c-nav-item>
+                </c-navbar-nav>
+                <form cForm class="d-flex">
+                  <input aria-label="Pesquisar" cFormControl class="me-2" placeholder="Pesquisar" type="search">
+                  <button cButton color="success" type="submit" variant="outline">Pesquisar</button>
+                </form>
+              </div>
+            </c-container>
+          </c-navbar>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Menu suspenso Angular</strong> <small>Para cima</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Exiba menus suspensos acima dos elementos adicionando
+          <code>direction=&#34;dropup&#34;</code> ao componente <code>&lt;c-dropdown&gt;</code>.
+        </p>
+        <app-docs-example>
+          <c-dropdown direction="dropup" variant="btn-group">
+            <button cButton cDropdownToggle color="secondary">
+              Para cima
+            </button>
+            <ul cDropdownMenu>
+              <li>
+                <button cDropdownItem>Ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra opção aqui</button>
+              </li>
+              <li>
+                <hr cDropdownDivider>
+              </li>
+              <li>
+                <button cDropdownItem>Link separado</button>
+              </li>
+            </ul>
+          </c-dropdown>
+          <c-dropdown direction="dropup" variant="btn-group">
+            <button cButton color="secondary">
+              Dividido para cima
+            </button>
+            <button [split]="true" cButton cDropdownToggle color="secondary">
+              <span class="visually-hidden">Alternar menu suspenso</span>
+            </button>
+            <ul cDropdownMenu>
+              <li>
+                <button cDropdownItem>Ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra opção aqui</button>
+              </li>
+              <li>
+                <hr cDropdownDivider>
+              </li>
+              <li>
+                <button cDropdownItem>Link separado</button>
+              </li>
+            </ul>
+          </c-dropdown>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Menu suspenso Angular</strong> <small>Para a direita</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Exiba menus suspensos à direita dos elementos adicionando
+          <code>direction=&#34;dropend&#34;</code> ao componente <code>&lt;c-dropdown&gt;</code>.
+        </p>
+        <app-docs-example>
+          <c-dropdown direction="dropend" variant="btn-group">
+            <button cButton cDropdownToggle color="secondary">
+              Para a direita
+            </button>
+            <ul cDropdownMenu>
+              <li>
+                <button cDropdownItem>Ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra opção aqui</button>
+              </li>
+              <li>
+                <hr cDropdownDivider>
+              </li>
+              <li>
+                <button cDropdownItem>Link separado</button>
+              </li>
+            </ul>
+          </c-dropdown>
+          <c-dropdown direction="dropend" variant="btn-group">
+            <button cButton color="secondary">
+              Dividido à direita
+            </button>
+            <button [split]="true" cButton cDropdownToggle color="secondary">
+              <span class="visually-hidden">Alternar menu suspenso</span>
+            </button>
+            <ul cDropdownMenu>
+              <li>
+                <button cDropdownItem>Ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra ação</button>
+              </li>
+              <li>
+                <button cDropdownItem>Outra opção aqui</button>
+              </li>
+              <li>
+                <hr cDropdownDivider>
+              </li>
+              <li>
+                <button cDropdownItem>Link separado</button>
+              </li>
+            </ul>
+          </c-dropdown>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Menu suspenso Angular</strong> <small>Para a esquerda</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Exiba menus suspensos à esquerda dos elementos adicionando
+          <code>direction=&#34;dropstart&#34;</code> ao componente <code>&lt;c-dropdown&gt;</code>.
+        </p>
+        <app-docs-example>
+          <c-button-group>
+            <c-dropdown direction="dropstart" variant="input-group">
+              <button [split]="true" cButton cDropdownToggle color="secondary">
+                <span class="visually-hidden">Alternar menu suspenso</span>
+              </button>
+              <ul cDropdownMenu>
+                <li>
+                  <button cDropdownItem>Ação</button>
+                </li>
+                <li>
+                  <button cDropdownItem>Outra ação</button>
+                </li>
+                <li>
+                  <button cDropdownItem>Outra opção aqui</button>
+                </li>
+                <li>
+                  <hr cDropdownDivider>
+                </li>
+                <li>
+                  <button cDropdownItem>Link separado</button>
+                </li>
+              </ul>
+              <button cButton color="secondary">
+                Dividido à esquerda
+              </button>
+            </c-dropdown>
+          </c-button-group>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Menu suspenso Angular</strong> <small>Centralizado</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Exiba menus suspensos centralizados abaixo do botão de abertura adicionando <code>direction="center"</code> ao componente <code>c-dropdown</code>.
+        </p>
+        <app-docs-example>
+          <c-dropdown direction="center" variant="btn-group">
+            <button cButton cDropdownToggle color="secondary">Menu suspenso centralizado</button>
+            <ul cDropdownMenu>
+              <li><button cDropdownItem>Ação um</button></li>
+              <li><button cDropdownItem>Ação dois</button></li>
+              <li><button cDropdownItem>Ação três</button></li>
+            </ul>
+          </c-dropdown>
+          <c-dropdown direction="dropup-center" class="dropup" variant="btn-group">
+            <button cButton cDropdownToggle color="secondary">Menu centralizado para cima</button>
+            <ul cDropdownMenu>
+              <li><button cDropdownItem>Ação um</button></li>
+              <li><button cDropdownItem>Ação dois</button></li>
+              <li><button cDropdownItem>Ação três</button></li>
+            </ul>
+          </c-dropdown>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

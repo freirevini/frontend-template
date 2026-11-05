@@ -1,0 +1,64 @@
+<c-card class="h-100" aria-labelledby="themes-title">
+  <c-card-body>
+    <h4 class="card-title mb-0" id="themes-title">Assunto das Normas {{ listsNotApplicable ? 'Não Aplicáveis' : 'Aplicáveis' }}</h4>
+    <div class="small text-medium-emphasis">
+      {{ subtitle }}
+      @if (segmentFilter) {
+        · {{ filterLabel }}
+      }
+    </div>
+
+    @switch (state) {
+      @case ('loading') {
+        <div class="classification-placeholder text-medium-emphasis">
+          <c-spinner size="sm" label="Carregando..." class="me-2"></c-spinner>
+          Carregando dados...
+        </div>
+      }
+      @case ('error') {
+        <div class="classification-placeholder text-medium-emphasis" role="alert">
+          <app-api-error-text [error]="loadProblem" fallback="Não foi possível carregar a classificação das normas."></app-api-error-text>
+        </div>
+      }
+      @case ('ready') {
+        @if (aggregate && aggregate.themesTotal === 0) {
+          <p class="classification-placeholder text-medium-emphasis mb-0">
+            Nenhuma norma {{ listsNotApplicable ? 'não aplicável' : 'aplicável' }} neste período.
+          </p>
+        }
+        @if (aggregate && aggregate.themesTotal > 0) {
+          <ol
+            class="theme-bars"
+            [attr.aria-label]="'Temas por número de normas ' + (listsNotApplicable ? 'não aplicáveis' : 'aplicáveis') + '; escolha um tema para filtrar a pizza'"
+            >
+            @for (theme of aggregate.themes; track theme) {
+              <li>
+                <button
+                  type="button"
+                  class="theme-row"
+                  data-page-filter
+                  [class.is-active]="themeFilter === theme.label"
+                  [class.is-dimmed]="isDimmed(theme)"
+                  [attr.aria-pressed]="themeFilter === theme.label"
+                  [attr.title]="themeFilter === theme.label ? 'Remover filtro' : theme.label + ': filtrar a pizza por este tema'"
+                  (click)="select(theme)"
+                  >
+                  <span class="theme-label">{{ theme.label }}</span>
+                  <span class="theme-track" aria-hidden="true"><span class="theme-fill" [class.is-not-applicable]="listsNotApplicable" [style.width.%]="barWidth(theme.width)"></span></span>
+                  <span class="theme-value">{{ formatNumber(theme.count) }} <span>{{ formatPercent(theme.share) }}</span></span>
+                </button>
+              </li>
+            }
+            @if (aggregate.others; as others) {
+              <li class="theme-row is-other">
+                <span class="theme-label">{{ others.label }} ({{ others.grouped }} {{ others.grouped === 1 ? 'tema' : 'temas' }})</span>
+                <span class="theme-track" aria-hidden="true"></span>
+                <span class="theme-value">{{ formatNumber(others.count) }} <span>{{ formatPercent(others.share) }}</span></span>
+              </li>
+            }
+          </ol>
+        }
+      }
+    }
+  </c-card-body>
+</c-card>

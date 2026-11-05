@@ -1,0 +1,221 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <app-docs-callout name="Paginação"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Paginação Angular</strong>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Usamos um grande bloco de links conectados para a paginação, tornando os links difíceis de
+          ignorar e facilmente escaláveis, tudo isso oferecendo grandes áreas de clique. A paginação é
+          construída com elementos HTML de lista para que leitores de tela possam anunciar o número de
+          links disponíveis. Use um elemento <code>&lt;nav&gt;</code> envolvendo-a para identificá-la
+          como uma seção de navegação para leitores de tela e outras tecnologias assistivas.
+        </p>
+        <p class="text-medium-emphasis small">
+          Além disso, como as páginas provavelmente têm mais de uma seção de navegação desse tipo, é
+          recomendável fornecer um <code>aria-label</code> descritivo para o
+          <code>&lt;nav&gt;</code> que reflita seu propósito. Por exemplo, se o componente de paginação
+          for usado para navegar entre um conjunto de resultados de pesquisa, um rótulo apropriado
+          poderia ser <code>aria-label=&#34;Search results pages&#34;</code>.
+        </p>
+        <app-docs-example>
+          <c-pagination aria-label="Exemplo de navegação de páginas">
+            <c-page-item>
+              <a cPageLink routerLink="./">Anterior</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">1</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">2</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">3</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">Próximo</a>
+            </c-page-item>
+          </c-pagination>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Paginação Angular</strong> <small>Trabalhando com ícones</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Quer usar um ícone ou símbolo no lugar do texto em alguns links da paginação? Não deixe
+          de oferecer suporte adequado a leitores de tela com atributos <code>aria</code>.
+        </p>
+        <app-docs-example>
+          <c-pagination aria-label="Exemplo de navegação de páginas">
+            <c-page-item aria-label="Anterior">
+              <a cPageLink routerLink="./"><span aria-hidden="true">&laquo;</span></a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">1</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">2</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">1</a>
+            </c-page-item>
+            <c-page-item aria-label="Próximo">
+              <a cPageLink routerLink="./"><span aria-hidden="true">&raquo;</span></a>
+            </c-page-item>
+          </c-pagination>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Paginação Angular</strong> <small>Estados desabilitado e ativo</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Os links da paginação são personalizáveis para diferentes situações. Use
+          <code>disabled</code> para links que devem parecer não clicáveis e <code>.active</code> para
+          indicar a página atual.
+        </p>
+        <p class="text-medium-emphasis small">
+          Embora a prop <code>disabled</code> use <code>pointer-events: none</code> para
+          <em>tentar</em> desabilitar a funcionalidade de link dos <code>&lt;a&gt;</code>s, essa propriedade
+          CSS ainda não é padronizada e não leva em conta a navegação por teclado. Por isso,
+          sempre adicionamos <code>tabindex=&#34;-1&#34;</code> em links desabilitados e usamos
+          JavaScript personalizado para desabilitar totalmente sua funcionalidade.
+        </p>
+        <app-docs-example>
+          <c-pagination aria-label="Exemplo de navegação de páginas">
+            <c-page-item [disabled]="true" aria-label="Anterior">
+              <a cPageLink routerLink="./"><span aria-hidden="true">&laquo;</span></a>
+            </c-page-item>
+            <c-page-item [active]="true">
+              <a routerLink="./" cPageLink>1</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">2</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">3</a>
+            </c-page-item>
+            <c-page-item aria-label="Próximo">
+              <a cPageLink routerLink="./"><span aria-hidden="true">&raquo;</span></a>
+            </c-page-item>
+          </c-pagination>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Paginação Angular</strong> <small>Tamanhos</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Quer uma paginação maior ou menor? Adicione <code>sizing=&#34;lg&#34;</code> ou
+          <code>sizing=&#34;sm&#34;</code> para tamanhos adicionais.
+        </p>
+        <app-docs-example>
+          <c-pagination aria-label="Exemplo de navegação de páginas" size="lg">
+            <c-page-item>
+              <a cPageLink routerLink="./">Anterior</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">1</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">2</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">3</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">Próximo</a>
+            </c-page-item>
+          </c-pagination>
+        </app-docs-example>
+        <app-docs-example>
+          <c-pagination aria-label="Exemplo de navegação de páginas" size="sm">
+            <c-page-item>
+              <a cPageLink routerLink="./">Anterior</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">1</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">2</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">3</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">Próximo</a>
+            </c-page-item>
+          </c-pagination>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Paginação Angular</strong> <small>Alinhamento</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Altere o alinhamento dos componentes de paginação com
+          utilitários flexbox.
+        </p>
+        <app-docs-example>
+          <c-pagination align="center" aria-label="Exemplo de navegação de páginas">
+            <c-page-item [disabled]="true">
+              <a cPageLink routerLink="./">Anterior</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">1</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">2</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">3</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">Próximo</a>
+            </c-page-item>
+          </c-pagination>
+        </app-docs-example>
+        <app-docs-example>
+          <c-pagination align="end" aria-label="Exemplo de navegação de páginas">
+            <c-page-item [disabled]="true">
+              <a cPageLink routerLink="./">Anterior</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">1</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">2</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">3</a>
+            </c-page-item>
+            <c-page-item>
+              <a cPageLink routerLink="./">Próximo</a>
+            </c-page-item>
+          </c-pagination>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

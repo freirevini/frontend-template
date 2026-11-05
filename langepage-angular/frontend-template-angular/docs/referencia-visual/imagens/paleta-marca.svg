@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1204" height="922" viewBox="0 0 1204 922" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif">
+<rect width="1204" height="922" fill="#ffffff"/>
+<text x="20" y="34" font-size="18" font-weight="600" fill="#20262c">Paleta da marca (variáveis SCSS $brand-*, tema claro)</text>
+<text x="20" y="101" font-size="13" font-weight="600" fill="#20262c">Primário (azul)</text>
+<rect x="190" y="60" width="132" height="72" rx="8" fill="#223ad2" stroke="none" stroke-width="1"/>
+<text x="200" y="82" font-size="12" font-weight="600" fill="#ffffff">#223ad2</text>
+<text x="190" y="148" font-size="11" fill="#4b5968">$brand-blue</text>
+<rect x="332" y="60" width="132" height="72" rx="8" fill="#192a9a" stroke="none" stroke-width="1"/>
+<text x="342" y="82" font-size="12" font-weight="600" fill="#ffffff">#192a9a</text>
+<text x="332" y="148" font-size="11" fill="#4b5968">$brand-blue-high</text>
+<rect x="474" y="60" width="132" height="72" rx="8" fill="#17278c" stroke="none" stroke-width="1"/>
+<text x="484" y="82" font-size="12" font-weight="600" fill="#ffffff">#17278c</text>
+<text x="474" y="148" font-size="11" fill="#4b5968">$brand-blue-deep</text>
+<rect x="616" y="60" width="132" height="72" rx="8" fill="#cad0f6" stroke="none" stroke-width="1"/>
+<text x="626" y="82" font-size="12" font-weight="600" fill="#0b0b0b">#cad0f6</text>
+<text x="616" y="148" font-size="11" fill="#4b5968">$brand-blue-light</text>
+<rect x="758" y="60" width="132" height="72" rx="8" fill="#edeffc" stroke="#4b5968" stroke-width="1"/>
+<text x="768" y="82" font-size="12" font-weight="600" fill="#0b0b0b">#edeffc</text>
+<text x="758" y="148" font-size="11" fill="#4b5968">$brand-blue-low</text>
+<rect x="900" y="60" width="132" height="72" rx="8" fill="#0e1650" stroke="none" stroke-width="1"/>
+<text x="910" y="82" font-size="12" font-weight="600" fill="#ffffff">#0e1650</text>
+<text x="900" y="148" font-size="11" fill="#4b5968">$brand-navy</text>
+<rect x="1042" y="60" width="132" height="72" rx="8" fill="#0a1040" stroke="none" stroke-width="1"/>
+<text x="1052" y="82" font-size="12" font-weight="600" fill="#ffffff">#0a1040</text>
+<text x="1042" y="148" font-size="11" fill="#4b5968">$brand-navy-deep</text>
+<text x="20" y="207" font-size="13" font-weight="600" fill="#20262c">Destaque (ciano)</text>
+<rect x="190" y="166" width="132" height="72" rx="8" fill="#31c7ed" stroke="none" stroke-width="1"/>
+<text x="200" y="188" font-size="12" font-weight="600" fill="#0b0b0b">#31c7ed</text>
+<text x="190" y="254" font-size="11" fill="#4b5968">$brand-cyan</text>
+<rect x="332" y="166" width="132" height="72" rx="8" fill="#1099bc" stroke="none" stroke-width="1"/>
+<text x="342" y="188" font-size="12" font-weight="600" fill="#0b0b0b">#1099bc</text>
+<text x="332" y="254" font-size="11" fill="#4b5968">$brand-cyan-dark</text>
+<rect x="474" y="166" width="132" height="72" rx="8" fill="#0a5c71" stroke="none" stroke-width="1"/>
+<text x="484" y="188" font-size="12" font-weight="600" fill="#ffffff">#0a5c71</text>
+<text x="474" y="254" font-size="11" fill="#4b5968">$brand-cyan-high</text>
+<rect x="616" y="166" width="132" height="72" rx="8" fill="#ecfafd" stroke="#4b5968" stroke-width="1"/>
+<text x="626" y="188" font-size="12" font-weight="600" fill="#0b0b0b">#ecfafd</text>
+<text x="616" y="254" font-size="11" fill="#4b5968">$brand-cyan-low</text>
+<text x="20" y="313" font-size="13" font-weight="600" fill="#20262c">Terciário e acento</text>
+<rect x="190" y="272" width="132" height="72" rx="8" fill="#e44e83" stroke="none" stroke-width="1"/>
+<text x="200" y="294" font-size="12" font-weight="600" fill="#0b0b0b">#e44e83</text>
+<text x="190" y="360" font-size="11" fill="#4b5968">$brand-pink</text>
+<rect x="332" y="272" width="132" height="72" rx="8" fill="#dd2264" stroke="none" stroke-width="1"/>
+<text x="342" y="294" font-size="12" font-weight="600" fill="#ffffff">#dd2264</text>
+<text x="332" y="360" font-size="11" fill="#4b5968">$brand-pink-dark</text>
+<rect x="474" y="272" width="132" height="72" rx="8" fill="#fdf2f6" stroke="#4b5968" stroke-width="1"/>
+<text x="484" y="294" font-size="12" font-weight="600" fill="#0b0b0b">#fdf2f6</text>
+<text x="474" y="360" font-size="11" fill="#4b5968">$brand-pink-low</text>
+<rect x="616" y="272" width="132" height="72" rx="8" fill="#ae6ae6" stroke="none" stroke-width="1"/>
+<text x="626" y="294" font-size="12" font-weight="600" fill="#0b0b0b">#ae6ae6</text>
+<text x="616" y="360" font-size="11" fill="#4b5968">$brand-purple</text>
+<text x="20" y="419" font-size="13" font-weight="600" fill="#20262c">Sucesso</text>
+<rect x="190" y="378" width="132" height="72" rx="8" fill="#36bf36" stroke="none" stroke-width="1"/>
+<text x="200" y="400" font-size="12" font-weight="600" fill="#0b0b0b">#36bf36</text>
+<text x="190" y="466" font-size="11" fill="#4b5968">$brand-green</text>
+<rect x="332" y="378" width="132" height="72" rx="8" fill="#288f28" stroke="none" stroke-width="1"/>
+<text x="342" y="400" font-size="12" font-weight="600" fill="#0b0b0b">#288f28</text>
+<text x="332" y="466" font-size="11" fill="#4b5968">$brand-green-dark</text>
+<rect x="474" y="378" width="132" height="72" rx="8" fill="#1b601b" stroke="none" stroke-width="1"/>
+<text x="484" y="400" font-size="12" font-weight="600" fill="#ffffff">#1b601b</text>
+<text x="474" y="466" font-size="11" fill="#4b5968">$brand-green-high</text>
+<rect x="616" y="378" width="132" height="72" rx="8" fill="#effaef" stroke="#4b5968" stroke-width="1"/>
+<text x="626" y="400" font-size="12" font-weight="600" fill="#0b0b0b">#effaef</text>
+<text x="616" y="466" font-size="11" fill="#4b5968">$brand-green-low</text>
+<text x="20" y="525" font-size="13" font-weight="600" fill="#20262c">Alerta</text>
+<rect x="190" y="484" width="132" height="72" rx="8" fill="#ff6600" stroke="none" stroke-width="1"/>
+<text x="200" y="506" font-size="12" font-weight="600" fill="#0b0b0b">#ff6600</text>
+<text x="190" y="572" font-size="11" fill="#4b5968">$brand-orange</text>
+<rect x="332" y="484" width="132" height="72" rx="8" fill="#b84900" stroke="none" stroke-width="1"/>
+<text x="342" y="506" font-size="12" font-weight="600" fill="#ffffff">#b84900</text>
+<text x="332" y="572" font-size="11" fill="#4b5968">$brand-orange-dark</text>
+<rect x="474" y="484" width="132" height="72" rx="8" fill="#8a3700" stroke="none" stroke-width="1"/>
+<text x="484" y="506" font-size="12" font-weight="600" fill="#ffffff">#8a3700</text>
+<text x="474" y="572" font-size="11" fill="#4b5968">$brand-orange-high</text>
+<rect x="616" y="484" width="132" height="72" rx="8" fill="#fff3eb" stroke="#4b5968" stroke-width="1"/>
+<text x="626" y="506" font-size="12" font-weight="600" fill="#0b0b0b">#fff3eb</text>
+<text x="616" y="572" font-size="11" fill="#4b5968">$brand-orange-low</text>
+<text x="20" y="631" font-size="13" font-weight="600" fill="#20262c">Erro</text>
+<rect x="190" y="590" width="132" height="72" rx="8" fill="#dc1832" stroke="none" stroke-width="1"/>
+<text x="200" y="612" font-size="12" font-weight="600" fill="#ffffff">#dc1832</text>
+<text x="190" y="678" font-size="11" fill="#4b5968">$brand-red</text>
+<rect x="332" y="590" width="132" height="72" rx="8" fill="#a51226" stroke="none" stroke-width="1"/>
+<text x="342" y="612" font-size="12" font-weight="600" fill="#ffffff">#a51226</text>
+<text x="332" y="678" font-size="11" fill="#4b5968">$brand-red-dark</text>
+<rect x="474" y="590" width="132" height="72" rx="8" fill="#931022" stroke="none" stroke-width="1"/>
+<text x="484" y="612" font-size="12" font-weight="600" fill="#ffffff">#931022</text>
+<text x="474" y="678" font-size="11" fill="#4b5968">$brand-red-high</text>
+<rect x="616" y="590" width="132" height="72" rx="8" fill="#fdedef" stroke="#4b5968" stroke-width="1"/>
+<text x="626" y="612" font-size="12" font-weight="600" fill="#0b0b0b">#fdedef</text>
+<text x="616" y="678" font-size="11" fill="#4b5968">$brand-red-low</text>
+<text x="20" y="737" font-size="13" font-weight="600" fill="#20262c">Texto (content)</text>
+<rect x="190" y="696" width="132" height="72" rx="8" fill="#20262c" stroke="none" stroke-width="1"/>
+<text x="200" y="718" font-size="12" font-weight="600" fill="#ffffff">#20262c</text>
+<text x="200" y="736" font-size="11" fill="#ffffff">15,27:1 / #ffffff</text>
+<text x="190" y="784" font-size="11" fill="#4b5968">$brand-content-high</text>
+<rect x="332" y="696" width="132" height="72" rx="8" fill="#363f4a" stroke="none" stroke-width="1"/>
+<text x="342" y="718" font-size="12" font-weight="600" fill="#ffffff">#363f4a</text>
+<text x="342" y="736" font-size="11" fill="#ffffff">10,68:1 / #ffffff</text>
+<text x="332" y="784" font-size="11" fill="#4b5968">$brand-content-pure</text>
+<rect x="474" y="696" width="132" height="72" rx="8" fill="#4b5968" stroke="none" stroke-width="1"/>
+<text x="484" y="718" font-size="12" font-weight="600" fill="#ffffff">#4b5968</text>
+<text x="484" y="736" font-size="11" fill="#ffffff">7,17:1 / #ffffff</text>
+<text x="474" y="784" font-size="11" fill="#4b5968">$brand-content-low</text>
+<rect x="616" y="696" width="132" height="72" rx="8" fill="#a7b2be" stroke="none" stroke-width="1"/>
+<text x="626" y="718" font-size="12" font-weight="600" fill="#0b0b0b">#a7b2be</text>
+<text x="626" y="736" font-size="11" fill="#0b0b0b">2,15:1 / #ffffff</text>
+<text x="616" y="784" font-size="11" fill="#4b5968">$brand-content-disabled</text>
+<text x="20" y="843" font-size="13" font-weight="600" fill="#20262c">Superfícies (claro)</text>
+<rect x="190" y="802" width="132" height="72" rx="8" fill="#f3f5f7" stroke="#4b5968" stroke-width="1"/>
+<text x="200" y="824" font-size="12" font-weight="600" fill="#0b0b0b">#f3f5f7</text>
+<text x="190" y="890" font-size="11" fill="#4b5968">$brand-surface-page</text>
+<rect x="332" y="802" width="132" height="72" rx="8" fill="#ffffff" stroke="#4b5968" stroke-width="1"/>
+<text x="342" y="824" font-size="12" font-weight="600" fill="#0b0b0b">#ffffff</text>
+<text x="332" y="890" font-size="11" fill="#4b5968">$brand-surface-card</text>
+<rect x="474" y="802" width="132" height="72" rx="8" fill="#eaedf0" stroke="#4b5968" stroke-width="1"/>
+<text x="484" y="824" font-size="12" font-weight="600" fill="#0b0b0b">#eaedf0</text>
+<text x="474" y="890" font-size="11" fill="#4b5968">$brand-surface-mid</text>
+<rect x="616" y="802" width="132" height="72" rx="8" fill="#dbe0e5" stroke="none" stroke-width="1"/>
+<text x="626" y="824" font-size="12" font-weight="600" fill="#0b0b0b">#dbe0e5</text>
+<text x="616" y="890" font-size="11" fill="#4b5968">$brand-surface-high</text>
+<rect x="758" y="802" width="132" height="72" rx="8" fill="#dbe0e5" stroke="none" stroke-width="1"/>
+<text x="768" y="824" font-size="12" font-weight="600" fill="#0b0b0b">#dbe0e5</text>
+<text x="758" y="890" font-size="11" fill="#4b5968">$brand-border</text>
+<rect x="900" y="802" width="132" height="72" rx="8" fill="#c5ccd4" stroke="none" stroke-width="1"/>
+<text x="910" y="824" font-size="12" font-weight="600" fill="#0b0b0b">#c5ccd4</text>
+<text x="900" y="890" font-size="11" fill="#4b5968">$brand-input-border</text>
+</svg>

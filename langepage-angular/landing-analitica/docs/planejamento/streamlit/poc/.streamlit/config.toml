@@ -1,0 +1,105 @@
+[server]
+enableStaticServing = true
+headless = true
+port = 8601
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+showSidebarNavigation = false
+
+# Brand tokens (landing-analitica src/scss/_brand.scss) on the Streamlit theme. Light values in [theme.light],
+# dark values in [theme.dark]; the sidebar (navy) is configured apart. Inter is served from static/fonts.
+[theme]
+base = "light"
+font = "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+headingFont = "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+baseFontSize = 16
+baseRadius = "0.5rem"
+buttonRadius = "0.5rem"
+headingFontWeights = [600, 600, 600, 600, 600, 600]
+headingFontSizes = ["1.75rem", "1.5rem", "1.25rem", "1.125rem", "1rem", "0.875rem"]
+showWidgetBorder = true
+showSidebarBorder = false
+metricValueFontSize = "1.75rem"
+metricValueFontWeight = 600
+
+[[theme.fontFaces]]
+family = "Inter"
+url = "app/static/fonts/inter-latin-400-normal.woff2"
+weight = 400
+style = "normal"
+
+[[theme.fontFaces]]
+family = "Inter"
+url = "app/static/fonts/inter-latin-500-normal.woff2"
+weight = 500
+style = "normal"
+
+[[theme.fontFaces]]
+family = "Inter"
+url = "app/static/fonts/inter-latin-600-normal.woff2"
+weight = 600
+style = "normal"
+
+[[theme.fontFaces]]
+family = "Inter"
+url = "app/static/fonts/inter-latin-700-normal.woff2"
+weight = 700
+style = "normal"
+
+[theme.light]
+primaryColor = "#223ad2"
+backgroundColor = "#f3f5f7"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#20262c"
+linkColor = "#223ad2"
+borderColor = "#dbe0e5"
+dataframeBorderColor = "#dbe0e5"
+dataframeHeaderBackgroundColor = "#eaedf0"
+dataframeHeaderTextColor = "#4b5968"
+codeBackgroundColor = "#eaedf0"
+redColor = "#dc1832"
+orangeColor = "#ff6600"
+greenColor = "#288f28"
+blueColor = "#223ad2"
+violetColor = "#ae6ae6"
+grayColor = "#a7b2be"
+chartCategoricalColors = ["#223ad2", "#1099bc", "#288f28", "#ae6ae6", "#dc1832", "#0e1650", "#a7b2be", "#17278c", "#8c9ae8", "#f07a89"]
+
+[theme.light.sidebar]
+primaryColor = "#31c7ed"
+backgroundColor = "#0e1650"
+secondaryBackgroundColor = "#0a1040"
+textColor = "#ffffff"
+linkColor = "#ffffff"
+borderColor = "#1a2360"
+
+[theme.dark]
+primaryColor = "#6b7cf0"
+backgroundColor = "#0f1319"
+secondaryBackgroundColor = "#171e28"
+textColor = "#eef1f5"
+linkColor = "#8c9ae8"
+borderColor = "#2b3542"
+dataframeBorderColor = "#2b3542"
+dataframeHeaderBackgroundColor = "#1f2733"
+dataframeHeaderTextColor = "#a9b1bd"
+codeBackgroundColor = "#1f2733"
+redColor = "#f0566b"
+orangeColor = "#ff8a3d"
+greenColor = "#36bf36"
+blueColor = "#6b7cf0"
+violetColor = "#ae6ae6"
+grayColor = "#a9b1bd"
+chartCategoricalColors = ["#4d61e0", "#1099bc", "#2fae2f", "#ae6ae6", "#e8475c", "#a4b0f2", "#a9b1bd", "#3448d0", "#8c9ae8", "#f59aa6"]
+
+[theme.dark.sidebar]
+primaryColor = "#31c7ed"
+backgroundColor = "#0c1238"
+secondaryBackgroundColor = "#080d2b"
+textColor = "#ffffff"
+linkColor = "#ffffff"
+borderColor = "#161d4a"

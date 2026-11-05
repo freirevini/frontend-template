@@ -1,0 +1,59 @@
+<div class="period-filter" role="group" [attr.aria-label]="label">
+  <div class="filter-bar">
+    <c-button-group role="group" aria-label="Granularidade do período" size="sm" class="period-filter-granularity brand-segmented">
+      <button
+        *ngFor="let option of periods"
+        cButton
+        color="secondary"
+        variant="outline"
+        type="button"
+        [active]="period === option"
+        [attr.aria-pressed]="period === option"
+        (click)="setPeriod(option)"
+      >{{ periodLabels[option] }}</button>
+    </c-button-group>
+    <span class="small text-medium-emphasis">Últimos</span>
+    <button
+      *ngFor="let option of rangeOptions"
+      type="button"
+      class="filter-chip"
+      [class.is-active]="option.count === range"
+      [attr.aria-pressed]="option.count === range"
+      (click)="setRange(option.count)"
+    >{{ option.label }}</button>
+    <button
+      type="button"
+      class="filter-chip"
+      [class.is-active]="range === null"
+      [attr.aria-pressed]="range === null"
+      [attr.aria-expanded]="customOpen"
+      [attr.aria-controls]="customFormId"
+      (click)="toggleCustomRange()"
+    >
+      <svg cIcon name="cilCalendar" size="sm" aria-hidden="true"></svg>
+      Personalizado
+    </button>
+  </div>
+  <div *ngIf="customNotice && !customOpen" class="small text-medium-emphasis mt-2" role="status">{{ customNotice }}</div>
+  <form
+    *ngIf="customOpen"
+    [id]="customFormId"
+    class="filter-bar mt-2"
+    [formGroup]="customForm"
+    (ngSubmit)="applyCustomRange()"
+    aria-label="Intervalo de datas personalizado"
+    novalidate
+  >
+    <label class="filter-date small text-medium-emphasis">
+      De
+      <input type="date" class="form-control form-control-sm" formControlName="start" />
+    </label>
+    <label class="filter-date small text-medium-emphasis">
+      Até
+      <input type="date" class="form-control form-control-sm" formControlName="end" />
+    </label>
+    <button type="submit" class="filter-chip is-active">Aplicar</button>
+    <button type="button" class="filter-chip" (click)="toggleCustomRange()">Cancelar</button>
+    <span *ngIf="customError" class="small text-danger" role="alert">{{ customError }}</span>
+  </form>
+</div>

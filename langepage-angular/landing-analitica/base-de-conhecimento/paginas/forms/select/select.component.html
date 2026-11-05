@@ -1,0 +1,94 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <app-docs-callout name="Seleção"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Seleção Angular</strong> <small>Padrão</small>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <select aria-label="Exemplo de seleção padrão" cSelect>
+            <option>Abra este menu de seleção</option>
+            <option value="1">Um</option>
+            <option value="2">Dois</option>
+            <option value="3">Três</option>
+          </select>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Seleção Angular</strong> <small>Tamanhos</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Você também pode escolher entre seleções personalizadas pequenas e grandes, que combinam
+          com os campos de texto de tamanho equivalente.
+        </p>
+        <app-docs-example>
+          <select aria-label="Exemplo de seleção grande" cSelect class="mb-3" sizing="lg">
+            <option>Abra este menu de seleção</option>
+            <option value="1">Um</option>
+            <option value="2">Dois</option>
+            <option value="3">Três</option>
+          </select>
+          <select aria-label="Exemplo de seleção pequena" cSelect class="mb-3" sizing="sm">
+            <option>Abra este menu de seleção</option>
+            <option value="1">Um</option>
+            <option value="2">Dois</option>
+            <option value="3">Três</option>
+          </select>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          O atributo <code>multiple</code> também é suportado:
+        </p>
+        <app-docs-example>
+          <select aria-label="Exemplo de seleção múltipla" cSelect multiple sizing="lg">
+            <option>Abra este menu de seleção</option>
+            <option value="1">Um</option>
+            <option value="2">Dois</option>
+            <option value="3">Três</option>
+          </select>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Assim como a propriedade <code>html size</code>:
+        </p>
+        <app-docs-example>
+          <select aria-label="Exemplo de seleção múltipla" cSelect multiple size="3" sizing="lg">
+            <option>Abra este menu de seleção</option>
+            <option value="1">Um</option>
+            <option value="2">Dois</option>
+            <option value="3">Três</option>
+            <option value="4">Quatro</option>
+          </select>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Seleção Angular</strong> <small>Desabilitado</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione o atributo booleano <code>disabled</code> a uma seleção para deixá-la com aparência
+          acinzentada e remover os eventos de ponteiro.
+        </p>
+        <app-docs-example>
+          <select aria-label="Exemplo de seleção desabilitada" cSelect disabled>
+            <option>Abra este menu de seleção</option>
+            <option value="1">Um</option>
+            <option selected value="2">Selecionado: Dois</option>
+            <option value="3">Três</option>
+          </select>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+

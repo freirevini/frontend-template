@@ -1,0 +1,65 @@
+/* Scalation page: waterfall header/result/legend/table and the "Tráfego e vendas" demo card.
+   Port of waterfall-chart.component.scss and of the CoreUI classes used by scalation.component.html. Colors only by
+   var(--brand-*) / var(--app-*) (R10); colors that depend on the theme in Python come inline from tokens(). */
+
+/* Waterfall header: title on the left, unit and view chip groups on the right (wrap on narrow screens) */
+.st-key-wf-toggles { flex-direction: row; flex-wrap: wrap; justify-content: flex-end; gap: .5rem 1rem; }
+.st-key-wf-toggles > [data-testid="stElementContainer"] { width: auto !important; flex: 0 0 auto; }
+@media (max-width: 640px) { .st-key-wf-toggles { justify-content: flex-start; } }
+
+.brand-wf-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; margin: .5rem 0 .25rem; }
+.brand-wf-result strong { margin-left: .5rem; font-size: 1.25rem; font-weight: 600; color: var(--brand-content-high); font-variant-numeric: tabular-nums; }
+.brand-wf-share { margin-left: .25rem; }
+.brand-wf-legend { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin: 0; padding: 0; list-style: none; font-size: .875rem; color: var(--brand-content-high); }
+.brand-wf-legend li { display: inline-flex; align-items: center; gap: .375rem; }
+.brand-wf-swatch { display: inline-block; width: .75rem; height: .75rem; border-radius: 2px; }
+.brand-wf-connector { display: inline-block; width: 1rem; border-top: 1px solid var(--brand-content-disabled); }
+.brand-wf-placeholder { display: flex; align-items: center; justify-content: center; min-height: 320px; }
+
+.brand-wf-table-wrap { overflow-x: auto; }
+.brand-wf-table { width: 100%; margin: 0; border-collapse: collapse; font-size: .875rem; color: var(--brand-content-high); }
+.brand-wf-table th, .brand-wf-table td { padding: .25rem .375rem; vertical-align: middle; text-align: left; border-bottom: 1px solid var(--brand-border); }
+.brand-wf-table thead th { font-weight: 600; border-bottom-width: 2px; }
+.brand-wf-table tbody th { font-weight: 600; }
+.brand-wf-table tbody tr:hover td { background: var(--brand-surface-mid); }
+.brand-wf-table .brand-wf-num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.brand-wf-table .is-strong { font-weight: 600; }
+
+/* Tráfego e vendas: card with a header band (c-card-header) and CoreUI progress groups */
+[data-testid="stVerticalBlockBorderWrapper"]:has(> div > .st-key-card-trafego-e-vendas) { padding: 0; overflow: hidden; }
+.brand-demo { color: var(--brand-content-high); }
+.brand-demo-cap { padding: .5rem 1rem; background: rgba(var(--cui-black-rgb), .03); border-bottom: 1px solid var(--brand-border); }
+.brand-demo-body { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.5rem; padding: 1rem; }
+.brand-demo-col { min-width: 0; }
+.brand-demo-kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.5rem; }
+.brand-demo-kpi { padding: .25rem 1rem; margin-bottom: 1rem; border-left: 4px solid var(--brand-border); }
+.brand-demo-kpi.is-info { border-left-color: var(--brand-demo-info); }
+.brand-demo-kpi.is-danger { border-left-color: var(--brand-danger); }
+.brand-demo-kpi.is-warning { border-left-color: var(--brand-warning); }
+.brand-demo-kpi.is-success { border-left-color: var(--brand-success); }
+.brand-demo-kpi-value { font-size: 1.25rem; font-weight: 600; }
+.brand-demo-hr { margin: 0 0 1rem; border: 0; border-top: 1px solid var(--brand-border); opacity: 1; }
+.brand-demo-group { display: flex; flex-wrap: wrap; margin-bottom: 1rem; }
+.brand-demo-group.mb-4 { margin-bottom: 1.5rem; }
+.brand-demo-group.mb-5 { margin-bottom: 3rem; }
+.brand-demo-prepend { flex: 0 0 100px; align-self: center; }
+.brand-demo-header { display: flex; flex-basis: 100%; align-items: flex-end; margin-bottom: .25rem; font-size: .875rem; }
+.brand-demo-end { margin-left: auto; font-weight: 600; }
+.brand-demo-icon { margin-right: .5rem; }
+/* "Mais opções" (divider d-flex justify-content-center + btn-link text-muted btn-sm): icon only, no action */
+.brand-demo-divider { display: flex; justify-content: center; }
+.brand-demo-more { display: inline-flex; align-items: center; padding: .25rem .5rem; color: var(--brand-content-low); background: transparent; border: 0; border-radius: var(--brand-radius-sm); cursor: pointer; }
+.brand-demo-more:hover { color: var(--brand-content-high); }
+.brand-demo-more:focus-visible { outline: 2px solid var(--brand-primary); outline-offset: 2px; }
+.brand-demo-bars { flex-grow: 1; align-self: center; }
+.brand-demo-bars > .brand-demo-progress + .brand-demo-progress { margin-top: 2px; }
+.brand-demo-progress { display: flex; height: 4px; overflow: hidden; background: var(--brand-surface-mid); border-radius: var(--brand-radius-pill); }
+.brand-demo-progress > span { display: block; height: 100%; }
+.brand-demo-progress > .is-info, .brand-demo-badge.is-info { background: var(--brand-demo-info); }
+.brand-demo-progress > .is-danger, .brand-demo-badge.is-danger { background: var(--brand-danger); }
+.brand-demo-progress > .is-warning { background: var(--brand-warning); }
+.brand-demo-progress > .is-success { background: var(--brand-success); }
+.brand-demo-legend { text-align: center; }
+.brand-demo-badge { display: inline-block; width: .75rem; height: .625rem; border-radius: 100px; vertical-align: super; }
+@media (max-width: 767px) { .brand-demo-body { grid-template-columns: 1fr; } }
+@media (max-width: 575px) { .brand-demo-kpis { grid-template-columns: 1fr; } }

@@ -1,0 +1,9 @@
+{
+  "asOf": "2021-12-31",
+  "segments": [
+    { "id": "atacado", "label": "Atacado", "icon": "cilTruck", "total": 54, "toClassify": 7, "trend": [65, 59, 84, 84, 51, 55, 40] },
+    { "id": "corporativo", "label": "Corporativo", "icon": "cilBuilding", "total": 62, "toClassify": 9, "trend": [1, 18, 9, 17, 34, 22, 11] },
+    { "id": "plataforma", "label": "Plataforma", "icon": "cilDevices", "total": 25, "toClassify": 4, "trend": [78, 81, 80, 45, 34, 12, 40] },
+    { "id": "varejo", "label": "Varejo", "icon": "cilCart", "total": 44, "toClassify": 6, "trend": [85, 65, 23, 12, 98, 34, 84] }
+  ]
+}

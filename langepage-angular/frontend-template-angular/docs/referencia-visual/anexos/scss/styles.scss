@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+// Brand design tokens (colors, radius, elevation, typography), then the CoreUI overrides built on them
+@import "brand";
+@import "variables";
+
+$enable-ltr: true;
+$enable-rtl: true;
+
+// Import styles with default layout.
+@import "@coreui/coreui/scss/coreui";
+
+// Import Chart.js custom tooltips styles
+@import "@coreui/chartjs/scss/coreui-chartjs";
+
+// perfect scrollbar theming for use with [perfectScrollbar] directive
+//@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+@import "layout";
+
+// Floating assistant chat
+@import "chat-widget";
+
+// Some temp fixes
+@import "fixes";
+
+// Light/dark color mode (CoreUI 4.x has none built in)
+@import "theme-dark";
+
+// If you want to add something do it here
+@import "custom";

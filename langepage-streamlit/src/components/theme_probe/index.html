@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>brand-theme-probe</title>
+<script src="./theme.js"></script>
+</head>
+<body style="margin:0">
+<script>
+/* Streamlit components v1 protocol by hand (no build): componentReady → render(args, theme) → setComponentValue.
+ * Reports {base, mode, narrow} to Python only when it differs from what Python already knows (args.known), so it never
+ * triggers a rerun loop. narrow = app viewport under 576 px (charts drop crowded ticks there); re-checked on resize. */
+(function () {
+  const post = (type, extra) => window.parent.postMessage(Object.assign({ isStreamlitMessage: true, type: type }, extra), '*');
+  let lastArgs = null;
+  let lastTheme = null;
+  let lastState = null;
+  let lastSent = null;
+
+  function narrow() {
+    try { return window.parent.innerWidth < 576; } catch (e) { return false; }
+  }
+
+  function send() {
+    if (!lastArgs || !lastState) return;
+    const known = lastSent || lastArgs.known || {};
+    const value = { base: lastState.base, mode: lastState.mode, narrow: narrow() };
+    if (known.base !== value.base || known.mode !== value.mode || Boolean(known.narrow) !== value.narrow) {
+      lastSent = value;
+      post('streamlit:setComponentValue', { value: value, dataType: 'json' });
+    }
+  }
+
+  function report() {
+    if (!lastArgs || !lastTheme) return;
+    const slugs = lastArgs.slugs || [];
+    const state = window.brandTheme.reconcile(lastTheme.base === 'dark' ? 'dark' : 'light', slugs);
+    if (state.reloading) return;
+    lastState = state;
+    send();
+  }
+
+  window.addEventListener('message', (event) => {
+    const data = event.data || {};
+    if (data.type !== 'streamlit:render') return;
+    lastArgs = data.args || {};
+    lastTheme = data.theme || { base: 'light' };
+    lastSent = null;  // args.known is what Python holds now
+    post('streamlit:setFrameHeight', { height: 0 });
+    report();
+  });
+  let resizeTimer = null;
+  try {
+    window.parent.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(send, 250); });
+  } catch (e) { /* not same-origin: stays wide */ }
+  window.brandTheme.watchSystem(() => window.brandTheme.setMode('auto', (lastArgs && lastArgs.slugs) || []));
+  post('streamlit:componentReady', { apiVersion: 1 });
+})();
+</script>
+</body>
+</html>

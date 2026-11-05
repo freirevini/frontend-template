@@ -1,0 +1,73 @@
+
+  <c-row>
+    <c-col xs="12">
+      <app-docs-callout>
+        Componente Angular que encapsula o Chart.js 3.6, a biblioteca de gráficos mais popular.
+        <br>
+      </app-docs-callout>
+    </c-col>
+    <c-col xs="12" lg="6">
+      <c-card class="mb-4">
+        <c-card-header>
+          Gráfico de barras
+        </c-card-header>
+        <c-card-body>
+          <c-chart type="bar" [data]="chartBarData"></c-chart>
+        </c-card-body>
+      </c-card>
+    </c-col>
+    <c-col xs="12" lg="6">
+      <c-card class="mb-4">
+        <c-card-header>
+          Gráfico de linhas
+        </c-card-header>
+        <c-card-body>
+          <c-chart type="line" [data]="chartLineData"></c-chart>
+        </c-card-body>
+      </c-card>
+    </c-col>
+  </c-row>
+  <c-row>
+    <c-col xs="12" lg="6">
+      <c-card class="mb-4">
+        <c-card-header>
+          Gráfico de rosca
+        </c-card-header>
+        <c-card-body>
+          <c-chart type="doughnut" [data]="chartDoughnutData"></c-chart>
+        </c-card-body>
+      </c-card>
+    </c-col>
+    <c-col xs="12" lg="6">
+      <c-card class="mb-4">
+        <c-card-header>
+          Gráfico de pizza
+        </c-card-header>
+        <c-card-body>
+          <c-chart type="pie" [data]="chartPieData"></c-chart>
+        </c-card-body>
+      </c-card>
+    </c-col>
+  </c-row>
+  <c-row>
+    <c-col xs="12" lg="6">
+      <c-card class="mb-4">
+        <c-card-header>
+          Gráfico de área polar
+        </c-card-header>
+        <c-card-body>
+          <c-chart type="polarArea" [data]="chartPolarAreaData"></c-chart>
+        </c-card-body>
+      </c-card>
+    </c-col>
+    <c-col xs="12" lg="6">
+      <c-card class="mb-4">
+        <c-card-header>
+          Gráfico de radar
+        </c-card-header>
+        <c-card-body>
+          <c-chart type="radar" [data]="chartRadarData"></c-chart>
+        </c-card-body>
+      </c-card>
+    </c-col>
+  </c-row>

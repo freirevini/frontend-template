@@ -1,0 +1,583 @@
+<c-row>
+  <c-col xs="12">
+    <app-docs-callout name="Modal"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Modal Angular</strong>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small" ngPreserveWhitespaces>
+          Abaixo está um exemplo de modal estático (ou seja, com <code>position</code> e
+          <code>display</code> sobrescritos). Estão incluídos o cabeçalho, o corpo do modal
+          (obrigatório para o <code>padding</code>) e o rodapé do modal (opcional). Pedimos que você
+          inclua cabeçalhos com ações de fechar sempre que possível, ou ofereça outra
+          ação explícita para fechar.
+        </p>
+        <app-docs-example>
+          <c-modal
+            [keyboard]="false"
+            [transition]="false"
+            backdrop="static"
+            class="position-static d-block show"
+            id="modalStatic"
+          >
+            <c-modal-header>
+              <h5 cModalTitle>Título do modal</h5>
+              <button cButtonClose></button>
+            </c-modal-header>
+            <c-modal-body>O texto do corpo do modal vai aqui.</c-modal-body>
+            <c-modal-footer>
+              <button cButton color="secondary">Fechar</button>
+              <button cButton color="primary">Salvar alterações</button>
+            </c-modal-footer>
+          </c-modal>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Modal Angular</strong> <small>Demonstração ao vivo</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Abra uma demonstração funcional do modal clicando no botão abaixo. Ele deslizará para baixo e
+          aparecerá gradualmente a partir do topo da página.
+        </p>
+        <app-docs-example>
+          <ng-container *ngTemplateOutlet="liveDemo"></ng-container>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Modal Angular</strong> <small>Fundo estático</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Se você não fornecer um handler <code>(visibleChange)</code> ao componente Modal, seu
+          modal se comportará como se o fundo fosse estático, ou seja, não fechará ao
+          clicar fora dele. Clique no botão abaixo para testar.
+        </p>
+        <app-docs-example>
+          <ng-container *ngTemplateOutlet="staticBackdrop"></ng-container>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Modal Angular</strong> <small>Rolagem de conteúdo longo</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Se os seus modais forem longos demais para a área visível do usuário, eles rolarão a própria página.
+        </p>
+        <app-docs-example>
+          <ng-container *ngTemplateOutlet="scrollingLongContent"></ng-container>
+        </app-docs-example>
+        <p class="text-medium-emphasis small" ngPreserveWhitespaces>
+          Você também pode criar um modal rolável, que permite rolar o corpo do modal, adicionando a propriedade
+          <code>scrollable</code>.
+        </p>
+        <app-docs-example>
+          <ng-container *ngTemplateOutlet="scrollableLongContent"></ng-container>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Modal Angular</strong> <small>Centralizado verticalmente</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione <code>alignment=&#34;center&#34;</code> ao <code>&lt;c-modal&gt;</code> para
+          centralizar o modal verticalmente.
+        </p>
+        <app-docs-example>
+          <ng-container *ngTemplateOutlet="verticallyCentered"></ng-container>
+        </app-docs-example>
+        <app-docs-example>
+          <ng-container *ngTemplateOutlet="verticallyCenteredScrollable"></ng-container>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Modal Angular</strong> <small>Dicas e popovers</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          <code>cTooltip</code> e <code>cPopover</code> podem ser colocados dentro de
+          modais conforme necessário. Quando os modais são fechados, todas as dicas e popovers dentro deles também
+          são fechados automaticamente.
+        </p>
+        <app-docs-example>
+          <ng-container *ngTemplateOutlet="withPopover"></ng-container>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Modal Angular</strong> <small>Tamanhos opcionais</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small" ngPreserveWhitespaces>
+          Os modais têm três tamanhos opcionais, disponíveis por meio de classes modificadoras aplicadas a um
+          <code>&lt;c-modal&gt;</code>. Esses tamanhos entram em ação em determinados breakpoints para evitar
+          barras de rolagem horizontais em telas mais estreitas.
+        </p>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Tamanho</th>
+            <th>Propriedade size</th>
+            <th>max-width do modal</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Pequeno</td>
+            <td>
+              <code>&#39;sm&#39;</code>
+            </td>
+            <td>
+              <code>300px</code>
+            </td>
+          </tr>
+          <tr>
+            <td>Padrão</td>
+            <td class="text-medium-emphasis">Nenhuma</td>
+            <td>
+              <code>500px</code>
+            </td>
+          </tr>
+          <tr>
+            <td>Grande</td>
+            <td>
+              <code>&#39;lg&#39;</code>
+            </td>
+            <td>
+              <code>800px</code>
+            </td>
+          </tr>
+          <tr>
+            <td>Extra grande</td>
+            <td>
+              <code>&#39;xl&#39;</code>
+            </td>
+            <td>
+              <code>1140px</code>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <app-docs-example>
+          <ng-container *ngTemplateOutlet="optionalSizes"></ng-container>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Modal Angular</strong> <small>Modal em tela cheia</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Outra opção é abrir um modal que cobre toda a área visível do usuário,
+          disponível por meio da propriedade <code>fullscreen</code>.
+        </p>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Propriedade fullscreen</th>
+            <th>Disponibilidade</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              <code>true</code>
+            </td>
+            <td>Sempre</td>
+          </tr>
+          <tr>
+            <td>
+              <code>&#39;sm&#39;</code>
+            </td>
+            <td>
+              Abaixo de <code>576px</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>&#39;md&#39;</code>
+            </td>
+            <td>
+              Abaixo de <code>768px</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>&#39;lg&#39;</code>
+            </td>
+            <td>
+              Abaixo de <code>992px</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>&#39;xl&#39;</code>
+            </td>
+            <td>
+              Abaixo de <code>1200px</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>&#39;xxl&#39;</code>
+            </td>
+            <td>
+              Abaixo de <code>1400px</code>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <app-docs-example>
+          <ng-container *ngTemplateOutlet="fullScreen"></ng-container>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+
+<ng-template #liveDemo>
+  <button (click)="toggleLiveDemo()" cButton>Abrir modal de demonstração</button>
+  <c-modal id="liveDemoModal" [visible]="liveDemoVisible" (visibleChange)="handleLiveDemoChange($event)">
+    <c-modal-header>
+      <h5 cModalTitle>Título do modal</h5>
+      <button (click)="toggleLiveDemo()" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>Uhuu, você está lendo este texto em um modal!</c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveDemo()" cButton color="secondary">
+        Fechar
+      </button>
+      <button cButton color="primary">Salvar alterações</button>
+    </c-modal-footer>
+  </c-modal>
+</ng-template>
+
+<ng-template #staticBackdrop>
+  <button [cModalToggle]="staticBackdropModal.id" cButton>Abrir modal com fundo estático</button>
+  <c-modal #staticBackdropModal backdrop="static" id="staticBackdropModal">
+    <c-modal-header>
+      <h5 cModalTitle>Título do modal</h5>
+      <button [cModalToggle]="staticBackdropModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>Não vou fechar se você clicar fora de mim. Nem adianta tentar pressionar a tecla Esc.</c-modal-body>
+    <c-modal-footer>
+      <button [cModalToggle]="staticBackdropModal.id" cButton color="secondary">
+        Fechar
+      </button>
+      <button cButton color="primary">Entendi</button>
+    </c-modal-footer>
+  </c-modal>
+</ng-template>
+
+<ng-template #scrollingLongContent>
+  <button [cModalToggle]="scrollingLongContentModal.id" cButton>Rolagem de conteúdo longo</button>
+  <c-modal #scrollingLongContentModal id="scrollingLongContentModal">
+    <c-modal-header>
+      <h5 cModalTitle>Título do modal</h5>
+      <button [cModalToggle]="scrollingLongContentModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <ng-container *ngTemplateOutlet="longContent"></ng-container>
+    </c-modal-body>
+    <c-modal-footer>
+      <button [cModalToggle]="scrollingLongContentModal.id" cButton color="secondary">
+        Fechar
+      </button>
+      <button cButton color="primary">Salvar alterações</button>
+    </c-modal-footer>
+  </c-modal>
+</ng-template>
+
+<ng-template #scrollableLongContent>
+  <button [cModalToggle]="scrollableLongContentModal.id" cButton>Conteúdo longo rolável</button>
+  <c-modal #scrollableLongContentModal id="scrollableLongContentModal" scrollable>
+    <c-modal-header>
+      <h5 cModalTitle>Título do modal</h5>
+      <button [cModalToggle]="scrollableLongContentModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <ng-container *ngTemplateOutlet="longContent"></ng-container>
+    </c-modal-body>
+    <c-modal-footer>
+      <button [cModalToggle]="scrollableLongContentModal.id" cButton color="secondary">
+        Fechar
+      </button>
+      <button cButton color="primary">Salvar alterações</button>
+    </c-modal-footer>
+  </c-modal>
+</ng-template>
+
+<ng-template #verticallyCentered>
+  <button [cModalToggle]="verticallyCenteredModal.id" cButton>Modal centralizado</button>
+  <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+    <c-modal-header>
+      <h5 cModalTitle>Título do modal</h5>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      Uhuu, você está lendo este texto em um modal!
+    </c-modal-body>
+    <c-modal-footer>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">
+        Fechar
+      </button>
+      <button cButton color="primary">Entendi</button>
+    </c-modal-footer>
+  </c-modal>
+</ng-template>
+
+<ng-template #verticallyCenteredScrollable>
+  <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButton>Modal centralizado rolável</button>
+  <c-modal #verticallyCenteredScrollableModal
+           [scrollable]="true"
+           alignment="center"
+           id="verticallyCenteredScrollableModal">
+    <c-modal-header>
+      <h5 cModalTitle>Título do modal</h5>
+      <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <p>
+        Este é um conteúdo de exemplo para mostrar um modal centralizado verticalmente. Adicionamos um texto extra aqui para mostrar
+        como a centralização vertical do modal funciona em conjunto com modais roláveis. Também usamos algumas quebras de linha
+        repetidas para aumentar rapidamente a altura do conteúdo, acionando assim a rolagem. Quando o conteúdo ficar
+        maior que o max-height predefinido do modal, ele será cortado e poderá ser rolado dentro do modal.
+      </p>
+      <br><br><br><br><br><br><br><br><br><br>
+      <p>Simples assim.</p>
+    </c-modal-body>
+    <c-modal-footer>
+      <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButton color="secondary">
+        Fechar
+      </button>
+      <button cButton color="primary">Entendi</button>
+    </c-modal-footer>
+  </c-modal>
+</ng-template>
+
+<ng-template #withPopover>
+  <button [cModalToggle]="withPopoverModal.id" cButton>Modal com popover</button>
+  <c-modal #withPopoverModal alignment="center" id="withPopoverModal">
+    <c-modal-header>
+      <h5 cModalTitle>Título do modal</h5>
+      <button [cModalToggle]="withPopoverModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <h5>Popover em um modal</h5>
+      Este
+      <button [cPopoverTrigger]="'click'" [cPopover]="popoverHtml" [cPopoverOptions]="{strategy: 'fixed'}" cButton>botão</button>
+      abre um popover ao ser clicado.
+      <ng-template #popoverHtml>
+        <h3 class="popover-header">
+          Título do popover
+        </h3>
+        <div class="popover-body" id="">
+          E aqui está um conteúdo incrível. É muito envolvente, não é?
+        </div>
+      </ng-template>
+      <hr/>
+      <h5>Dicas em um modal</h5>
+      <p>
+        <a cTooltip="Texto da dica" href>Este link</a> e <a [cTooltipOptions]="{strategy: 'fixed'}"
+                                                             cTooltip="Texto da dica"
+                                                             cTooltipPlacement="bottom"
+                                                             href>aquele link</a>
+        têm dicas ao passar o mouse.
+      </p>
+    </c-modal-body>
+    <c-modal-footer>
+      <button [cModalToggle]="withPopoverModal.id" cButton color="secondary">
+        Fechar
+      </button>
+      <button cButton color="primary">Entendi</button>
+    </c-modal-footer>
+  </c-modal>
+</ng-template>
+
+<ng-template #optionalSizes>
+  <button [cModalToggle]="modalXl.id" cButton>Modal extra grande</button>
+  <button [cModalToggle]="modalLg.id" cButton>Modal grande</button>
+  <button [cModalToggle]="modalSm.id" cButton>Modal pequeno</button>
+  <c-modal #modalXl id="modalXl" size="xl">
+    <c-modal-header>
+      <h5 cModalTitle>Modal extra grande</h5>
+    </c-modal-header>
+    <c-modal-body>...</c-modal-body>
+  </c-modal>
+  <c-modal #modalLg id="modalLg" size="lg">
+    <c-modal-header>
+      <h5 cModalTitle>Modal grande</h5>
+    </c-modal-header>
+    <c-modal-body>...</c-modal-body>
+  </c-modal>
+  <c-modal #modalSm id="modalSm" size="sm">
+    <c-modal-header>
+      <h5 cModalTitle>Modal pequeno</h5>
+    </c-modal-header>
+    <c-modal-body>...</c-modal-body>
+  </c-modal>
+</ng-template>
+
+<ng-template #fullScreen>
+  <button [cModalToggle]="fullScreen.id" cButton>Tela cheia</button>
+  <button [cModalToggle]="fullScreenSm.id" cButton>Tela cheia abaixo de sm</button>
+  <button [cModalToggle]="fullScreenMd.id" cButton>Tela cheia abaixo de md</button>
+  <button [cModalToggle]="fullScreenLg.id" cButton>Tela cheia abaixo de lg</button>
+  <button [cModalToggle]="fullScreenXl.id" cButton>Tela cheia abaixo de xl</button>
+  <button [cModalToggle]="fullScreen2Xl.id" cButton>Tela cheia abaixo de xxl</button>
+  <c-modal #fullScreen [fullscreen]="true" id="fullScreen">
+    <c-modal-header>
+      <h5 cModalTitle>Tela cheia</h5>
+      <button [cModalToggle]="fullScreen.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>...</c-modal-body>
+    <c-modal-footer>
+      <button cButton [cModalToggle]="fullScreen.id">Fechar</button>
+    </c-modal-footer>
+  </c-modal>
+  <c-modal #fullScreenSm fullscreen="sm" id="fullScreenSm">
+    <c-modal-header>
+      <h5 cModalTitle>Tela cheia abaixo de sm</h5>
+      <button [cModalToggle]="fullScreenSm.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>...</c-modal-body>
+  </c-modal>
+  <c-modal #fullScreenMd fullscreen="md" id="fullScreenMd">
+    <c-modal-header>
+      <h5 cModalTitle>Tela cheia abaixo de md</h5>
+      <button [cModalToggle]="fullScreenMd.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>...</c-modal-body>
+  </c-modal>
+  <c-modal #fullScreenLg fullscreen="lg" id="fullScreenLg">
+    <c-modal-header>
+      <h5 cModalTitle>Tela cheia abaixo de lg</h5>
+      <button [cModalToggle]="fullScreenLg.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>...</c-modal-body>
+  </c-modal>
+  <c-modal #fullScreenXl fullscreen="xl" id="fullScreenXl">
+    <c-modal-header>
+      <h5 cModalTitle>Tela cheia abaixo de xl</h5>
+      <button [cModalToggle]="fullScreenXl.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>...</c-modal-body>
+  </c-modal>
+  <c-modal #fullScreen2Xl fullscreen="xxl" id="fullScreen2Xl">
+    <c-modal-header>
+      <h5 cModalTitle>Tela cheia abaixo de xxl</h5>
+      <button [cModalToggle]="fullScreen2Xl.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>...</c-modal-body>
+  </c-modal>
+</ng-template>
+
+<ng-template #longContent>
+  <p>
+    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
+    in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+  </p>
+  <p>
+    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
+    lacus vel augue laoreet rutrum faucibus dolor auctor.
+  </p>
+  <p>
+    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
+    scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+    auctor fringilla.
+  </p>
+  <p>
+    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
+    in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+  </p>
+  <p>
+    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
+    lacus vel augue laoreet rutrum faucibus dolor auctor.
+  </p>
+  <p>
+    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
+    scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+    auctor fringilla.
+  </p>
+  <p>
+    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
+    in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+  </p>
+  <p>
+    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
+    lacus vel augue laoreet rutrum faucibus dolor auctor.
+  </p>
+  <p>
+    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
+    scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+    auctor fringilla.
+  </p>
+  <p>
+    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
+    in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+  </p>
+  <p>
+    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
+    lacus vel augue laoreet rutrum faucibus dolor auctor.
+  </p>
+  <p>
+    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
+    scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+    auctor fringilla.
+  </p>
+  <p>
+    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
+    in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+  </p>
+  <p>
+    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
+    lacus vel augue laoreet rutrum faucibus dolor auctor.
+  </p>
+  <p>
+    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
+    scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+    auctor fringilla.
+  </p>
+  <p>
+    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
+    in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+  </p>
+  <p>
+    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
+    lacus vel augue laoreet rutrum faucibus dolor auctor.
+  </p>
+  <p>
+    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
+    scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+    auctor fringilla.
+  </p>
+</ng-template>

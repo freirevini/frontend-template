@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# .githooks/pre-commit — instalado com: git config core.hooksPath .githooks   (uma vez por clone)
+# Checagens rápidas (segundos). ruff e pytest ficam em `bash scripts/verify.sh`, antes de declarar pronto.
+set -e
+PY=python3
+[ -x .venv/bin/python ] && PY=.venv/bin/python
+"$PY" scripts/docs_check.py
+bash .rules/check.sh

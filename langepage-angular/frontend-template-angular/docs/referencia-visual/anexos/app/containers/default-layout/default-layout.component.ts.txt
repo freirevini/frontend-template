@@ -1,0 +1,47 @@
+import { Component, ElementRef, NgZone, OnDestroy } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, Subject, takeUntil } from 'rxjs';
+
+import { SectionScrollService } from '../../core/navigation/section-scroll';
+import { navItems } from './_nav';
+
+@Component({
+  selector: 'app-dashboard',
+  templateUrl: './default-layout.component.html',
+})
+export class DefaultLayoutComponent implements OnDestroy {
+
+  public navItems = navItems;
+
+  public perfectScrollbarConfig = {
+    suppressScrollX: true,
+  };
+
+  private readonly destroy$ = new Subject<void>();
+
+  constructor(router: Router, sectionScroll: SectionScrollService, host: ElementRef<HTMLElement>, zone: NgZone) {
+    router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd), takeUntil(this.destroy$))
+      .subscribe((event) => {
+        // Sidebar sub-items point to page sections (#fragment): keep the section aligned while the page's cards load.
+        sectionScroll.follow(router.parseUrl(event.urlAfterRedirects).fragment);
+        // CoreUI 4 cannot match "/triagent#section" to the "/triagent" group, so a page opened by a section link
+        // starts with its group closed: open the group that holds the active link (same as the user clicking it).
+        zone.runOutsideAngular(() => setTimeout(() => zone.run(() => openActiveGroup(host.nativeElement))));
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+}
+
+/** Clicks the toggle of every closed sidebar group that contains the active link. */
+export function openActiveGroup(root: HTMLElement): void {
+  root.querySelectorAll<HTMLElement>('.nav-group:not(.show)').forEach((group) => {
+    if (group.querySelector('.nav-group-items a.active')) {
+      group.querySelector<HTMLElement>('.nav-group-toggle')?.click();
+    }
+  });
+}

@@ -1,0 +1,38 @@
+// "N a classificar" badge of the segment cards (app-widgets-dropdown), tokens only.
+// Global on purpose: the component stylesheet would exceed the anyComponentStyle budget (docs/portabilidade.md 4.11).
+// --stat-accent comes from the component host (blue or petrol tone).
+// Translucent pill over the gradient; a button toggles the page filter, a span is plain text.
+.brand-stat-pending {
+  padding: .125rem .5rem;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color .15s ease-in-out, color .15s ease-in-out;
+  font-size: .75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0;
+  white-space: nowrap;
+  background-color: rgba(var(--cui-white-rgb), .16);
+  border: 1px solid rgba(var(--cui-white-rgb), .28);
+  border-radius: var(--brand-radius-pill);
+}
+
+span.brand-stat-pending {
+  cursor: default;
+}
+
+button.brand-stat-pending:hover {
+  background-color: rgba(var(--cui-white-rgb), .26);
+}
+
+.brand-stat-pending:focus-visible {
+  outline: 2px solid rgb(var(--cui-white-rgb));
+  outline-offset: 2px;
+}
+
+// Active filter: inverted pill (white with primary text)
+.brand-stat-pending[aria-pressed="true"] {
+  color: var(--stat-accent);
+  background-color: rgb(var(--cui-white-rgb));
+  border-color: rgb(var(--cui-white-rgb));
+}

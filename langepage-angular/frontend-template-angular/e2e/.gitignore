@@ -1,0 +1,5 @@
+# Playwright output and the separate install of this folder.
+/node_modules
+/test-results
+/playwright-report
+/blob-report

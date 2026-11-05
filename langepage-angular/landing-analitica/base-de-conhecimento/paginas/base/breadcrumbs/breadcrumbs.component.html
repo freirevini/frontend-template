@@ -1,0 +1,95 @@
+<div class="fade-in">
+  <c-row ngPreserveWhitespaces>
+    <c-col xs="12">
+      <app-docs-callout name="Trilha de navegação"></app-docs-callout>
+    </c-col>
+    <c-col class="mb-4" xs="12">
+      <c-card>
+        <c-card-header>
+          <strong>Trilha de navegação Angular</strong>
+        </c-card-header>
+        <c-card-body>
+          <p class="text-medium-emphasis small">
+            A trilha de navegação fornece links de volta para cada página anterior pela qual o usuário
+            navegou e mostra a localização atual em um site ou aplicativo. Você não precisa
+            adicionar separadores, pois eles são adicionados automaticamente via CSS por meio de
+            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/::before">
+              <code>::before</code>
+            </a>
+            e
+            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/content">
+              <code>content</code>
+            </a>
+            .
+          </p>
+          <app-docs-example>
+            <c-breadcrumb class="mb-2" ariaLabel="Trilha de navegação">
+              <c-breadcrumb-item *ngFor="let item of items; index as i; last as isLast"
+                                 [active]="isLast"
+                                 [url]="item.url">
+                {{item.label}}
+              </c-breadcrumb-item>
+            </c-breadcrumb>
+            <hr>
+            <c-breadcrumb class="mb-2" ariaLabel="Trilha de navegação">
+              <c-breadcrumb-item *ngFor="let item of items.slice(0,1); index as i; last as isLast"
+                                 [active]="isLast"
+                                 [url]="item.url">
+                {{item.label}}
+              </c-breadcrumb-item>
+            </c-breadcrumb>
+            <c-breadcrumb class="mb-2" ariaLabel="Trilha de navegação">
+              <c-breadcrumb-item *ngFor="let item of items.slice(0,2); index as i; last as isLast"
+                                 [active]="isLast"
+                                 [url]="item.url">
+                {{item.label}}
+              </c-breadcrumb-item>
+            </c-breadcrumb>
+            <c-breadcrumb class="mb-2" ariaLabel="Trilha de navegação">
+              <c-breadcrumb-item *ngFor="let item of items.slice(0,3); index as i; last as isLast"
+                                 [active]="isLast"
+                                 [url]="item.url">
+                {{item.label}}
+              </c-breadcrumb-item>
+            </c-breadcrumb>
+            <c-breadcrumb class="mb-2" ariaLabel="Trilha de navegação">
+              <c-breadcrumb-item *ngFor="let item of items.slice(0,4); index as i; last as isLast"
+                                 [active]="isLast"
+                                 [url]="item.url">
+                <span [ngClass]="{'mark': isLast}">{{item.label}}</span>
+              </c-breadcrumb-item>
+            </c-breadcrumb>
+            <hr>
+            <c-breadcrumb class="mb-0">
+              <c-breadcrumb-item url="/">
+                Início
+              </c-breadcrumb-item>
+              <c-breadcrumb-item url="/">
+                Biblioteca
+              </c-breadcrumb-item>
+              <c-breadcrumb-item url="/">
+                Dados
+              </c-breadcrumb-item>
+              <c-breadcrumb-item [active]="true">
+                Bootstrap
+              </c-breadcrumb-item>
+            </c-breadcrumb>
+          </app-docs-example>
+        </c-card-body>
+      </c-card>
+    </c-col>
+    <c-col xs="12">
+      <c-card>
+        <c-card-header>
+          <strong>Trilha de navegação Angular</strong> <small>com roteador</small>
+        </c-card-header>
+        <c-card-body>
+          <app-docs-example>
+            <c-breadcrumb-router></c-breadcrumb-router>
+            <c-breadcrumb-router [items]="items"></c-breadcrumb-router>
+          </app-docs-example>
+        </c-card-body>
+      </c-card>
+    </c-col>
+  </c-row>
+</div>

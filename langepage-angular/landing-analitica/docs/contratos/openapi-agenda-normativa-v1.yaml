@@ -1,0 +1,1556 @@
+openapi: 3.0.3
+info:
+  title: Agenda Normativa — API do BFF
+  version: 1.0.0-rascunho
+  description: |
+    Rascunho contract-first (Fase 2 de `docs/planejamento/adequacao-padroes-corporativos.md`, ADR-023) para o time do
+    BFF `sboot-<sigla>-base-bff-agenda-normativa` (Java 21, chassi corporativo; sigla a definir). Gera o código do
+    servidor pelo `openapi-generator-maven-plugin`; o front confere as próprias interfaces contra este arquivo (D9).
+
+    Convenções
+    - Caminhos relativos a `/api/v1` (o front chama `apiBase` + `/v1/...`, com `apiBase` = `/api` na configuração de
+      execução). Recursos no plural, minúsculos, kebab-case.
+    - Campos em pt-BR camelCase; valores de domínio (enumerações) em MAIÚSCULAS_COM_SUBLINHADO.
+    - Datas `yyyy-MM-dd` no fuso de Brasília; data e hora em ISO 8601 com deslocamento.
+    - Listagens paginadas no envelope Spring `Page` (`content`, `totalElements`, `totalPages`, `number`, `size`);
+      `page` começa em 0, `size` de 1 a 100. Campos extras do Spring (`pageable`, `sort`, `first`, `last`...) podem vir
+      e são ignorados pelo front.
+    - Erros 4xx/5xx em Problem Details (RFC 7807, `application/problem+json`) com os campos do chassi: `timestamp`,
+      `status`, `code`, `message`, `details[]`, `traceId`. O front nunca mostra `message`; mostra um texto próprio em
+      pt-BR e o `traceId` como "código de suporte".
+    - Identidade: cookie de sessão `HttpOnly`, `Secure`, `SameSite` emitido pelo BFF após Authorization Code + PKCE no
+      IdP corporativo (feito pelo gateway/BFF). Sessão inválida ou expirada: 401 e cookies limpos; o front redireciona
+      para `loginUrl` (configuração de execução).
+    - CSRF (suposição): cookie `XSRF-TOKEN` legível pelo front e cabeçalho `X-XSRF-TOKEN` em POST/PUT/PATCH/DELETE
+      (padrão do `HttpClient` do Angular).
+    - Limites: corpo de requisição até 10 MB (Ingress/API Gateway); arquivos de um envio somam até 9 MB (D4).
+    - Respostas do agente levam `Cache-Control: no-store`.
+
+    Suposições deste rascunho (ADR-023): nome do BFF, cookie de sessão `SESSION`, CSRF acima, `usuarios/me` para o
+    primeiro nome, antivírus assíncrono (202 + consulta), envelope Spring, códigos de erro por família (`VAL-`, `AUT-`,
+    `NEG-`, `SIS-`) com os números propostos em `components.schemas.ProblemDetail`, dados do PDBD
+    (`dvry_corp_compliance`) pela API da Ilha de Dados (`sboot-pdbd-base-atom-ilha-dados`).
+servers:
+  - url: /api/v1
+    description: Mesmo domínio do front (Ingress roteia `/api/*` para o Service do BFF)
+tags:
+  - name: Segmentos
+  - name: Normativos recebidos
+  - name: Normas classificadas
+  - name: E-mails de sugestão
+  - name: Cascata do resultado
+  - name: Usuários
+  - name: Agente
+security:
+  - cookieSessao: []
+paths:
+  /segmentos:
+    get:
+      tags: [Segmentos]
+      operationId: listarSegmentos
+      summary: Cards de segmento (total, a classificar e tendência)
+      parameters:
+        - $ref: '#/components/parameters/DataReferencia'
+      responses:
+        '200':
+          description: Um item por segmento, na ordem ATACADO, CORPORATIVO, PLATAFORMA, VAREJO
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SegmentosResposta'
+        '400':
+          $ref: '#/components/responses/RequisicaoInvalida'
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '403':
+          $ref: '#/components/responses/SemPermissao'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+        '503':
+          $ref: '#/components/responses/Indisponivel'
+  /normativos-recebidos:
+    get:
+      tags: [Normativos recebidos]
+      operationId: obterNormativosRecebidos
+      summary: Série do gráfico Normativos Recebidos (classificadas e a classificar por segmento)
+      parameters:
+        - $ref: '#/components/parameters/Granularidade'
+        - $ref: '#/components/parameters/Inicio'
+        - $ref: '#/components/parameters/Fim'
+      responses:
+        '200':
+          description: Pontos em ordem cronológica; cada segmento traz uma posição por ponto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormativosRecebidos'
+        '400':
+          $ref: '#/components/responses/RequisicaoInvalida'
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '403':
+          $ref: '#/components/responses/SemPermissao'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+        '503':
+          $ref: '#/components/responses/Indisponivel'
+  /normas-classificadas:
+    get:
+      tags: [Normas classificadas]
+      operationId: listarNormasClassificadas
+      summary: Tabela Analítica (paginada, ordenada e filtrada no servidor)
+      parameters:
+        - $ref: '#/components/parameters/Inicio'
+        - $ref: '#/components/parameters/Fim'
+        - $ref: '#/components/parameters/Segmento'
+        - $ref: '#/components/parameters/Aplicavel'
+        - $ref: '#/components/parameters/Tema'
+        - $ref: '#/components/parameters/Pagina'
+        - $ref: '#/components/parameters/TamanhoPagina'
+        - $ref: '#/components/parameters/OrdenacaoNormas'
+      responses:
+        '200':
+          description: Página de normas classificadas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginaNormasClassificadas'
+        '400':
+          $ref: '#/components/responses/RequisicaoInvalida'
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '403':
+          $ref: '#/components/responses/SemPermissao'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+        '503':
+          $ref: '#/components/responses/Indisponivel'
+  /normas-classificadas/resumo:
+    get:
+      tags: [Normas classificadas]
+      operationId: resumirNormasClassificadas
+      summary: Pizza (aplicáveis × não aplicáveis) e lista de temas, já agregadas
+      parameters:
+        - $ref: '#/components/parameters/Inicio'
+        - $ref: '#/components/parameters/Fim'
+        - $ref: '#/components/parameters/Segmento'
+        - $ref: '#/components/parameters/Tema'
+        - $ref: '#/components/parameters/TemasDe'
+      responses:
+        '200':
+          description: Totais do período e os 10 maiores temas da classe pedida, com o restante em `outrosTemas`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResumoNormasClassificadas'
+        '400':
+          $ref: '#/components/responses/RequisicaoInvalida'
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '403':
+          $ref: '#/components/responses/SemPermissao'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+        '503':
+          $ref: '#/components/responses/Indisponivel'
+  /emails-sugestao:
+    get:
+      tags: [E-mails de sugestão]
+      operationId: listarEmailsSugestao
+      summary: E-mails de sugestão de classificação (paginado; "Últimos e-mails" = size 5, sort dataEnvio,desc)
+      parameters:
+        - $ref: '#/components/parameters/Inicio'
+        - $ref: '#/components/parameters/Fim'
+        - $ref: '#/components/parameters/Segmento'
+        - $ref: '#/components/parameters/Pagina'
+        - $ref: '#/components/parameters/TamanhoPagina'
+        - $ref: '#/components/parameters/OrdenacaoEmails'
+      responses:
+        '200':
+          description: Página de e-mails, cada um com as normas sugeridas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginaEmailsSugestao'
+        '400':
+          $ref: '#/components/responses/RequisicaoInvalida'
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '403':
+          $ref: '#/components/responses/SemPermissao'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+        '503':
+          $ref: '#/components/responses/Indisponivel'
+  /emails-sugestao/resumo:
+    get:
+      tags: [E-mails de sugestão]
+      operationId: resumirEmailsSugestao
+      summary: Indicadores e barras do card de e-mails, agrupados por granularidade
+      parameters:
+        - $ref: '#/components/parameters/Granularidade'
+        - $ref: '#/components/parameters/Inicio'
+        - $ref: '#/components/parameters/Fim'
+        - $ref: '#/components/parameters/Segmento'
+      responses:
+        '200':
+          description: Indicadores do período e um item por intervalo (vazios incluídos)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResumoEmailsSugestao'
+        '400':
+          $ref: '#/components/responses/RequisicaoInvalida'
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '403':
+          $ref: '#/components/responses/SemPermissao'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+        '503':
+          $ref: '#/components/responses/Indisponivel'
+  /cascatas-resultado:
+    get:
+      tags: [Cascata do resultado]
+      operationId: obterCascataResultado
+      summary: Cascata do resultado do período pedido (página Scalation)
+      parameters:
+        - $ref: '#/components/parameters/Granularidade'
+        - $ref: '#/components/parameters/Inicio'
+        - $ref: '#/components/parameters/Fim'
+      responses:
+        '200':
+          description: Etapas na ordem de exibição
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CascataResultado'
+        '400':
+          $ref: '#/components/responses/RequisicaoInvalida'
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '403':
+          $ref: '#/components/responses/SemPermissao'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+        '503':
+          $ref: '#/components/responses/Indisponivel'
+  /usuarios/me:
+    get:
+      tags: [Usuários]
+      operationId: obterUsuarioAtual
+      summary: Primeiro nome do usuário autenticado (saudação do chat)
+      responses:
+        '200':
+          description: Só o primeiro nome; nunca login, e-mail, matrícula ou nome completo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioAtual'
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+  /agente/sessoes:
+    post:
+      tags: [Agente]
+      operationId: criarSessaoAgente
+      summary: Abre uma conversa com o agente (passo inicial e boas-vindas, sem saudação)
+      security:
+        - cookieSessao: []
+          xsrf: []
+      responses:
+        '201':
+          description: Sessão criada
+          headers:
+            Location:
+              description: '`/api/v1/agente/sessoes/{sessaoId}`'
+              schema:
+                type: string
+            Cache-Control:
+              $ref: '#/components/headers/SemCache'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessaoAgente'
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '403':
+          $ref: '#/components/responses/SemPermissao'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+        '503':
+          $ref: '#/components/responses/Indisponivel'
+  /agente/sessoes/{sessaoId}:
+    parameters:
+      - $ref: '#/components/parameters/SessaoId'
+    delete:
+      tags: [Agente]
+      operationId: encerrarSessaoAgente
+      summary: Encerra a conversa e apaga sessão, histórico e arquivos (idempotente)
+      security:
+        - cookieSessao: []
+          xsrf: []
+      responses:
+        '204':
+          description: Apagada (também quando já não existia)
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '403':
+          $ref: '#/components/responses/SemPermissao'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+  /agente/sessoes/{sessaoId}/mensagens:
+    parameters:
+      - $ref: '#/components/parameters/SessaoId'
+    post:
+      tags: [Agente]
+      operationId: enviarMensagemAgente
+      summary: Opção, texto, voltar, recomeçar ou pergunta vinda de outra tela
+      description: |
+        Repetir o mesmo `requisicaoId` devolve a resposta guardada sem agir de novo ("Tentar novamente").
+      security:
+        - cookieSessao: []
+          xsrf: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoMensagem'
+      responses:
+        '200':
+          description: Passo atual e mensagens a exibir
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/SemCache'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RespostaAgente'
+        '400':
+          $ref: '#/components/responses/RequisicaoInvalida'
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '403':
+          $ref: '#/components/responses/SemPermissao'
+        '404':
+          $ref: '#/components/responses/SessaoNaoEncontrada'
+        '422':
+          $ref: '#/components/responses/AcaoNaoPermitida'
+        '429':
+          $ref: '#/components/responses/MuitasRequisicoes'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+        '503':
+          $ref: '#/components/responses/Indisponivel'
+        '504':
+          $ref: '#/components/responses/TempoEsgotado'
+  /agente/sessoes/{sessaoId}/arquivos:
+    parameters:
+      - $ref: '#/components/parameters/SessaoId'
+    post:
+      tags: [Agente]
+      operationId: enviarArquivosAgente
+      summary: Envia de 1 a 5 documentos para a quarentena (antivírus) e a avaliação
+      description: |
+        Validação técnica síncrona (extensão, tipo real, tamanho, soma do envio até 9 MB, cota de 20 MB da sessão,
+        passo atual `ENVIO_ARQUIVO`). Passando, os arquivos vão para o bucket de quarentena e a resposta é 202 com
+        `status: EM_VERIFICACAO` por arquivo. O front consulta cada arquivo em
+        `GET /agente/sessoes/{sessaoId}/arquivos/{arquivoId}` até sair de `EM_VERIFICACAO`; quando todos os arquivos
+        do envio terminam, a consulta traz `resposta` (passo e mensagens do agente). Um problema técnico em qualquer
+        arquivo recusa o envio inteiro e nada é guardado.
+      security:
+        - cookieSessao: []
+          xsrf: []
+      requestBody:
+        required: true
+        description: Até 10 MB no total; os arquivos somam até 9 MB
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PedidoEnvioArquivos'
+            encoding:
+              arquivos:
+                contentType: application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, image/png, image/jpeg, image/webp, application/octet-stream
+      responses:
+        '202':
+          description: Recebidos e em verificação
+          headers:
+            Retry-After:
+              description: Segundos sugeridos até a primeira consulta
+              schema:
+                type: integer
+                example: 2
+            Cache-Control:
+              $ref: '#/components/headers/SemCache'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvioArquivosAceito'
+        '400':
+          $ref: '#/components/responses/RequisicaoInvalida'
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '403':
+          $ref: '#/components/responses/SemPermissao'
+        '404':
+          $ref: '#/components/responses/SessaoNaoEncontrada'
+        '413':
+          $ref: '#/components/responses/CargaGrandeDemais'
+        '415':
+          $ref: '#/components/responses/TipoNaoPermitido'
+        '422':
+          $ref: '#/components/responses/AcaoNaoPermitida'
+        '429':
+          $ref: '#/components/responses/MuitasRequisicoes'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+        '503':
+          $ref: '#/components/responses/Indisponivel'
+  /agente/sessoes/{sessaoId}/arquivos/{arquivoId}:
+    parameters:
+      - $ref: '#/components/parameters/SessaoId'
+      - $ref: '#/components/parameters/ArquivoId'
+    get:
+      tags: [Agente]
+      operationId: consultarArquivoAgente
+      summary: Situação de um documento enviado (quarentena, avaliação e, ao fim do envio, a resposta do agente)
+      responses:
+        '200':
+          description: Situação atual do arquivo
+          headers:
+            Retry-After:
+              description: Presente enquanto `status` é `EM_VERIFICACAO`
+              schema:
+                type: integer
+                example: 2
+            Cache-Control:
+              $ref: '#/components/headers/SemCache'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArquivoAgente'
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '403':
+          $ref: '#/components/responses/SemPermissao'
+        '404':
+          $ref: '#/components/responses/SessaoNaoEncontrada'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+  /agente/sessoes/{sessaoId}/avaliacoes:
+    parameters:
+      - $ref: '#/components/parameters/SessaoId'
+    post:
+      tags: [Agente]
+      operationId: avaliarRespostaAgente
+      summary: '"Útil / Não útil" de uma resposta (sem texto da conversa)'
+      security:
+        - cookieSessao: []
+          xsrf: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoAvaliacao'
+      responses:
+        '204':
+          description: Registrada
+        '400':
+          $ref: '#/components/responses/RequisicaoInvalida'
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '403':
+          $ref: '#/components/responses/SemPermissao'
+        '404':
+          $ref: '#/components/responses/SessaoNaoEncontrada'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+  /agente/sessoes/{sessaoId}/cancelamentos:
+    parameters:
+      - $ref: '#/components/parameters/SessaoId'
+    post:
+      tags: [Agente]
+      operationId: cancelarPedidoAgente
+      summary: '"Parar": descarta o pedido em andamento ou desfaz o último pedido'
+      security:
+        - cookieSessao: []
+          xsrf: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoCancelamento'
+      responses:
+        '200':
+          description: Passo em que a sessão ficou
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/SemCache'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RespostaCancelamento'
+        '400':
+          $ref: '#/components/responses/RequisicaoInvalida'
+        '401':
+          $ref: '#/components/responses/NaoAutenticado'
+        '403':
+          $ref: '#/components/responses/SemPermissao'
+        '404':
+          $ref: '#/components/responses/SessaoNaoEncontrada'
+        '500':
+          $ref: '#/components/responses/ErroInterno'
+components:
+  securitySchemes:
+    cookieSessao:
+      type: apiKey
+      in: cookie
+      name: SESSION
+      description: |
+        Cookie de sessão `HttpOnly`, `Secure`, `SameSite=Lax` emitido pelo BFF (nome real definido pelo chassi;
+        `SESSION` é suposição). O BFF guarda os tokens do IdP e chama o orquestrador e os átomos com
+        `Authorization: Bearer <jwt>`. O navegador nunca vê token.
+    xsrf:
+      type: apiKey
+      in: header
+      name: X-XSRF-TOKEN
+      description: |
+        Exigido em POST/PUT/PATCH/DELETE. Valor copiado pelo `HttpClient` do Angular do cookie `XSRF-TOKEN` (não
+        `HttpOnly`) emitido pelo BFF. Ausente ou diferente: 403 `AUT-003`.
+  headers:
+    SemCache:
+      description: Respostas do agente não são guardadas por proxy nem pelo navegador
+      schema:
+        type: string
+        example: no-store
+  parameters:
+    DataReferencia:
+      name: dataReferencia
+      in: query
+      required: false
+      description: Data da fotografia (padrão, a última disponível)
+      schema:
+        type: string
+        format: date
+        example: '2021-12-31'
+    Granularidade:
+      name: granularidade
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/Granularidade'
+    Inicio:
+      name: inicio
+      in: query
+      required: true
+      description: 'Primeiro dia do período (inclusive). Máximo de pontos por granularidade — DIA 92, MES 60, ANO 30'
+      schema:
+        type: string
+        format: date
+        example: '2021-01-01'
+    Fim:
+      name: fim
+      in: query
+      required: true
+      description: Último dia do período (inclusive); não pode ser anterior a `inicio`
+      schema:
+        type: string
+        format: date
+        example: '2021-12-31'
+    Segmento:
+      name: segmento
+      in: query
+      required: false
+      description: Só os dados deste segmento; ausente, todos
+      schema:
+        $ref: '#/components/schemas/SegmentoId'
+    Aplicavel:
+      name: aplicavel
+      in: query
+      required: false
+      description: Só as aplicáveis (`true`) ou só as não aplicáveis (`false`); ausente, as duas classes
+      schema:
+        type: boolean
+    Tema:
+      name: tema
+      in: query
+      required: false
+      description: Só as normas com este tema, comparado exatamente como gravado
+      schema:
+        type: string
+        maxLength: 300
+    TemasDe:
+      name: temasDe
+      in: query
+      required: false
+      description: Classe cujos temas são ranqueados
+      schema:
+        type: string
+        enum: [APLICAVEIS, NAO_APLICAVEIS]
+        default: APLICAVEIS
+    Pagina:
+      name: page
+      in: query
+      required: false
+      description: Índice da página, a partir de 0
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+    TamanhoPagina:
+      name: size
+      in: query
+      required: false
+      description: Itens por página (Tabela Analítica usa 15; "Últimos e-mails", 5; exportação Excel, 100)
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 20
+    OrdenacaoNormas:
+      name: sort
+      in: query
+      required: false
+      description: |
+        `campo,asc|desc`, repetível. Padrão `dataClassificacao,desc`; desempate sempre por `codigo,asc`. `numero`
+        ordena pelo valor numérico (`4.855` antes de `10.001`). Campo fora da lista: 400 `VAL-005`.
+      style: form
+      explode: true
+      schema:
+        type: array
+        maxItems: 3
+        items:
+          type: string
+          pattern: '^(dataClassificacao|orgao|tipo|numero|tema|segmento|aplicavel|area|diretoria|codigo)(,(asc|desc))?$'
+        example: ['dataClassificacao,desc']
+    OrdenacaoEmails:
+      name: sort
+      in: query
+      required: false
+      description: '`campo,asc|desc`. Padrão `dataEnvio,desc`; desempate por `id,asc`.'
+      style: form
+      explode: true
+      schema:
+        type: array
+        maxItems: 2
+        items:
+          type: string
+          pattern: '^(dataEnvio|segmento|id)(,(asc|desc))?$'
+        example: ['dataEnvio,desc']
+    SessaoId:
+      name: sessaoId
+      in: path
+      required: true
+      description: UUID v4 gerado pelo orquestrador; a sessão pertence ao usuário que a criou (outro usuário recebe 404)
+      schema:
+        type: string
+        format: uuid
+    ArquivoId:
+      name: arquivoId
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: '^[A-Za-z0-9_-]{1,64}$'
+  responses:
+    RequisicaoInvalida:
+      description: Dados de entrada inválidos (`VAL-001`) ou paginação/ordenação inválida (`VAL-005`)
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+          example:
+            timestamp: '2026-11-04T10:15:30-03:00'
+            status: 400
+            code: VAL-001
+            message: Parâmetro inválido.
+            details:
+              - campo: fim
+                code: VAL-001
+                message: deve ser igual ou posterior a inicio
+            traceId: 4bf92f3577b34da6a3ce929d0e0e4736
+    NaoAutenticado:
+      description: Sessão ausente, inválida ou expirada (`AUT-001`); o BFF limpa os cookies e o front redireciona para `loginUrl`
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+          example:
+            timestamp: '2026-11-04T10:15:30-03:00'
+            status: 401
+            code: AUT-001
+            message: Não autenticado.
+            details: []
+            traceId: 4bf92f3577b34da6a3ce929d0e0e4736
+    SemPermissao:
+      description: Autenticado sem o papel exigido (`AUT-002`) ou token CSRF ausente/inválido (`AUT-003`)
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    SessaoNaoEncontrada:
+      description: Sessão do agente (ou arquivo) inexistente, expirada ou de outro usuário (`NEG-002`)
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    AcaoNaoPermitida:
+      description: Ação que não vale no passo atual (`NEG-001`) ou cota de 20 MB da sessão atingida (`NEG-003`)
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    CargaGrandeDemais:
+      description: Arquivo acima do limite (`VAL-003`) ou envio acima de 9 MB somados (`VAL-004`); acima de 10 MB o próprio gateway recusa (pode vir sem corpo)
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    TipoNaoPermitido:
+      description: Extensão ou tipo real fora de PDF, DOC, DOCX, PNG, JPEG, WEBP (`VAL-002`)
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    MuitasRequisicoes:
+      description: Recusado por excesso pelo gateway (pode vir sem corpo)
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    ErroInterno:
+      description: Falha inesperada (`SIS-003`); nunca traz stack trace
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    Indisponivel:
+      description: Orquestrador, modelo ou fonte de dados indisponível (`SIS-001`)
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    TempoEsgotado:
+      description: Resposta do modelo passou do tempo limite (`SIS-002`)
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+  schemas:
+    ProblemDetail:
+      type: object
+      description: |
+        RFC 7807 com os campos do chassi. Códigos propostos (suposição até o catálogo do chassi, pergunta Q10):
+        VAL-001 entrada inválida; VAL-002 tipo de arquivo não permitido; VAL-003 arquivo acima do limite;
+        VAL-004 envio acima de 9 MB; VAL-005 paginação ou ordenação inválida; AUT-001 não autenticado;
+        AUT-002 sem permissão; AUT-003 CSRF inválido; NEG-001 ação fora do passo atual; NEG-002 sessão ou arquivo não
+        encontrado; NEG-003 cota de 20 MB da sessão; SIS-001 serviço indisponível; SIS-002 tempo esgotado;
+        SIS-003 erro interno. O front decide pelo `status` HTTP e pela família do `code`; código desconhecido cai no
+        texto do `status`.
+      required: [timestamp, status, code, message, traceId]
+      properties:
+        type:
+          type: string
+          description: URI do tipo do problema (RFC 7807); `about:blank` quando não houver
+          example: about:blank
+        title:
+          type: string
+          description: Resumo do tipo (RFC 7807); não exibido
+        instance:
+          type: string
+          description: Caminho da requisição (RFC 7807)
+          example: /api/v1/normas-classificadas
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          format: int32
+          minimum: 400
+          maximum: 599
+        code:
+          type: string
+          pattern: '^(VAL|AUT|NEG|SIS)-[0-9]{3}$'
+          example: VAL-001
+        message:
+          type: string
+          description: Texto técnico do servidor; o front não exibe
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProblemDetailItem'
+        traceId:
+          type: string
+          description: Identificador de rastreio (W3C trace id); o front mostra como "código de suporte"
+          example: 4bf92f3577b34da6a3ce929d0e0e4736
+    ProblemDetailItem:
+      type: object
+      required: [message]
+      properties:
+        campo:
+          type: string
+          description: Parâmetro ou campo do corpo que falhou
+        code:
+          type: string
+        message:
+          type: string
+    SegmentoId:
+      type: string
+      enum: [ATACADO, CORPORATIVO, PLATAFORMA, VAREJO]
+      description: Ordem fixa (alfabética); o front converte para `atacado`, `corporativo`, `plataforma`, `varejo`
+    Granularidade:
+      type: string
+      enum: [DIA, MES, ANO]
+      description: Front `Day`, `Month`, `Year`
+    SegmentosResposta:
+      type: object
+      required: [dataReferencia, segmentos]
+      properties:
+        dataReferencia:
+          type: string
+          format: date
+          example: '2021-12-31'
+        segmentos:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Segmento'
+    Segmento:
+      type: object
+      required: [id, nome, total, aClassificar, tendencia]
+      properties:
+        id:
+          $ref: '#/components/schemas/SegmentoId'
+        nome:
+          type: string
+          example: Atacado
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+          example: 54
+        aClassificar:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Normas do segmento ainda a classificar na `dataReferencia` (≤ `total`)
+          example: 7
+        tendencia:
+          type: array
+          description: Valores do mini-gráfico, mais antigo primeiro (quantidade e granularidade a confirmar; o mock usa 7 pontos)
+          items:
+            type: integer
+            format: int64
+            minimum: 0
+          example: [65, 59, 84, 84, 51, 55, 40]
+    NormativosRecebidos:
+      type: object
+      required: [granularidade, inicio, fim, pontos, segmentos]
+      properties:
+        granularidade:
+          $ref: '#/components/schemas/Granularidade'
+        inicio:
+          type: string
+          format: date
+        fim:
+          type: string
+          format: date
+        pontos:
+          type: array
+          description: Um por ponto do eixo x, em ordem (`yyyy-MM-dd`, `yyyy-MM` ou `yyyy` conforme a granularidade)
+          items:
+            type: string
+          example: ['2021-10', '2021-11', '2021-12']
+        segmentos:
+          type: array
+          items:
+            $ref: '#/components/schemas/SerieSegmento'
+    SerieSegmento:
+      type: object
+      required: [segmento, nome, classificadas, aClassificar]
+      properties:
+        segmento:
+          $ref: '#/components/schemas/SegmentoId'
+        nome:
+          type: string
+          example: Varejo
+        classificadas:
+          type: array
+          description: Mesmo comprimento de `pontos`
+          items:
+            type: integer
+            format: int64
+            minimum: 0
+        aClassificar:
+          type: array
+          description: Mesmo comprimento de `pontos`
+          items:
+            type: integer
+            format: int64
+            minimum: 0
+    NormaClassificada:
+      type: object
+      required: [codigo, orgao, tipo, numero, dataClassificacao, segmento, tema, aplicavel, area, diretoria]
+      properties:
+        codigo:
+          type: string
+          description: Identificador completo e único da norma
+          example: Resolução CMN 4.855
+        orgao:
+          type: string
+          example: CMN
+        tipo:
+          type: string
+          example: Resolução
+        numero:
+          type: string
+          description: Como publicado (milhar com ponto)
+          example: '4.855'
+        dataClassificacao:
+          type: string
+          format: date
+          example: '2021-03-02'
+        segmento:
+          $ref: '#/components/schemas/SegmentoId'
+        tema:
+          type: string
+          example: 'Pix: regras de devolução e limites'
+        aplicavel:
+          type: boolean
+          description: Aplicável ou não à instituição
+        area:
+          type: string
+          example: Meios de Pagamento
+        diretoria:
+          type: string
+          example: Operações
+    PaginaNormasClassificadas:
+      type: object
+      required: [content, totalElements, totalPages, number, size]
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/NormaClassificada'
+        totalElements:
+          type: integer
+          format: int64
+          minimum: 0
+        totalPages:
+          type: integer
+          format: int32
+          minimum: 0
+        number:
+          type: integer
+          format: int32
+          minimum: 0
+          description: Índice da página devolvida (0 = primeira)
+        size:
+          type: integer
+          format: int32
+          minimum: 1
+    ResumoNormasClassificadas:
+      type: object
+      required: [dataReferencia, total, aplicaveis, naoAplicaveis, totalTemas, temas]
+      properties:
+        dataReferencia:
+          type: string
+          format: date
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Normas classificadas no período (com `segmento` e `tema`, quando enviados)
+        aplicaveis:
+          type: integer
+          format: int64
+          minimum: 0
+        naoAplicaveis:
+          type: integer
+          format: int64
+          minimum: 0
+        totalTemas:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Normas da classe de `temasDe` (base dos percentuais dos temas)
+        temas:
+          type: array
+          description: |
+            Temas da classe de `temasDe`, maior primeiro, empate por nome (ordem pt-BR). Até 10; com exatamente 11 temas
+            vêm os 11 e `outrosTemas` é nulo (agrupar um só tema esconderia um nome à toa).
+          maxItems: 11
+          items:
+            $ref: '#/components/schemas/TemaQuantidade'
+        outrosTemas:
+          allOf:
+            - $ref: '#/components/schemas/OutrosTemas'
+          nullable: true
+    TemaQuantidade:
+      type: object
+      required: [tema, quantidade]
+      properties:
+        tema:
+          type: string
+        quantidade:
+          type: integer
+          format: int64
+          minimum: 0
+    OutrosTemas:
+      type: object
+      required: [quantidade, temasAgrupados]
+      properties:
+        quantidade:
+          type: integer
+          format: int64
+          minimum: 0
+        temasAgrupados:
+          type: integer
+          format: int32
+          minimum: 2
+    ClasseSugerida:
+      type: string
+      enum: [APLICAVEL, APLICAVEL_PARCIALMENTE, NAO_APLICAVEL]
+      description: Front `Aplicável`, `Aplicável parcialmente`, `Não aplicável` (exibidos como Sim, Parcialmente, Não)
+    NormaSugerida:
+      type: object
+      required: [codigo, orgao, tipo, numero, tema, classeSugerida, area, diretoria]
+      properties:
+        codigo:
+          type: string
+          example: Resolução CMN 5.123
+        orgao:
+          type: string
+        tipo:
+          type: string
+        numero:
+          type: string
+        tema:
+          type: string
+        classeSugerida:
+          $ref: '#/components/schemas/ClasseSugerida'
+        area:
+          type: string
+        diretoria:
+          type: string
+    EmailSugestao:
+      type: object
+      required: [id, dataEnvio, assunto, segmento, destinatarios, normas]
+      properties:
+        id:
+          type: string
+          example: em-2021-12-28-001
+        dataEnvio:
+          type: string
+          format: date-time
+          example: '2021-12-28T09:14:00-03:00'
+        assunto:
+          type: string
+        segmento:
+          $ref: '#/components/schemas/SegmentoId'
+        destinatarios:
+          type: integer
+          format: int32
+          minimum: 0
+        normas:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/NormaSugerida'
+    PaginaEmailsSugestao:
+      type: object
+      required: [content, totalElements, totalPages, number, size]
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailSugestao'
+        totalElements:
+          type: integer
+          format: int64
+          minimum: 0
+        totalPages:
+          type: integer
+          format: int32
+          minimum: 0
+        number:
+          type: integer
+          format: int32
+          minimum: 0
+        size:
+          type: integer
+          format: int32
+          minimum: 1
+    QuantidadePorSegmento:
+      type: object
+      required: [segmento, quantidade]
+      properties:
+        segmento:
+          $ref: '#/components/schemas/SegmentoId'
+        quantidade:
+          type: integer
+          format: int64
+          minimum: 0
+    PeriodoEmails:
+      type: object
+      required: [inicio, fim, emails, normasPorSegmento, totalNormas]
+      properties:
+        inicio:
+          type: string
+          format: date
+          description: Primeiro dia do intervalo (o front monta o rótulo pt-BR)
+        fim:
+          type: string
+          format: date
+        emails:
+          type: integer
+          format: int64
+          minimum: 0
+        normasPorSegmento:
+          type: array
+          description: Quatro itens, na ordem de `SegmentoId`; com `segmento` no pedido, os outros vêm com 0
+          items:
+            $ref: '#/components/schemas/QuantidadePorSegmento'
+        totalNormas:
+          type: integer
+          format: int64
+          minimum: 0
+    ResumoEmailsSugestao:
+      type: object
+      required: [dataReferencia, granularidade, inicio, fim, totalEmails, totalNormas, normasDistintas, mediaNormasPorEmail, normasPorSegmento, periodos]
+      properties:
+        dataReferencia:
+          type: string
+          format: date
+        granularidade:
+          $ref: '#/components/schemas/Granularidade'
+        inicio:
+          type: string
+          format: date
+        fim:
+          type: string
+          format: date
+        totalEmails:
+          type: integer
+          format: int64
+          minimum: 0
+        totalNormas:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Normas por envio (a mesma norma em dois e-mails conta duas vezes)
+        normasDistintas:
+          type: integer
+          format: int64
+          minimum: 0
+          description: '`codigo` únicos no período'
+        mediaNormasPorEmail:
+          type: number
+          format: double
+          minimum: 0
+          description: '`totalNormas / totalEmails`; 0 sem e-mails'
+        normasPorSegmento:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuantidadePorSegmento'
+        periodos:
+          type: array
+          description: Um item por intervalo da granularidade entre `inicio` e `fim`, vazios incluídos, em ordem
+          items:
+            $ref: '#/components/schemas/PeriodoEmails'
+    CascataResultado:
+      type: object
+      required: [moeda, escalaUnidade, etapas]
+      properties:
+        periodo:
+          type: string
+          description: Subtítulo pt-BR do período; ausente, o front monta pelo filtro
+          example: Outubro a dezembro de 2021
+        moeda:
+          type: string
+          description: ISO 4217
+          example: BRL
+        escalaUnidade:
+          type: number
+          description: Multiplicador de `valor` para a moeda (1000000 = valores em milhões)
+          example: 1000000
+        etapas:
+          type: array
+          minItems: 1
+          description: Ordem de exibição; a primeira `TOTAL` é a base e a última `TOTAL` deve ser a base menos as reduções
+          items:
+            $ref: '#/components/schemas/EtapaCascata'
+    EtapaCascata:
+      type: object
+      required: [id, rotulo, tipo, partes]
+      properties:
+        id:
+          type: string
+          pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+          example: gross-revenue
+        rotulo:
+          type: string
+          example: Receita bruta
+        tipo:
+          type: string
+          enum: [TOTAL, REDUCAO]
+          description: Front `total`, `decrease`
+        partes:
+          type: array
+          minItems: 1
+          maxItems: 3
+          items:
+            $ref: '#/components/schemas/ParteCascata'
+    ParteCascata:
+      type: object
+      required: [rotulo, valor]
+      properties:
+        rotulo:
+          type: string
+          example: Impostos
+        valor:
+          type: number
+          minimum: 0
+          description: Sempre positivo, na unidade de `escalaUnidade`; o `tipo` da etapa dá o sentido
+          example: 15
+    UsuarioAtual:
+      type: object
+      properties:
+        primeiroNome:
+          type: string
+          maxLength: 60
+          description: Primeiro nome (diretório corporativo); ausente quando desconhecido
+          example: Vinicius
+    TipoPasso:
+      type: string
+      enum: [MENU, TEXTO_LIVRE, ENVIO_ARQUIVO, FIM]
+      description: Front `menu`, `free_text`, `upload`, `end`
+    PassoAgente:
+      type: object
+      required: [id, tipo, enunciado, podeVoltar]
+      properties:
+        id:
+          type: string
+          example: inicio
+        tipo:
+          $ref: '#/components/schemas/TipoPasso'
+        enunciado:
+          type: string
+          description: Texto do passo (pt-BR); já vem como primeira mensagem do agente ao entrar no passo
+        opcoes:
+          type: array
+          description: Só em `MENU`
+          items:
+            $ref: '#/components/schemas/OpcaoPasso'
+        entrada:
+          $ref: '#/components/schemas/EntradaPasso'
+        envio:
+          $ref: '#/components/schemas/EnvioPasso'
+        podeVoltar:
+          type: boolean
+    OpcaoPasso:
+      type: object
+      required: [id, rotulo]
+      properties:
+        id:
+          type: string
+        rotulo:
+          type: string
+    EntradaPasso:
+      type: object
+      required: [habilitada]
+      properties:
+        habilitada:
+          type: boolean
+        dica:
+          type: string
+          description: Placeholder do campo
+        maxCaracteres:
+          type: integer
+          format: int32
+          maximum: 1000
+    EnvioPasso:
+      type: object
+      description: Só em `ENVIO_ARQUIVO`
+      required: [extensoes, maxBytesPorArquivo, maxBytesPorEnvio, maxArquivos]
+      properties:
+        extensoes:
+          type: array
+          items:
+            type: string
+          example: ['.pdf', '.doc', '.docx', '.png', '.jpg', '.jpeg', '.webp']
+        maxBytesPorArquivo:
+          type: integer
+          format: int64
+          example: 9437184
+        maxBytesPorEnvio:
+          type: integer
+          format: int64
+          maximum: 9437184
+          example: 9437184
+        maxArquivos:
+          type: integer
+          format: int32
+          maximum: 5
+          example: 5
+    Situacao:
+      type: string
+      enum: [RESPOSTA, PRECISA_MAIS_INFORMACAO, FORA_DOS_DADOS, FORA_DO_ESCOPO]
+      description: Front `answer`, `need_more_info`, `not_in_data`, `out_of_scope` (`error` só existe no front)
+    MensagemAgente:
+      type: object
+      required: [papel]
+      properties:
+        papel:
+          type: string
+          enum: [AGENTE, USUARIO, SISTEMA]
+          description: Front `ai`, `user`, `system`
+        texto:
+          type: string
+          description: Markdown simples (parágrafos, negrito, itálico, listas, links https); nunca HTML
+        situacao:
+          $ref: '#/components/schemas/Situacao'
+        citacoes:
+          type: array
+          description: Obrigatório com `situacao` `RESPOSTA`
+          items:
+            $ref: '#/components/schemas/Citacao'
+        perguntas:
+          type: array
+          items:
+            type: string
+        contatos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contato'
+        respostasRapidas:
+          type: array
+          maxItems: 4
+          items:
+            type: string
+        listaNormas:
+          $ref: '#/components/schemas/ListaNormas'
+        transitoria:
+          type: boolean
+          description: Nota de progresso; some na próxima ação do usuário
+    Citacao:
+      type: object
+      required: [fonteId, trecho]
+      properties:
+        fonteId:
+          type: string
+        trecho:
+          type: string
+    Contato:
+      type: object
+      required: [nome, area, canal]
+      properties:
+        nome:
+          type: string
+        area:
+          type: string
+        canal:
+          type: string
+          description: E-mail ou outro canal da equipe
+    ListaNormas:
+      type: object
+      required: [itens]
+      properties:
+        rotuloData:
+          type: string
+          example: Vigência
+        itens:
+          type: array
+          maxItems: 20
+          items:
+            $ref: '#/components/schemas/ItemListaNormas'
+    ItemListaNormas:
+      type: object
+      required: [id, titulo]
+      properties:
+        id:
+          type: string
+        titulo:
+          type: string
+        detalhe:
+          type: string
+        segmento:
+          type: string
+          description: Nome do segmento como mostrado na tela (ex. `Varejo`)
+        data:
+          type: string
+          format: date
+    SessaoAgente:
+      type: object
+      required: [sessaoId, passo, mensagens]
+      properties:
+        sessaoId:
+          type: string
+          format: uuid
+        passo:
+          $ref: '#/components/schemas/PassoAgente'
+        mensagens:
+          type: array
+          description: Boas-vindas sem saudação (o front põe "Bom dia/Boa tarde/Boa noite[, nome]!")
+          items:
+            $ref: '#/components/schemas/MensagemAgente'
+    PedidoMensagem:
+      type: object
+      required: [passoId, acao, requisicaoId]
+      properties:
+        passoId:
+          type: string
+          description: Passo que a tela mostra; diferente do atual = 422 `NEG-001`
+        acao:
+          type: string
+          enum: [OPCAO, TEXTO, VOLTAR, RECOMECAR, PERGUNTAR]
+          description: Front `option`, `text`, `back`, `restart`, `ask`
+        opcaoId:
+          type: string
+          description: Obrigatório com `OPCAO`
+        texto:
+          type: string
+          minLength: 1
+          maxLength: 1000
+          description: Obrigatório com `TEXTO` e `PERGUNTAR`
+        requisicaoId:
+          type: string
+          maxLength: 64
+    RespostaAgente:
+      type: object
+      required: [passo, mensagens]
+      properties:
+        passo:
+          $ref: '#/components/schemas/PassoAgente'
+        mensagens:
+          type: array
+          items:
+            $ref: '#/components/schemas/MensagemAgente'
+    PedidoEnvioArquivos:
+      type: object
+      required: [passoId, requisicaoId, arquivos]
+      properties:
+        passoId:
+          type: string
+        requisicaoId:
+          type: string
+          maxLength: 64
+        arquivos:
+          type: array
+          minItems: 1
+          maxItems: 5
+          description: Campo repetido, na ordem escolhida; soma até 9 MB
+          items:
+            type: string
+            format: binary
+    StatusArquivo:
+      type: string
+      enum: [EM_VERIFICACAO, APROVADO, REJEITADO]
+      description: |
+        `EM_VERIFICACAO`: na quarentena (antivírus) ou em avaliação. `APROVADO`: passou no antivírus e nas verificações
+        técnicas; `avaliacao` diz se é norma do setor financeiro. `REJEITADO`: barrado antes da avaliação; ver `motivoRejeicao`.
+    ArquivoAgente:
+      type: object
+      required: [arquivoId, nome, tamanhoBytes, status]
+      properties:
+        arquivoId:
+          type: string
+          example: f1
+        nome:
+          type: string
+          description: Nome como enviado (só para exibir; nunca usado em caminho)
+        tamanhoBytes:
+          type: integer
+          format: int64
+          minimum: 1
+        status:
+          $ref: '#/components/schemas/StatusArquivo'
+        motivoRejeicao:
+          type: string
+          enum: [AMEACA_DETECTADA, VERIFICACAO_FALHOU, CONTEUDO_NAO_SUPORTADO]
+          description: |
+            Só com `REJEITADO`. `AMEACA_DETECTADA`: antivírus encontrou ameaça. `VERIFICACAO_FALHOU`: antivírus não
+            conseguiu verificar (ex. arquivo protegido por senha). `CONTEUDO_NAO_SUPORTADO`: PDF com JavaScript, DOCX com
+            macro, mais de 200 páginas ou arquivo corrompido.
+        avaliacao:
+          $ref: '#/components/schemas/AvaliacaoArquivo'
+        resposta:
+          allOf:
+            - $ref: '#/components/schemas/RespostaAgente'
+          description: Presente quando todos os arquivos do mesmo envio saíram de `EM_VERIFICACAO`
+    AvaliacaoArquivo:
+      type: object
+      required: [aceito]
+      properties:
+        aceito:
+          type: boolean
+        motivo:
+          type: string
+          description: Por que foi recusado (pt-BR, sem repetir texto do documento)
+        metadados:
+          $ref: '#/components/schemas/MetadadosArquivo'
+    MetadadosArquivo:
+      type: object
+      properties:
+        tipoDocumento:
+          type: string
+          example: norma_integral
+        emissor:
+          type: string
+          example: CMN
+        identificacaoNorma:
+          type: string
+          example: Resolução CMN 4.855
+    EnvioArquivosAceito:
+      type: object
+      required: [requisicaoId, arquivos]
+      properties:
+        requisicaoId:
+          type: string
+        arquivos:
+          type: array
+          description: Um por arquivo, na ordem enviada, todos com `status` `EM_VERIFICACAO`
+          items:
+            $ref: '#/components/schemas/ArquivoAgente'
+    PedidoAvaliacao:
+      type: object
+      required: [nota, fonteIds]
+      properties:
+        nota:
+          type: string
+          enum: [UTIL, NAO_UTIL]
+          description: Front `useful`, `not_useful`
+        fonteIds:
+          type: array
+          maxItems: 20
+          description: Fontes mostradas com a resposta (vazio em `FORA_DOS_DADOS`)
+          items:
+            type: string
+            maxLength: 64
+    PedidoCancelamento:
+      type: object
+      required: [requisicaoId]
+      properties:
+        requisicaoId:
+          type: string
+          maxLength: 64
+    RespostaCancelamento:
+      type: object
+      required: [passo]
+      properties:
+        passo:
+          $ref: '#/components/schemas/PassoAgente'

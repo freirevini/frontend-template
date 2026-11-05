@@ -1,0 +1,11 @@
+---
+description: Ponteiro para as regras do projeto landing-analitica (AGENTS.md e .rules/)
+globs:
+alwaysApply: true
+---
+
+Leia `AGENTS.md` na raiz e todos os arquivos de `.rules/` antes da primeira ação. São vinculantes.
+Texto completo das regras em `.rules/projeto.md`; abra antes de qualquer edição.
+
+Antes de declarar pronto: `npm run verify`. Após correção: entrada nova em `.rules/erros.md` e teste no mesmo commit.
+Não copie regras para este arquivo: edite `AGENTS.md` ou `.rules/`.

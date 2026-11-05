@@ -1,0 +1,135 @@
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+
+import {
+  DateRange,
+  DEFAULT_TRAFFIC_RANGE,
+  fromInputDate,
+  PERIOD_LABELS,
+  presetRange,
+  RangeOption,
+  toInputDate,
+  TRAFFIC_RANGES,
+  TrafficPeriod,
+  validateCustomRange
+} from '../period/period-range';
+
+/** Validated selection emitted by the filter: granularity, preset (last N) or null for custom, and its dates. */
+export interface PeriodSelection {
+  period: TrafficPeriod;
+  range: number | null;
+  bounds: DateRange;
+}
+
+let nextId = 0;
+
+/**
+ * Period filter shared by the dashboard charts: Dia/Mês/Ano, "Últimos N" chips and a custom
+ * De/Até range. Stateless toward the parent: the current selection comes in through the inputs
+ * and every change goes out validated through `selectionChange`. The inputs are also updated locally, so
+ * the control works whether or not the parent binds the selection back.
+ */
+@Component({
+  selector: 'app-period-filter',
+  templateUrl: './period-filter.component.html',
+  styleUrls: ['./period-filter.component.scss']
+})
+export class PeriodFilterComponent implements OnChanges {
+  @Input() period: TrafficPeriod = 'Month';
+  /** Preset range (last N) or null while a custom range is shown. */
+  @Input() range: number | null = DEFAULT_TRAFFIC_RANGE.Month;
+  @Input() bounds: DateRange = presetRange('Month', DEFAULT_TRAFFIC_RANGE.Month);
+  /** Accessible name of the whole filter (pt-BR). */
+  @Input() label = 'Período';
+  /** Prefix for element ids, so several filters can share a page. */
+  @Input() id = `period-filter-${++nextId}`;
+  /** Granularities offered, in this order (e.g. without Ano when a year view makes no sense). */
+  @Input() periods: TrafficPeriod[] = ['Day', 'Month', 'Year'];
+
+  @Output() readonly selectionChange = new EventEmitter<PeriodSelection>();
+
+  readonly periodLabels = PERIOD_LABELS;
+
+  customOpen = false;
+  customError: string | null = null;
+  /** Shown when a custom range could not carry over to the new granularity. */
+  customNotice: string | null = null;
+  readonly customForm = new FormGroup({
+    start: new FormControl('', { nonNullable: true }),
+    end: new FormControl('', { nonNullable: true })
+  });
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // A new selection from the parent replaces whatever the user was typing.
+    if (changes['period'] || changes['range'] || changes['bounds']) {
+      this.customError = null;
+      if (this.customOpen) {
+        this.prefillCustomForm();
+      }
+    }
+  }
+
+  get rangeOptions(): RangeOption[] {
+    return TRAFFIC_RANGES[this.period] ?? TRAFFIC_RANGES.Month;
+  }
+
+  get customFormId(): string {
+    return `${this.id}-custom-range`;
+  }
+
+  /** Dia/Mês/Ano: a custom range carries over when it still fits; otherwise the default preset applies with a notice. */
+  setPeriod(period: TrafficPeriod): void {
+    this.customError = null;
+    this.customNotice = null;
+    this.customOpen = false;
+    if (this.range === null && validateCustomRange(period, this.bounds) === null) {
+      this.emit({ period, range: null, bounds: this.bounds });
+      return;
+    }
+    const fallback = DEFAULT_TRAFFIC_RANGE[period];
+    if (this.range === null) {
+      const option = TRAFFIC_RANGES[period].find((candidate) => candidate.count === fallback);
+      this.customNotice = `O intervalo personalizado não cabe nesta visão; mostrando os últimos ${option?.label ?? 'períodos'}.`;
+    }
+    this.emit({ period, range: fallback, bounds: presetRange(period, fallback) });
+  }
+
+  setRange(count: number): void {
+    this.customOpen = false;
+    this.customError = null;
+    this.customNotice = null;
+    this.emit({ period: this.period, range: count, bounds: presetRange(this.period, count) });
+  }
+
+  /** Opens the custom range form prefilled with the dates on screen, or closes it. */
+  toggleCustomRange(): void {
+    this.customOpen = !this.customOpen;
+    this.customError = null;
+    if (this.customOpen) {
+      this.prefillCustomForm();
+    }
+  }
+
+  applyCustomRange(): void {
+    const { start, end } = this.customForm.getRawValue();
+    const candidate: Partial<DateRange> = { start: fromInputDate(start), end: fromInputDate(end) };
+    this.customError = validateCustomRange(this.period, candidate);
+    if (this.customError) {
+      return;
+    }
+    this.customOpen = false;
+    this.customNotice = null;
+    this.emit({ period: this.period, range: null, bounds: candidate as DateRange });
+  }
+
+  private prefillCustomForm(): void {
+    this.customForm.setValue({ start: toInputDate(this.bounds.start), end: toInputDate(this.bounds.end) });
+  }
+
+  private emit(selection: PeriodSelection): void {
+    this.period = selection.period;
+    this.range = selection.range;
+    this.bounds = selection.bounds;
+    this.selectionChange.emit(selection);
+  }
+}

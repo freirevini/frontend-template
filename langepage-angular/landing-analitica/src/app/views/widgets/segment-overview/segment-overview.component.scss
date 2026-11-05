@@ -1,0 +1,43 @@
+// Segment overview cards ("Início"). The header takes the segment's chart color (--segment-color, set inline from
+// --app-series-N) under a 25% black layer, so the white name and icon stay at 4.9:1 or more in both themes.
+:host {
+  display: block;
+}
+
+.segment-overview-card {
+  overflow: hidden;
+
+  // Header from <c-widget-stat-d>: no padding, so the sparkline runs edge to edge under the name.
+  ::ng-deep .card-header {
+    --cui-card-cap-padding-x: 0;
+    --cui-card-cap-padding-y: 0;
+    color: rgb(var(--cui-white-rgb));
+    background:
+      linear-gradient(rgba(var(--cui-black-rgb), .25), rgba(var(--cui-black-rgb), .25)),
+      var(--segment-color, var(--brand-primary));
+    border-bottom: 0;
+  }
+}
+
+.segment-overview-top {
+  width: 100%;
+}
+
+.segment-overview-head {
+  display: flex;
+  align-items: center;
+  gap: .625rem;
+  padding: 1.125rem 1.25rem .5rem;
+}
+
+// Size comes from size="xl" (1.5rem): CoreUI's .icon:not(...) rule outranks a width set here.
+.segment-overview-icon {
+  flex-shrink: 0;
+}
+
+.segment-overview-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+}

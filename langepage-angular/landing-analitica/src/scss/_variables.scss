@@ -1,0 +1,75 @@
+// CoreUI 5 variable overrides with the brand tokens (see _brand.scss).
+// Imported before @coreui/coreui/scss/coreui, so every CoreUI component and the --cui-* CSS
+// variables follow the brand. The full list of overridable variables lives in
+// node_modules/@coreui/coreui/scss/_variables.scss.
+
+// Theme colors
+$primary:   $brand-blue;
+$secondary: $brand-content-low;   // neutral slate for secondary actions
+$success:   $brand-green-dark;
+$info:      $brand-cyan-dark;
+$warning:   $brand-orange;
+$danger:    $brand-red;
+$light:     $brand-surface-page;  // page background (.bg-light wrapper)
+$dark:      $brand-content-high;
+
+// Text emphasis and body
+$high-emphasis:   $brand-content-high;
+$medium-emphasis: $brand-content-low;
+$disabled:        $brand-content-disabled;
+// CoreUI 5 names for the same three levels (.text-body-secondary, .text-body-tertiary, .text-body-emphasis)
+$body-secondary-color: $brand-content-low;
+$body-tertiary-color:  $brand-content-disabled;
+$body-emphasis-color:  $brand-content-high;
+$body-bg:         $brand-surface-card;
+$body-color:      $brand-content-high;
+$link-color:       $brand-blue;
+$link-hover-color: $brand-blue-high;
+$border-color:     $brand-border;
+
+// Typography
+$font-family-sans-serif: $brand-font-family;
+$font-weight-semibold:   600;
+$headings-font-weight:   600;
+
+// Shape and elevation
+$border-radius:    $brand-radius-sm;
+$border-radius-sm: $brand-radius-xs;
+$border-radius-lg: $brand-radius-md;
+$border-radius-xl: $brand-radius-lg;
+$box-shadow:       $brand-elevation-2;
+$box-shadow-sm:    $brand-elevation-1;
+$box-shadow-lg:    $brand-elevation-3;
+
+// Cards
+$card-border-radius: $brand-radius-md;
+$card-border-color:  $brand-border;
+$card-box-shadow:    $brand-elevation-card;
+$card-cap-bg:        transparent;
+
+// Buttons, forms, badges, progress
+$btn-font-weight:            500;
+$input-border-color:         $brand-input-border;
+$badge-border-radius:        $brand-radius-pill;
+$badge-font-weight:          600;
+$progress-border-radius:     $brand-radius-pill;
+$table-striped-bg:           rgba(32, 38, 44, .03);
+$breadcrumb-divider-color:   $brand-content-disabled;
+$breadcrumb-active-color:    $brand-content-low;
+
+// Layout: sidebar (navy), header and footer
+$sidebar-bg:                        $brand-navy;
+$sidebar-brand-bg:                  $brand-navy-deep;
+$sidebar-brand-color:               rgba(255, 255, 255, .87);
+$sidebar-nav-title-color:           rgba(255, 255, 255, .5);
+$sidebar-nav-link-color:            rgba(255, 255, 255, .72);
+$sidebar-nav-link-icon-color:       rgba(255, 255, 255, .6);
+$sidebar-nav-link-hover-bg:         rgba(255, 255, 255, .06);
+$sidebar-nav-link-active-bg:        rgba(255, 255, 255, .1);
+$sidebar-nav-group-bg:              rgba(0, 0, 0, .18);
+$sidebar-nav-group-indicator-color: rgba(255, 255, 255, .6);
+$header-bg:           $brand-surface-card;
+$header-border-color: $brand-border;
+$footer-bg:           $brand-navy;
+$footer-border-color: $brand-navy;
+$footer-color:        rgba(255, 255, 255, .72);

@@ -1,0 +1,15 @@
+# PLACEHOLDER: substituir pelo Service do Cookiecutter do Titan (ADR-001).
+apiVersion: v1
+kind: Service
+metadata:
+  name: agenda-normativa
+  labels:
+    app: agenda-normativa
+spec:
+  type: ClusterIP
+  selector:
+    app: agenda-normativa
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

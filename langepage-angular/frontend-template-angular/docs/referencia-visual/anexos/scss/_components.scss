@@ -1,0 +1,372 @@
+// Component chrome on the brand tokens: sidebar, header, footer, cards, buttons, segmented control.
+// Everything reads --brand-* / --cui-* variables, so the dark theme (_theme-dark.scss) applies by itself.
+
+// --- Sidebar ----------------------------------------------------------------
+.sidebar {
+  --cui-sidebar-nav-link-padding-y: .5625rem;
+  --cui-sidebar-nav-link-padding-x: .875rem;
+  --cui-sidebar-nav-title-padding-x: .875rem;
+  --cui-sidebar-nav-title-padding-y: .5rem;
+  --cui-sidebar-nav-title-margin-top: 1.25rem;
+  --cui-sidebar-nav-icon-width: 1.25rem;
+  --cui-sidebar-nav-icon-height: 1.125rem;
+  --cui-sidebar-nav-link-active-color: rgb(var(--cui-white-rgb));
+  --cui-sidebar-nav-link-hover-color: rgb(var(--cui-white-rgb));
+  --cui-sidebar-nav-link-hover-icon-color: rgb(var(--cui-white-rgb));
+  --cui-sidebar-nav-link-active-icon-color: var(--brand-highlight);
+  --cui-sidebar-nav-group-indicator-hover-color: rgb(var(--cui-white-rgb));
+  box-shadow: none;
+}
+
+.sidebar-brand {
+  justify-content: flex-start;
+  padding: 0 1.125rem;
+  border-bottom: 1px solid rgba(var(--cui-white-rgb), .08);
+}
+
+// Brand: official brand mark (white on the navy sidebar) + "Agenda" regular / "Normativa" bold, in Inter.
+.brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: .625rem;
+  min-width: 0;
+  color: rgb(var(--cui-white-rgb));
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: rgb(var(--cui-white-rgb));
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-highlight);
+    outline-offset: 4px;
+    border-radius: var(--brand-radius-xs);
+  }
+}
+
+.brand-mark {
+  flex-shrink: 0;
+  width: auto;
+  height: 1.75rem; // official mark cropped to its drawing (asymmetric B + V), so it matches the wordmark height
+}
+
+.brand-name {
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+.sidebar-nav {
+  padding: .5rem .5rem .75rem;
+  gap: .125rem;
+
+  .nav-title {
+    font-size: .6875rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    line-height: 1.2;
+    color: rgba(var(--cui-white-rgb), .48);
+  }
+
+  .nav-link {
+    position: relative;
+    font-size: .875rem;
+    font-weight: 500;
+    border-radius: var(--brand-radius-sm);
+    transition: background-color .15s ease-in-out, color .15s ease-in-out;
+
+    // Active fillet: 3px highlight bar on the left edge of the item
+    &::before {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 3px;
+      height: 1.25rem;
+      content: "";
+      background: var(--brand-highlight);
+      border-radius: 0 3px 3px 0;
+      opacity: 0;
+      transform: translateY(-50%) scaleY(.4);
+      transition: opacity .15s ease-in-out, transform .2s ease-out;
+    }
+
+    &.active {
+      background: rgba(var(--cui-white-rgb), .1);
+
+      &::before {
+        opacity: 1;
+        transform: translateY(-50%) scaleY(1);
+      }
+
+      .nav-icon {
+        opacity: 1;
+      }
+    }
+
+    &:hover:not(.active) {
+      background: rgba(var(--cui-white-rgb), .06);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--brand-highlight);
+      outline-offset: -2px;
+    }
+  }
+
+  .nav-icon {
+    margin-right: .75rem;
+    opacity: .72;
+    transition: opacity .15s ease-in-out, color .15s ease-in-out;
+  }
+
+  .nav-link:hover .nav-icon {
+    opacity: 1;
+  }
+
+  .nav-group {
+    border-radius: var(--brand-radius-sm);
+
+    &.show {
+      background: rgba(var(--cui-black-rgb), .18);
+    }
+  }
+
+  .nav-group-items .nav-link {
+    font-size: .8125rem;
+    font-weight: 400;
+  }
+}
+
+// Page sections reached from the sidebar sub-items (#fragment): custom elements are inline by default.
+.page-section {
+  display: block;
+}
+
+// --- Header -----------------------------------------------------------------
+.header {
+  --cui-header-padding-y: .5rem;
+  --cui-header-padding-x: 1rem;
+  border-bottom: 1px solid var(--brand-border);
+  box-shadow: none;
+
+  .header-divider {
+    margin: .25rem 0;
+    border-top-color: var(--brand-border);
+  }
+
+  .header-toggler {
+    color: var(--brand-content-low);
+    border-radius: var(--brand-radius-sm);
+    transition: background-color .15s ease-in-out, color .15s ease-in-out;
+
+    &:hover {
+      color: var(--brand-content-high);
+      background-color: var(--brand-surface-mid);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--brand-primary);
+      outline-offset: 2px;
+    }
+  }
+
+  // Current date, right side
+  .header-date {
+    padding-right: .75rem;
+    font-size: .875rem;
+    font-weight: 500;
+    color: var(--brand-content-low) !important;
+    font-variant-numeric: tabular-nums;
+  }
+
+  // Theme switcher: round ghost button with visible hover and focus
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    color: var(--brand-content-low);
+    border: 0;
+    border-radius: var(--brand-radius-pill);
+    transition: background-color .15s ease-in-out, color .15s ease-in-out;
+
+    &:hover,
+    &.show {
+      color: var(--brand-primary);
+      background-color: var(--brand-primary-low);
+    }
+
+    &:focus-visible {
+      color: var(--brand-primary);
+      outline: 2px solid var(--brand-primary);
+      outline-offset: 2px;
+      box-shadow: none;
+    }
+  }
+
+  .dropdown-menu {
+    min-width: 11rem;
+    padding: .375rem;
+    border-color: var(--brand-border);
+    border-radius: var(--brand-radius-sm);
+    box-shadow: var(--brand-elevation-2);
+
+    .dropdown-header {
+      padding: .375rem .75rem;
+      font-size: .6875rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--brand-content-low);
+      background-color: transparent !important;
+    }
+
+    .dropdown-item {
+      padding: .5rem .75rem;
+      font-size: .875rem;
+      border-radius: var(--brand-radius-xs);
+
+      &.active,
+      &:active {
+        color: var(--brand-primary);
+        background-color: var(--brand-primary-low);
+      }
+    }
+  }
+}
+
+// --- Footer -----------------------------------------------------------------
+// Navy band (like the sidebar); content and spacing live in default-footer.component.scss
+.footer {
+  font-size: .8125rem;
+}
+
+// --- Cards ------------------------------------------------------------------
+.card {
+  --cui-card-spacer-y: 1.25rem;
+  --cui-card-spacer-x: 1.25rem;
+  --cui-card-cap-padding-y: .875rem;
+  --cui-card-cap-padding-x: 1.25rem;
+  --cui-card-cap-bg: transparent;
+  --cui-card-border-color: var(--brand-border);
+}
+
+.card-header {
+  font-size: .9375rem;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  color: var(--brand-content-high);
+  border-bottom-color: var(--brand-border);
+}
+
+.card-footer {
+  border-top-color: var(--brand-border);
+}
+
+// --- Buttons ----------------------------------------------------------------
+.btn {
+  --cui-btn-border-radius: var(--brand-radius-sm);
+  --cui-btn-font-weight: 500;
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+}
+
+// Square icon-only action (e.g. download) sized to the control row
+.brand-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: var(--brand-radius-sm);
+
+  .icon {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+}
+
+// Segmented pill control: a <c-button-group> of outline buttons where the checked one is filled.
+.brand-segmented {
+  display: inline-flex;
+  gap: .125rem;
+  padding: .25rem;
+  background-color: var(--brand-surface-mid);
+  border-radius: var(--brand-radius-pill);
+
+  > .btn,
+  > .btn-check + .btn {
+    min-width: 3.25rem;
+    margin: 0;
+    padding: .3125rem .875rem;
+    font-size: .8125rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--brand-content-low);
+    background-color: transparent;
+    border: 0;
+    border-radius: var(--brand-radius-pill) !important;
+    box-shadow: none;
+    transition: background-color .15s ease-in-out, color .15s ease-in-out;
+
+    &:hover {
+      color: var(--brand-content-high);
+      background-color: rgba(var(--brand-primary-rgb), .08);
+    }
+  }
+
+  > .btn-check:checked + .btn,
+  > .btn.active {
+    color: rgb(var(--cui-white-rgb));
+    background-color: var(--brand-primary);
+    box-shadow: var(--brand-elevation-1);
+  }
+
+  > .btn-check:focus-visible + .btn {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+}
+
+// Thin progress used in legends and lists
+.progress-thin {
+  height: 4px;
+  border-radius: var(--brand-radius-pill);
+  background-color: var(--brand-surface-mid);
+}
+
+// Form controls
+.form-control,
+.form-select {
+  border-radius: var(--brand-radius-sm);
+
+  &:focus {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 .25rem rgba(var(--brand-primary-rgb), .2);
+  }
+}
+
+// Reduced motion: drop the decorative transitions
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-nav .nav-link,
+  .sidebar-nav .nav-link::before,
+  .brand-segmented > .btn,
+  .theme-toggle,
+  .filter-chip {
+    transition: none;
+  }
+}

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1062" height="604" viewBox="0 0 1062 604" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif">
+<rect width="1062" height="604" fill="#0f1319"/>
+<text x="20" y="34" font-size="18" font-weight="600" fill="#eef1f5">Tema escuro (variáveis SCSS $brand-dark-*)</text>
+<text x="20" y="101" font-size="13" font-weight="600" fill="#eef1f5">Superfícies</text>
+<rect x="190" y="60" width="132" height="72" rx="8" fill="#0f1319" stroke="#a9b1bd" stroke-width="1"/>
+<text x="200" y="82" font-size="12" font-weight="600" fill="#ffffff">#0f1319</text>
+<text x="190" y="148" font-size="11" fill="#a9b1bd">$brand-dark-page</text>
+<rect x="332" y="60" width="132" height="72" rx="8" fill="#171e28" stroke="#a9b1bd" stroke-width="1"/>
+<text x="342" y="82" font-size="12" font-weight="600" fill="#ffffff">#171e28</text>
+<text x="332" y="148" font-size="11" fill="#a9b1bd">$brand-dark-card</text>
+<rect x="474" y="60" width="132" height="72" rx="8" fill="#1f2733" stroke="#a9b1bd" stroke-width="1"/>
+<text x="484" y="82" font-size="12" font-weight="600" fill="#ffffff">#1f2733</text>
+<text x="474" y="148" font-size="11" fill="#a9b1bd">$brand-dark-alt</text>
+<rect x="616" y="60" width="132" height="72" rx="8" fill="#2b3542" stroke="none" stroke-width="1"/>
+<text x="626" y="82" font-size="12" font-weight="600" fill="#ffffff">#2b3542</text>
+<text x="616" y="148" font-size="11" fill="#a9b1bd">$brand-dark-border</text>
+<rect x="758" y="60" width="132" height="72" rx="8" fill="#121820" stroke="#a9b1bd" stroke-width="1"/>
+<text x="768" y="82" font-size="12" font-weight="600" fill="#ffffff">#121820</text>
+<text x="758" y="148" font-size="11" fill="#a9b1bd">$brand-dark-input</text>
+<rect x="900" y="60" width="132" height="72" rx="8" fill="#3a4556" stroke="none" stroke-width="1"/>
+<text x="910" y="82" font-size="12" font-weight="600" fill="#ffffff">#3a4556</text>
+<text x="900" y="148" font-size="11" fill="#a9b1bd">$brand-dark-input-border</text>
+<text x="20" y="207" font-size="13" font-weight="600" fill="#eef1f5">Texto</text>
+<rect x="190" y="166" width="132" height="72" rx="8" fill="#eef1f5" stroke="none" stroke-width="1"/>
+<text x="200" y="188" font-size="12" font-weight="600" fill="#0b0b0b">#eef1f5</text>
+<text x="200" y="206" font-size="11" fill="#0b0b0b">14,80:1 / #171e28</text>
+<text x="190" y="254" font-size="11" fill="#a9b1bd">$brand-dark-text</text>
+<rect x="332" y="166" width="132" height="72" rx="8" fill="#a9b1bd" stroke="none" stroke-width="1"/>
+<text x="342" y="188" font-size="12" font-weight="600" fill="#0b0b0b">#a9b1bd</text>
+<text x="342" y="206" font-size="11" fill="#0b0b0b">7,75:1 / #171e28</text>
+<text x="332" y="254" font-size="11" fill="#a9b1bd">$brand-dark-text-medium</text>
+<text x="20" y="313" font-size="13" font-weight="600" fill="#eef1f5">Interativo</text>
+<rect x="190" y="272" width="132" height="72" rx="8" fill="#6b7cf0" stroke="none" stroke-width="1"/>
+<text x="200" y="294" font-size="12" font-weight="600" fill="#0b0b0b">#6b7cf0</text>
+<text x="200" y="312" font-size="11" fill="#0b0b0b">4,60:1 / #171e28</text>
+<text x="190" y="360" font-size="11" fill="#a9b1bd">$brand-dark-primary</text>
+<rect x="332" y="272" width="132" height="72" rx="8" fill="#8491f3" stroke="none" stroke-width="1"/>
+<text x="342" y="294" font-size="12" font-weight="600" fill="#0b0b0b">#8491f3</text>
+<text x="342" y="312" font-size="11" fill="#0b0b0b">5,85:1 / #171e28</text>
+<text x="332" y="360" font-size="11" fill="#a9b1bd">$brand-dark-primary-high</text>
+<rect x="474" y="272" width="132" height="72" rx="8" fill="#5568e7" stroke="none" stroke-width="1"/>
+<text x="484" y="294" font-size="12" font-weight="600" fill="#ffffff">#5568e7</text>
+<text x="484" y="312" font-size="11" fill="#ffffff">3,61:1 / #171e28</text>
+<text x="474" y="360" font-size="11" fill="#a9b1bd">$brand-dark-chat-accent</text>
+<rect x="616" y="272" width="132" height="72" rx="8" fill="#8c9ae8" stroke="none" stroke-width="1"/>
+<text x="626" y="294" font-size="12" font-weight="600" fill="#0b0b0b">#8c9ae8</text>
+<text x="626" y="312" font-size="11" fill="#0b0b0b">6,31:1 / #171e28</text>
+<text x="616" y="360" font-size="11" fill="#a9b1bd">$brand-dark-link</text>
+<rect x="758" y="272" width="132" height="72" rx="8" fill="#a4b0f2" stroke="none" stroke-width="1"/>
+<text x="768" y="294" font-size="12" font-weight="600" fill="#0b0b0b">#a4b0f2</text>
+<text x="768" y="312" font-size="11" fill="#0b0b0b">8,04:1 / #171e28</text>
+<text x="758" y="360" font-size="11" fill="#a9b1bd">$brand-dark-link-hover</text>
+<text x="20" y="419" font-size="13" font-weight="600" fill="#eef1f5">Menu lateral</text>
+<rect x="190" y="378" width="132" height="72" rx="8" fill="#0c1238" stroke="#a9b1bd" stroke-width="1"/>
+<text x="200" y="400" font-size="12" font-weight="600" fill="#ffffff">#0c1238</text>
+<text x="190" y="466" font-size="11" fill="#a9b1bd">$brand-dark-sidebar</text>
+<rect x="332" y="378" width="132" height="72" rx="8" fill="#080d2b" stroke="#a9b1bd" stroke-width="1"/>
+<text x="342" y="400" font-size="12" font-weight="600" fill="#ffffff">#080d2b</text>
+<text x="332" y="466" font-size="11" fill="#a9b1bd">$brand-dark-sidebar-deep</text>
+<text x="20" y="525" font-size="13" font-weight="600" fill="#eef1f5">Estados</text>
+<rect x="190" y="484" width="132" height="72" rx="8" fill="#36bf36" stroke="none" stroke-width="1"/>
+<text x="200" y="506" font-size="12" font-weight="600" fill="#0b0b0b">#36bf36</text>
+<text x="200" y="524" font-size="11" fill="#0b0b0b">6,91:1 / #171e28</text>
+<text x="190" y="572" font-size="11" fill="#a9b1bd">$brand-dark-success</text>
+<rect x="332" y="484" width="132" height="72" rx="8" fill="#ff8a3d" stroke="none" stroke-width="1"/>
+<text x="342" y="506" font-size="12" font-weight="600" fill="#0b0b0b">#ff8a3d</text>
+<text x="342" y="524" font-size="11" fill="#0b0b0b">7,15:1 / #171e28</text>
+<text x="332" y="572" font-size="11" fill="#a9b1bd">$brand-dark-warning</text>
+<rect x="474" y="484" width="132" height="72" rx="8" fill="#f0566b" stroke="none" stroke-width="1"/>
+<text x="484" y="506" font-size="12" font-weight="600" fill="#0b0b0b">#f0566b</text>
+<text x="484" y="524" font-size="11" fill="#0b0b0b">4,99:1 / #171e28</text>
+<text x="474" y="572" font-size="11" fill="#a9b1bd">$brand-dark-danger</text>
+<rect x="616" y="484" width="132" height="72" rx="8" fill="#31c7ed" stroke="none" stroke-width="1"/>
+<text x="626" y="506" font-size="12" font-weight="600" fill="#0b0b0b">#31c7ed</text>
+<text x="626" y="524" font-size="11" fill="#0b0b0b">8,40:1 / #171e28</text>
+<text x="616" y="572" font-size="11" fill="#a9b1bd">$brand-dark-info</text>
+</svg>

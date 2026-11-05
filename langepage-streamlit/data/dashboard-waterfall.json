@@ -1,0 +1,54 @@
+{
+  "period": "Janeiro a dezembro de 2021",
+  "baseYear": 2021,
+  "currency": "BRL",
+  "unitScale": 1000000,
+  "steps": [
+    {
+      "id": "gross-revenue",
+      "label": "Receita bruta",
+      "kind": "total",
+      "parts": [
+        { "label": "Produto A", "value": 15 },
+        { "label": "Produto B", "value": 10 },
+        { "label": "Produto C", "value": 25 }
+      ]
+    },
+    {
+      "id": "deductions",
+      "label": "Deduções",
+      "kind": "decrease",
+      "parts": [
+        { "label": "Impostos", "value": 15 },
+        { "label": "Devoluções", "value": 5 }
+      ]
+    },
+    {
+      "id": "costs",
+      "label": "Custos",
+      "kind": "decrease",
+      "parts": [
+        { "label": "Matéria-prima", "value": 5 },
+        { "label": "Logística", "value": 3 }
+      ]
+    },
+    {
+      "id": "expenses",
+      "label": "Despesas",
+      "kind": "decrease",
+      "parts": [
+        { "label": "Pessoal", "value": 8 },
+        { "label": "Marketing", "value": 4 }
+      ]
+    },
+    {
+      "id": "net-result",
+      "label": "Resultado",
+      "kind": "total",
+      "parts": [
+        { "label": "Operacional", "value": 6 },
+        { "label": "Financeiro", "value": 4 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+# Dependências e saídas geradas (cada projeto também tem o seu .gitignore)
+node_modules/
+dist/
+.angular/
+out-tsc/
+coverage/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Regras locais (não versionadas)
+**/.rules/local.md
+
+# Configuração local de ferramentas e ambiente
+.claude/
+*.local.json
+.env
+.env.*
+.DS_Store
+Thumbs.db

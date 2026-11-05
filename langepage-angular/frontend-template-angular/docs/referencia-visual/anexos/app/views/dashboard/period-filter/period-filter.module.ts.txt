@@ -1,0 +1,17 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { ButtonGroupModule, ButtonModule } from '@coreui/angular';
+import { IconModule } from '@coreui/icons-angular';
+
+import { PeriodFilterComponent } from './period-filter.component';
+
+/** Period filter shared by the charts of the Triagent and Scalation pages. */
+@NgModule({
+  imports: [CommonModule, ReactiveFormsModule, ButtonModule, ButtonGroupModule, IconModule],
+  declarations: [PeriodFilterComponent],
+  exports: [PeriodFilterComponent]
+})
+export class PeriodFilterModule {
+}

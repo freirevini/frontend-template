@@ -1,0 +1,17 @@
+// Place for small fixes to CoreUI 4.x defaults
+
+.form-floating > .form-select {
+  padding-top: 1.625rem !important;
+  padding-bottom: .625rem !important;
+}
+
+// Chart.js canvases must shrink with their column (no horizontal scroll at 375px)
+.chart-wrapper,
+c-chart {
+  display: block;
+  max-width: 100%;
+  min-width: 0;
+}
+
+@import "scrollbar";
+@import "charts";

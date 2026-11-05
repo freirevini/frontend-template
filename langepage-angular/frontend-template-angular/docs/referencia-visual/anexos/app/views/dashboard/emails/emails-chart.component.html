@@ -1,0 +1,209 @@
+<c-card #card class="mb-4" aria-labelledby="emails-title">
+  <c-card-body>
+    <div class="emails-header">
+      <div>
+        <h4 class="card-title mb-0" id="emails-title">Fluxo de e-mail - Triagem</h4>
+        <div class="small text-medium-emphasis">
+          {{ aggregate?.subtitle || 'Carregando período...' }}
+          <ng-container *ngIf="segmentFilter"> · {{ filterLabel }}</ng-container>
+        </div>
+      </div>
+      <div class="emails-controls">
+        <div class="filter-bar" role="group" aria-label="Forma de exibição">
+          <button
+            type="button"
+            class="filter-chip"
+            [class.is-active]="view === 'chart'"
+            [attr.aria-pressed]="view === 'chart'"
+            (click)="setView('chart')"
+          >
+            <svg cIcon name="cilChartLine" size="sm" aria-hidden="true"></svg>
+            Gráfico
+          </button>
+          <button
+            type="button"
+            class="filter-chip"
+            [class.is-active]="view === 'table'"
+            [attr.aria-pressed]="view === 'table'"
+            (click)="setView('table')"
+          >
+            <svg cIcon name="cilList" size="sm" aria-hidden="true"></svg>
+            Tabela
+          </button>
+        </div>
+        <button
+          *ngIf="view === 'table' && state === 'ready'"
+          type="button"
+          class="btn btn-outline-primary btn-sm emails-export"
+          [disabled]="exporting"
+          (click)="exportXlsx()"
+        >
+          <svg cIcon name="cilSpreadsheet" size="sm" aria-hidden="true"></svg>
+          {{ exporting ? 'Gerando arquivo...' : 'Exportar Excel' }}
+        </button>
+      </div>
+    </div>
+
+    <app-period-filter
+      class="d-block mt-3"
+      id="emails-period"
+      label="Período dos e-mails"
+      [periods]="periodOptions"
+      [period]="period"
+      [range]="range"
+      [bounds]="bounds"
+      (selectionChange)="onPeriodChange($event)"
+    ></app-period-filter>
+    <p *ngIf="exportError" class="small text-danger mt-2 mb-0" role="alert">{{ exportError }}</p>
+
+    <ng-container [ngSwitch]="state">
+      <div *ngSwitchCase="'loading'" class="emails-placeholder text-medium-emphasis">
+        <c-spinner size="sm" label="Carregando..." class="me-2"></c-spinner>
+        Carregando dados...
+      </div>
+
+      <div *ngSwitchCase="'error'" class="emails-placeholder text-medium-emphasis" role="alert">
+        Não foi possível carregar os e-mails.
+      </div>
+
+      <ng-container *ngSwitchCase="'ready'">
+        <dl class="emails-stats" *ngIf="aggregate as data">
+          <div class="emails-stat">
+            <dt>E-mails enviados</dt>
+            <dd>{{ formatNumber(data.emails) }}</dd>
+          </div>
+          <div class="emails-stat">
+            <dt>Normas sugeridas</dt>
+            <dd>
+              {{ formatNumber(data.normas) }}
+              <span class="emails-stat-note">{{ formatNumber(data.distinctNormas) }} {{ data.distinctNormas === 1 ? 'distinta' : 'distintas' }}</span>
+            </dd>
+          </div>
+          <div class="emails-stat">
+            <dt>Média por e-mail</dt>
+            <dd>{{ formatAverage(data.averagePerEmail) }}</dd>
+          </div>
+        </dl>
+
+        <p *ngIf="aggregate && aggregate.emails === 0" class="emails-placeholder text-medium-emphasis mb-0">
+          Nenhum e-mail enviado neste período.
+        </p>
+
+        <ng-container *ngIf="aggregate && aggregate.emails > 0">
+          <div *ngIf="view === 'chart'" class="emails-chart" role="img" [attr.aria-label]="ariaSummary">
+            <c-chart
+              type="bar"
+              [data]="chartData"
+              [options]="chartOptions"
+              [plugins]="chartPlugins"
+              [redraw]="true"
+              [customTooltips]="false"
+              [height]="300"
+            ></c-chart>
+          </div>
+
+          <div *ngIf="view === 'table'" class="table-responsive">
+            <table cTable [hover]="true" [small]="true" class="mb-0 align-middle emails-table">
+              <caption class="visually-hidden">E-mails e normas sugeridas por período e segmento, {{ aggregate.subtitle }}</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Período</th>
+                  <th scope="col" class="text-end">E-mails</th>
+                  <th scope="col" class="text-end" *ngFor="let item of legend">{{ item.label }}</th>
+                  <th scope="col" class="text-end">Total de normas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let bucket of aggregate.buckets">
+                  <th scope="row">{{ bucket.label }}</th>
+                  <td class="text-end">{{ formatNumber(bucket.emails) }}</td>
+                  <td class="text-end" *ngFor="let item of legend" [class.is-dimmed]="isDimmed(item.position)">{{ formatNumber(bucket.normas[item.position]) }}</td>
+                  <td class="text-end fw-semibold">{{ formatNumber(bucket.total) }}</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="row">Total</th>
+                  <td class="text-end">{{ formatNumber(aggregate.emails) }}</td>
+                  <td class="text-end" *ngFor="let item of legend">{{ formatNumber(aggregate.segmentNormas[item.position]) }}</td>
+                  <td class="text-end">{{ formatNumber(aggregate.normas) }}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <ul class="emails-legend" aria-label="Legenda: normas sugeridas por segmento">
+            <li *ngFor="let item of legend">
+              <button
+                type="button"
+                class="emails-legend-item"
+                [class.is-dimmed]="isDimmed(item.position)"
+                [class.is-active]="highlighted === item.position"
+                [attr.aria-pressed]="highlighted === item.position"
+                (click)="toggleHighlight(item.position)"
+              >
+                <span class="emails-swatch" [style.background-color]="item.color" aria-hidden="true"></span>
+                {{ item.label }} · {{ countLabel(item.normas, 'norma', 'normas') }}
+              </button>
+            </li>
+          </ul>
+
+          <h5 class="emails-list-title" id="emails-list-title">Últimos e-mails</h5>
+          <ul class="emails-list" aria-labelledby="emails-list-title">
+            <li *ngFor="let email of latest" class="emails-item">
+              <button
+                type="button"
+                class="emails-item-head"
+                [attr.aria-expanded]="expanded.has(email.id)"
+                [attr.aria-controls]="'emails-normas-' + email.id"
+                [attr.aria-label]="(expanded.has(email.id) ? 'Ocultar normas' : 'Ver normas') + ': ' + segmentName(email) + ', ' + (sentAt(email) | date: 'dd/MM/yyyy')"
+                (click)="toggleEmail(email.id)"
+              >
+                <svg cIcon name="cilChevronRight" size="sm" class="emails-chevron" [class.is-open]="expanded.has(email.id)" aria-hidden="true"></svg>
+                <span class="emails-item-date">{{ sentAt(email) | date: 'dd/MM/yyyy' }}</span>
+                <span class="emails-item-subject">
+                  <span class="emails-swatch" [style.background-color]="segmentColor(email)" aria-hidden="true"></span>
+                  {{ segmentName(email) }}
+                </span>
+                <span class="emails-item-meta fw-semibold">{{ countLabel(email.normas.length, 'norma', 'normas') }}</span>
+              </button>
+              <div
+                *ngIf="expanded.has(email.id)"
+                class="emails-normas"
+                [id]="'emails-normas-' + email.id"
+                role="region"
+                tabindex="0"
+                [attr.aria-label]="'Normas do e-mail de ' + segmentName(email) + ', ' + (sentAt(email) | date: 'dd/MM/yyyy') + '. Role para o lado para ver todas as colunas.'"
+              >
+                <table cTable [small]="true" class="mb-0 align-middle emails-normas-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Órgão</th>
+                      <th scope="col">Tipo</th>
+                      <th scope="col">Número</th>
+                      <th scope="col">Tema</th>
+                      <th scope="col">Aplicável ao segmento?</th>
+                      <th scope="col">Área</th>
+                      <th scope="col">Diretoria</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let norma of email.normas">
+                      <th scope="row">{{ norma.orgao }}</th>
+                      <td>{{ norma.tipo }}</td>
+                      <td class="emails-normas-number">{{ norma.numero }}</td>
+                      <td class="emails-normas-theme">{{ norma.title }}</td>
+                      <td>{{ applicability(norma) }}</td>
+                      <td>{{ norma.area }}</td>
+                      <td>{{ norma.diretoria }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+          </ul>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </c-card-body>
+</c-card>

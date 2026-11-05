@@ -1,0 +1,72 @@
+import { Component, Input } from '@angular/core';
+import { Observable, interval } from 'rxjs';
+import { distinctUntilChanged, map, startWith } from 'rxjs/operators';
+
+import { ClassToggleService, HeaderComponent } from '@coreui/angular';
+
+import { ColorMode, ThemeService } from '../../../core/services/theme.service';
+
+interface ColorModeOption {
+  value: ColorMode;
+  label: string;
+  icon: string;
+}
+
+export interface HeaderDate {
+  /** Local date as yyyy-MM-dd, for the <time datetime> attribute. */
+  iso: string;
+  /** e.g. "terça-feira, 27 de outubro de 2026" */
+  long: string;
+  /** e.g. "27/10/2026", used on small screens. */
+  short: string;
+}
+
+const LONG_DATE = new Intl.DateTimeFormat('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+const SHORT_DATE = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+const DATE_REFRESH_MS = 60_000;
+
+export function toHeaderDate(date: Date): HeaderDate {
+  const pad = (value: number) => String(value).padStart(2, '0');
+  return {
+    iso: `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`,
+    long: LONG_DATE.format(date),
+    short: SHORT_DATE.format(date)
+  };
+}
+
+@Component({
+  selector: 'app-default-header',
+  templateUrl: './default-header.component.html',
+  styleUrls: ['./default-header.component.scss'],
+})
+export class DefaultHeaderComponent extends HeaderComponent {
+
+  @Input() sidebarId: string = "sidebar";
+
+  readonly colorModes: ColorModeOption[] = [
+    { value: 'light', label: 'Claro', icon: 'cilSun' },
+    { value: 'dark', label: 'Escuro', icon: 'cilMoon' },
+    { value: 'auto', label: 'Automático', icon: 'cilContrast' }
+  ];
+
+  readonly colorMode$ = this.themeService.mode$;
+
+  /** Re-checked every minute so the date rolls over at midnight; the async pipe unsubscribes. */
+  readonly today$: Observable<HeaderDate> = interval(DATE_REFRESH_MS).pipe(
+    startWith(0),
+    map(() => toHeaderDate(new Date())),
+    distinctUntilChanged((previous, current) => previous.iso === current.iso)
+  );
+
+  constructor(private classToggler: ClassToggleService, private themeService: ThemeService) {
+    super();
+  }
+
+  setColorMode(mode: ColorMode): void {
+    this.themeService.setMode(mode);
+  }
+
+  iconFor(mode: ColorMode | null): string {
+    return this.colorModes.find((option) => option.value === mode)?.icon ?? 'cilSun';
+  }
+}

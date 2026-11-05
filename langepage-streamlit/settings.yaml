@@ -1,0 +1,25 @@
+# Configuração da aplicação (R6). Valores por ambiente entram por variáveis (ConfigMaps/Secrets do Kubernetes);
+# a sintaxe ${VAR:padrão} usa a variável quando existe. Nenhum host neste arquivo.
+environment: ${ENV:des}              # des | uat | prd; outro valor impede a subida
+auth:
+  mode: ${AUTH_MODE:mock}            # none | mock | gateway | oidc; uat e prd só gateway | oidc
+  user_id_header: x-user-id
+  user_email_header: x-user-email
+  mock_first_name: Vinicius          # só em mock (dev local)
+  login_url: ${AUTH_LOGIN_URL:/}     # 401 do BFF: link "Entrar novamente" (recarrega pelo gateway, que reautentica)
+bff:
+  base_url: ${BFF_BASE_URL:}         # caminho base da API do BFF (o que o Ingress roteia como /api); vazio = mock: lê data/*.json
+  timeout_seconds: 10
+  prefix: /v1                        # contrato v1 (ADR-009): recursos em base_url + /v1/<recurso>
+chat:
+  mock: ${CHAT_MOCK:true}            # uat e prd: false obrigatório; chave ausente = true só em des
+  max_session_bytes: 20971520
+  max_input_chars: 1000
+  max_files_per_send: 5
+  max_send_bytes: 9437184            # 9 MB somados por envio (abaixo dos ~10 MB do gateway)
+cache:
+  ttl_seconds: 300
+footer:
+  # Bloco legal do rodapé: lista de {name, cnpj, address}, nunca versionada. Vem por ambiente: JSON em
+  # FOOTER_ENTITIES (ConfigMap/Secret) ou lista YAML num settings.yaml montado pelo ConfigMap. Vazio = só o copyright.
+  entities: ${FOOTER_ENTITIES:[]}

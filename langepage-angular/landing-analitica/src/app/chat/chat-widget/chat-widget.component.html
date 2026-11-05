@@ -1,0 +1,78 @@
+@if (state$ | async; as state) {
+  <button
+    #fab
+    type="button"
+    class="chat-fab"
+    [class.is-open]="open"
+    [attr.aria-expanded]="open"
+    aria-controls="chat-panel"
+    [attr.aria-label]="fabLabel(state.hasInteraction)"
+    [title]="fabLabel(state.hasInteraction)"
+    (click)="toggle()"
+    >
+    <svg cIcon name="cilCommentSquare" size="lg" aria-hidden="true"></svg>
+    <span class="chat-fab__name" aria-hidden="true">{{ nameLead }} <strong>{{ nameTail }}</strong></span>
+    @if (!open && state.hasInteraction) {
+      <span class="chat-fab__dot" aria-hidden="true"></span>
+    }
+  </button>
+  <section
+    #panel
+    id="chat-panel"
+    class="chat-panel"
+    [class.chat-panel--wide]="expanded"
+    [hidden]="!open"
+    role="dialog"
+    aria-modal="false"
+    aria-labelledby="chat-title"
+    tabindex="-1"
+    (paste)="input?.onPaste($event)"
+    >
+    <header class="chat-panel__header">
+      <h2 id="chat-title" class="chat-panel__title">{{ texts.title }}</h2>
+      <div class="chat-panel__actions">
+        <button type="button" class="chat-panel__restart" [disabled]="!state.hasInteraction" (click)="session.restart()">
+          {{ texts.restart }}
+        </button>
+        <button
+          type="button"
+          class="chat-panel__icon chat-panel__expand"
+          [attr.aria-label]="expanded ? texts.collapse : texts.expand"
+          [title]="expanded ? texts.collapse : texts.expand"
+          (click)="toggleExpanded()"
+          >
+          <svg cIcon [name]="expanded ? 'cilFullscreenExit' : 'cilResizeWidth'" size="lg" aria-hidden="true"></svg>
+        </button>
+        <button
+          type="button"
+          class="chat-panel__icon chat-panel__minimize"
+          [attr.aria-label]="texts.minimize"
+          [title]="texts.minimize"
+          (click)="minimize()"
+          >
+          <svg cIcon name="cilMinus" size="lg" aria-hidden="true"></svg>
+        </button>
+      </div>
+    </header>
+    <div class="chat-panel__body">
+      <app-chat-messages
+        [messages]="state.messages"
+        [typing]="state.typing"
+        [retryable]="state.canRetry"
+        (retry)="session.retry()"
+        [suggestions]="state.node | chatSuggestions: state.busy : state.hasInteraction : state.messages"
+        [focusSuggestions]="state.node?.type === 'menu' || state.node?.type === 'end'"
+        (suggestionPick)="onSuggestion($event)"
+        (rate)="session.rateMessage($event.message.id, $event.rating)"
+      ></app-chat-messages>
+    </div>
+    <app-chat-input
+      [node]="state.node"
+      [sending]="state.busy"
+      [usedBytes]="state.usedBytes"
+      (textSend)="session.sendText($event)"
+      (filesSend)="session.sendFiles($event)"
+      (stop)="session.stop()"
+    ></app-chat-input>
+  </section>
+}

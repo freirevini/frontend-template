@@ -1,0 +1,50 @@
+# PLACEHOLDER: substituir pelo Deployment do Cookiecutter do Titan (ADR-001). Imagem, recursos e réplicas vêm do sample.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agenda-normativa
+  labels:
+    app: agenda-normativa
+spec:
+  replicas: 1                      # >1 exige afinidade por cookie no ingress (estado do Streamlit na memória do pod)
+  selector:
+    matchLabels:
+      app: agenda-normativa
+  template:
+    metadata:
+      labels:
+        app: agenda-normativa
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+      containers:
+        - name: app
+          image: SUBSTITUIR-IMAGEM:TAG
+          ports:
+            - name: http
+              containerPort: 8501
+          envFrom:
+            - configMapRef:
+                name: agenda-normativa-config
+            - secretRef:
+                name: agenda-normativa-secret
+          readinessProbe:
+            httpGet:
+              path: /_stcore/health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /_stcore/health
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi

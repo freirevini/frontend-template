@@ -1,0 +1,1007 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <app-docs-callout name="Tabela"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Tabela Angular</strong> <small>Exemplo básico</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Usando a tabela mais básica, veja como ficam as tabelas baseadas em
+          <code>cTable</code>.
+        </p>
+        <app-docs-example>
+          <table cTable>
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Tabela Angular</strong> <small>Variantes</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Use classes contextuais para colorir tabelas, linhas de tabela ou células individuais.
+        </p>
+        <app-docs-example>
+          <table cTable>
+            <thead>
+            <tr>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">Padrão</th>
+              <td>Célula</td>
+              <td>Célula</td>
+            </tr>
+            <tr cTableColor="primary">
+              <th scope="row">Primário</th>
+              <td>Célula</td>
+              <td>Célula</td>
+            </tr>
+            <tr cTableColor="secondary">
+              <th scope="row">Secundário</th>
+              <td>Célula</td>
+              <td>Célula</td>
+            </tr>
+            <tr cTableColor="success">
+              <th scope="row">Sucesso</th>
+              <td>Célula</td>
+              <td>Célula</td>
+            </tr>
+            <tr cTableColor="danger">
+              <th scope="row">Perigo</th>
+              <td>Célula</td>
+              <td>Célula</td>
+            </tr>
+            <tr cTableColor="warning">
+              <th scope="row">Alerta</th>
+              <td>Célula</td>
+              <td>Célula</td>
+            </tr>
+            <tr cTableColor="info">
+              <th scope="row">Informação</th>
+              <td>Célula</td>
+              <td>Célula</td>
+            </tr>
+            <tr cTableColor="light">
+              <th scope="row">Claro</th>
+              <td>Célula</td>
+              <td>Célula</td>
+            </tr>
+            <tr cTableColor="dark">
+              <th scope="row">Escuro</th>
+              <td>Célula</td>
+              <td>Célula</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Tabela Angular</strong> <small>Linhas listradas</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Use a propriedade <code>striped</code> para adicionar listras zebradas a qualquer linha da tabela dentro do <code>&lt;tbody&gt;</code>.
+        </p>
+        <app-docs-example>
+          <table [striped]="true" cTable>
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Essas classes também podem ser adicionadas às variantes de tabela:
+        </p>
+        <app-docs-example>
+          <table [striped]="true" cTable color="dark">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+        <app-docs-example>
+          <table [striped]="true" cTable color="success">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Tabela Angular</strong> <small>Colunas listradas</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Use a propriedade <code>stripedColumn</code> para adicionar listras zebradas a qualquer coluna da tabela.
+        </p>
+        <app-docs-example>
+          <table stripedColumns cTable>
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Tabela Angular</strong> <small>Linhas com destaque ao passar o mouse</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Use a propriedade <code>[hover]="true"</code> para habilitar o destaque ao passar o mouse nas linhas da tabela dentro de um
+          <code>&lt;tbody&gt;</code>.
+        </p>
+        <app-docs-example>
+          <table [hover]="true" cTable>
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+        <app-docs-example>
+          <table [hover]="true" cTable color="dark">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+        <app-docs-example>
+          <table [hover]="true" [striped]="true" cTable>
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Tabela Angular</strong> <small>Tabelas ativas</small>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <table cTable>
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr cTableActive>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td cTableActive colSpan="2">
+                Larry the Bird
+              </td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+        <app-docs-example>
+          <table cTable color="dark">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr cTableActive>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td cTableActive colSpan="2">
+                Larry the Bird
+              </td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Tabela Angular</strong> <small>Tabelas com bordas</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione a propriedade <code>bordered</code> para ter bordas em todos os lados da tabela e das células.
+        </p>
+        <app-docs-example>
+          <table [bordered]="true" cTable>
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          
+            Utilitários de cor de borda
+           podem ser adicionados para alterar as cores:
+        </p>
+        <app-docs-example>
+          <table [bordered]="true" [cBorder]="1" borderColor="primary" cTable>
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Tabela Angular</strong> <small>Tabelas sem bordas</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione a propriedade <code>borderless</code> para ter uma tabela sem bordas.
+        </p>
+        <app-docs-example>
+          <table [borderless]="true" cTable>
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+        <app-docs-example>
+          <table borderless cTable color="dark">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Tabela Angular</strong> <small>Tabelas compactas</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione a propriedade <code>small</code> para deixar qualquer <code>cTable</code> mais compacta,
+          reduzindo pela metade o <code>padding</code> de todas as células.
+        </p>
+        <app-docs-example>
+          <table [small]="true" cTable>
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Tabela Angular</strong> <small>Alinhamento vertical</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          As células do <code>&lt;thead&gt;</code> são sempre alinhadas verticalmente na
+          parte inferior. As células do <code>&lt;tbody&gt;</code> herdam seu alinhamento de
+          <code>cTable</code> e são alinhadas no topo por padrão. Use a propriedade align
+          para realinhar onde for necessário.
+        </p>
+        <app-docs-example>
+          <table [responsive]="true" cAlign="middle" cTable>
+            <thead>
+            <tr>
+              <th class="w-25" scope="col">
+                Cabeçalho 1
+              </th>
+              <th class="w-25" scope="col">
+                Cabeçalho 2
+              </th>
+              <th class="w-25" scope="col">
+                Cabeçalho 3
+              </th>
+              <th class="w-25" scope="col">
+                Cabeçalho 4
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>
+                Esta célula herda <code>vertical-align: middle;</code> da tabela
+              </td>
+              <td>
+                Esta célula herda <code>vertical-align: middle;</code> da tabela
+              </td>
+              <td>
+                Esta célula herda <code>vertical-align: middle;</code> da tabela
+              </td>
+              <td>
+                Este é um texto de exemplo, feito para ocupar bastante
+                espaço vertical, para demonstrar como o alinhamento vertical funciona nas
+                células anteriores.
+              </td>
+            </tr>
+            <tr cAlign="bottom">
+              <td>
+                Esta célula herda <code>vertical-align: bottom;</code> da linha da tabela
+              </td>
+              <td>
+                Esta célula herda <code>vertical-align: bottom;</code> da linha da tabela
+              </td>
+              <td>
+                Esta célula herda <code>vertical-align: bottom;</code> da linha da tabela
+              </td>
+              <td>
+                Este é um texto de exemplo, feito para ocupar bastante
+                espaço vertical, para demonstrar como o alinhamento vertical funciona nas
+                células anteriores.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Esta célula herda <code>vertical-align: middle;</code> da tabela
+              </td>
+              <td>
+                Esta célula herda <code>vertical-align: middle;</code> da tabela
+              </td>
+              <td cAlign="top">Esta célula está alinhada ao topo.</td>
+              <td>
+                Este é um texto de exemplo, feito para ocupar bastante
+                espaço vertical, para demonstrar como o alinhamento vertical funciona nas
+                células anteriores.
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Tabela Angular</strong> <small>Aninhamento</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Estilos de borda, estilos ativos e variantes de tabela não são herdados por tabelas aninhadas.
+        </p>
+        <app-docs-example>
+          <table [striped]="true" cTable>
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th colSpan="4">
+                <table cTable>
+                  <thead>
+                  <tr>
+                    <th scope="col">Cabeçalho</th>
+                    <th scope="col">Cabeçalho</th>
+                    <th scope="col">Cabeçalho</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <th scope="row">A</th>
+                    <td>Nome</td>
+                    <td>Sobrenome</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">B</th>
+                    <td>Nome</td>
+                    <td>Sobrenome</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">C</th>
+                    <td>Nome</td>
+                    <td>Sobrenome</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </th>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Tabela Angular</strong> <small>Cabeçalho da tabela</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Assim como nas tabelas e tabelas escuras, use a prop modificadora
+          <code>color=&#34;light&#34;</code> ou <code>color=&#34;dark&#34;</code> para fazer os
+          <code>&lt;thead&gt;</code>s aparecerem em cinza-claro ou cinza-escuro.
+        </p>
+        <app-docs-example>
+          <table cTable>
+            <thead cTableColor="light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Larry</td>
+              <td>the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+        <app-docs-example>
+          <table cTable>
+            <thead cTableColor="dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Tabela Angular</strong> <small>Rodapé da tabela</small>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <table cTable>
+            <thead cTableColor="light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+              <td>Rodapé</td>
+              <td>Rodapé</td>
+              <td>Rodapé</td>
+              <td>Rodapé</td>
+            </tr>
+            </tfoot>
+          </table>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Tabela Angular</strong> <small>Legendas</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Um <code>&lt;caption&gt;</code> funciona como um título para a tabela. Ele ajuda
+          usuários de leitores de tela a encontrar uma tabela, entender do que ela trata e
+          decidir se querem lê-la.
+        </p>
+        <app-docs-example>
+          <table cTable>
+            <caption>Lista de usuários</caption>
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Larry</td>
+              <td>the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Você também pode colocar o <code>&lt;caption&gt;</code> no topo da tabela com
+          <code>caption=&#34;top&#34;</code>.
+        </p>
+        <app-docs-example>
+          <table cTable caption="top">
+            <caption>Lista de usuários</caption>
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Classe</th>
+              <th scope="col">Cabeçalho</th>
+              <th scope="col">Cabeçalho</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Larry</td>
+              <td>the Bird</td>
+              <td>@twitter</td>
+            </tr>
+            </tbody>
+          </table>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

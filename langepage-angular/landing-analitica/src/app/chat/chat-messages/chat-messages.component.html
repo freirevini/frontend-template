@@ -1,0 +1,286 @@
+<div
+  #log
+  class="chat-log"
+  role="log"
+  aria-live="polite"
+  [attr.aria-label]="texts.messagesLabel"
+  tabindex="0"
+  (scroll)="onScroll()"
+  >
+  @for (message of messages; track trackById(i, message); let i = $index) {
+    <article
+      class="chat-msg chat-msg--{{ message.role }}"
+      [class.chat-msg--answer]="message.status === 'answer'"
+      [class.chat-msg--clarify]="message.status === 'need_more_info'"
+      [class.chat-msg--notice]="message.status === 'out_of_scope' || message.status === 'not_in_data'"
+      [class.chat-msg--error]="message.status === 'error'"
+      >
+      @if (startsGroup(i)) {
+        <p class="chat-msg__author">
+          @if (message.role === 'ai') {
+            <span class="chat-msg__avatar" aria-hidden="true"><svg cIcon name="cilSpeech"></svg></span>
+          }
+          {{ author(message) }}
+        </p>
+      } @else {
+        @if (author(message)) {
+          <span class="visually-hidden">{{ author(message) }}:</span>
+        }
+      }
+      <div class="chat-msg__bubble">
+        @for (file of message.files; track file) {
+          <p class="chat-msg__file">
+            <span class="chat-msg__file-name">{{ file.name }}</span>
+            <span class="chat-msg__file-meta">
+              {{ formatFileSize(file.sizeBytes) }}@if (file.checking) {
+              · <span class="chat-msg__file-checking">{{ texts.fileChecking }}</span>
+            } @else if (file.accepted !== undefined) {
+              · {{ file.accepted ? texts.fileAccepted : texts.fileRejected }}
+            }
+          </span>
+          @if (file.reason) {
+            <span class="chat-msg__file-meta chat-msg__file-reason">{{ file.reason }}</span>
+          }
+        </p>
+      }
+      @if (message.text) {
+        <div class="chat-msg__text" [innerHTML]="message.text | safeMarkdown"></div>
+      }
+      @if (message.supportCode) {
+        <p class="chat-msg__support">{{ supportCodeLabel }}<span class="chat-msg__support-code">{{ message.supportCode }}</span></p>
+      }
+      @if (message.questions?.length) {
+        <div class="chat-msg__block">
+          <p class="chat-msg__block-title">{{ texts.clarify }}</p>
+          <ul class="chat-msg__list">
+            @for (question of message.questions; track question) {
+              <li>{{ question }}</li>
+            }
+          </ul>
+        </div>
+      }
+      @if (message.normList?.items?.length) {
+        <div class="chat-msg__block chat-norms">
+          @if (segmentsOf(message).length > 1) {
+            <div class="chat-norms__filter" role="group" [attr.aria-label]="texts.normsFilter">
+              <button
+                type="button"
+                class="chat-norms__segment"
+                [attr.aria-pressed]="!segmentFilter[message.id]"
+                (click)="filterSegment(message.id, null)"
+                >
+                {{ texts.normsAll }}
+              </button>
+              @for (segment of segmentsOf(message); track segment) {
+                <button
+                  type="button"
+                  class="chat-norms__segment"
+                  [attr.aria-pressed]="segmentFilter[message.id] === segment"
+                  (click)="filterSegment(message.id, segment)"
+                  >
+                  {{ segment }}
+                </button>
+              }
+            </div>
+          }
+          @if (!tableView[message.id]) {
+            <ul class="chat-msg__list chat-norms__list">
+              @for (item of visibleNorms(message); track item) {
+                <li class="chat-norms__item">
+                  <strong class="chat-norms__title">{{ item.title }}</strong>
+                  @if (item.detail) {
+                    <span class="chat-norms__detail">{{ item.detail }}</span>
+                  }
+                  @if (item.segment || item.date) {
+                    <span class="chat-norms__meta">
+                      @if (item.segment) {
+                        {{ item.segment }}
+                      }
+                      @if (item.segment && item.date) {
+                        ·
+                      }
+                      @if (item.date) {
+                        {{ message.normList?.dateLabel }} {{ formatNormDate(item.date) }}
+                      }
+                    </span>
+                  }
+                </li>
+              }
+            </ul>
+          } @else {
+            <div class="chat-norms__table-wrap" role="region" tabindex="0" [attr.aria-label]="normListTitle(message)">
+              <table class="chat-norms__table">
+                <caption class="visually-hidden">{{ normListTitle(message) }}</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">{{ texts.normsColumnTitle }}</th>
+                    <th scope="col">{{ texts.normsColumnDetail }}</th>
+                    <th scope="col">{{ texts.normsColumnSegment }}</th>
+                    <th scope="col">{{ message.normList?.dateLabel || texts.normsDate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of visibleNorms(message); track item) {
+                    <tr>
+                      <td class="chat-norms__title">{{ item.title }}</td>
+                      <td>{{ item.detail }}</td>
+                      <td class="chat-norms__nowrap">{{ item.segment }}</td>
+                      <td class="chat-norms__nowrap">{{ formatNormDate(item.date) }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+          @if (canShowTable(message)) {
+            <div class="chat-norms__actions">
+              <button type="button" class="chat-norms__action" [attr.aria-pressed]="!!tableView[message.id]" (click)="toggleTable(message.id)">
+                <svg cIcon [name]="tableView[message.id] ? 'cilList' : 'cilSpreadsheet'" aria-hidden="true"></svg>
+                {{ tableView[message.id] ? texts.normsShowList : texts.normsShowTable }}
+              </button>
+              @if (tableView[message.id]) {
+                <button
+                  type="button"
+                  class="chat-norms__action"
+                  [disabled]="exporting[message.id]"
+                  (click)="exportNorms(message)"
+                  >
+                  <svg cIcon name="cilCloudDownload" aria-hidden="true"></svg>
+                  {{ exporting[message.id] ? texts.normsExporting : texts.normsExport }}
+                </button>
+              }
+            </div>
+          }
+          @if (exportFailed[message.id]) {
+            <p class="chat-feedback__error" role="alert">{{ texts.normsExportFailed }}</p>
+          }
+        </div>
+      }
+      @if (message.fileResults?.length) {
+        <div class="chat-msg__block chat-norms">
+          <p class="chat-msg__block-title">{{ texts.fileResultsTitle }}</p>
+          <div class="chat-norms__table-wrap" role="region" tabindex="0" [attr.aria-label]="texts.fileResultsTitle">
+            <table class="chat-norms__table">
+              <caption class="visually-hidden">{{ texts.fileResultsTitle }}</caption>
+              <thead>
+                <tr>
+                  <th scope="col">{{ texts.fileColumnName }}</th>
+                  <th scope="col">{{ texts.fileColumnResult }}</th>
+                  <th scope="col">{{ texts.fileColumnNorm }}</th>
+                  <th scope="col">{{ texts.fileColumnNote }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (row of message.fileResults; track row) {
+                  <tr>
+                    <td class="chat-norms__title">{{ row.name }}</td>
+                    <td class="chat-norms__nowrap" [class.chat-norms__rejected]="!row.result.accepted">{{ fileCells(row).result }}</td>
+                    <td>{{ fileCells(row).norm }}</td>
+                    <td>{{ fileCells(row).note || fileCells(row).kind }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+          <div class="chat-norms__actions">
+            <button
+              type="button"
+              class="chat-norms__action"
+              [disabled]="exporting[message.id + ':files']"
+              (click)="exportFileResults(message)"
+              >
+              <svg cIcon name="cilCloudDownload" aria-hidden="true"></svg>
+              {{ exporting[message.id + ':files'] ? texts.normsExporting : texts.normsExport }}
+            </button>
+          </div>
+          @if (exportFailed[message.id + ':files']) {
+            <p class="chat-feedback__error" role="alert">{{ texts.normsExportFailed }}</p>
+          }
+        </div>
+      }
+      @if (message.citations?.length) {
+        <div class="chat-msg__block">
+          <p class="chat-msg__block-title">{{ texts.sources }}</p>
+          <ul class="chat-msg__list chat-msg__sources">
+            @for (citation of message.citations; track citation) {
+              <li>
+                <q class="chat-msg__excerpt">{{ citation.excerpt }}</q>
+                <span class="chat-msg__source-id">{{ citation.sourceId }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+      @if (message.contacts?.length) {
+        <div class="chat-msg__block">
+          <p class="chat-msg__block-title">{{ texts.contacts }}</p>
+          <ul class="chat-msg__list chat-msg__contacts">
+            @for (contact of message.contacts; track contact) {
+              <li>
+                <strong>{{ contact.name }}</strong> · {{ contact.area }}<br />
+                @if (isEmail(contact.channel)) {
+                  <a [href]="'mailto:' + contact.channel">{{ contact.channel }}</a>
+                } @else {
+                  {{ contact.channel }}
+                }
+              </li>
+            }
+          </ul>
+        </div>
+      }
+      @if (canRate(message)) {
+        <div class="chat-feedback" role="group" [attr.aria-label]="texts.feedbackQuestion">
+          @if (!message.feedback) {
+            <span class="chat-feedback__label" aria-hidden="true">{{ texts.feedbackQuestion }}</span>
+            <button type="button" class="chat-feedback__button" (click)="rate.emit({ message: message, rating: 'useful' })">
+              <svg cIcon name="cilThumbUp" aria-hidden="true"></svg>{{ texts.feedbackUseful }}
+            </button>
+            <button type="button" class="chat-feedback__button" (click)="rate.emit({ message: message, rating: 'not_useful' })">
+              <svg cIcon name="cilThumbDown" aria-hidden="true"></svg>{{ texts.feedbackNotUseful }}
+            </button>
+          } @else {
+            <span class="chat-feedback__label" role="status">{{ texts.feedbackThanks }}</span>
+          }
+          @if (message.feedbackError) {
+            <span class="chat-feedback__error" role="alert">{{ texts.feedbackFailed }}</span>
+          }
+        </div>
+      }
+    </div>
+  </article>
+}
+
+@if (showRetry) {
+  <button type="button" class="chat-option chat-retry" (click)="retry.emit()">{{ texts.retry }}</button>
+}
+
+@if (typing) {
+  <div class="chat-msg chat-msg--ai chat-msg--typing" role="status">
+    <span class="visually-hidden">{{ texts.typing }}</span>
+    <div class="chat-msg__bubble" aria-hidden="true"><span class="chat-dot"></span><span class="chat-dot"></span><span class="chat-dot"></span></div>
+  </div>
+}
+
+@if (suggestions.length) {
+  <div class="chat-suggestions" role="group" [attr.aria-label]="texts.suggestions">
+    @for (suggestion of suggestions; track suggestion) {
+      <button
+        #chip
+        type="button"
+        class="chat-chip"
+        [class.chat-chip--back]="suggestion.kind === 'back'"
+        [class.chat-chip--end]="suggestion.kind === 'end'"
+        (click)="suggestionPick.emit(suggestion)"
+        >
+        @if (suggestion.kind === 'back') {
+          <svg cIcon name="cilChevronLeft" aria-hidden="true"></svg>
+          }{{ suggestion.label }}
+        </button>
+      }
+    </div>
+  }
+</div>
+
+@if (showScrollButton) {
+  <button type="button" class="chat-scroll-end" (click)="scrollToEnd()">{{ texts.scrollToEnd }}</button>
+}

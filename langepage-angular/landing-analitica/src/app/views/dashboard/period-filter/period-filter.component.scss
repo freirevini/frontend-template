@@ -1,0 +1,8 @@
+// Chips, bars and date fields use the global .filter-bar / .filter-chip / .filter-date classes.
+:host {
+  display: block;
+}
+
+.period-filter-granularity {
+  margin-right: .25rem;
+}

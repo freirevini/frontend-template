@@ -1,0 +1,157 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <app-docs-callout name="Rótulo flutuante"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Rótulos flutuantes Angular</strong>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Envolva um par de elementos <code>&lt;cFormControl&gt;</code> e <code>&lt;label&gt;</code>
+          em <code>cFormControl</code> para habilitar rótulos flutuantes em campos de texto do
+          formulário. Um <code>placeholder</code> é obrigatório em cada <code>&lt;input&gt;</code>,
+          pois nosso método de rótulos flutuantes somente com CSS usa o pseudoelemento
+          <code>:placeholder-shown</code>. Observe também que o <code>&lt;cFormControl&gt;</code> deve vir
+          primeiro para que possamos usar um seletor de irmãos (por exemplo, <code>~</code>).
+        </p>
+        <app-docs-example>
+          <div [cFormFloating]="true" class="mb-3">
+            <input cFormControl id="floatingInput" placeholder="nome@exemplo.com" type="email" />
+            <label cLabel for="floatingInput">Endereço de e-mail</label>
+          </div>
+          <div cFormFloating>
+            <input cFormControl id="floatingPassword" placeholder="Senha" type="password" />
+            <label cLabel for="floatingPassword">Senha</label>
+          </div>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Quando já existe um <code>value</code> definido, os elementos <code>&lt;label&gt;</code>
+          se ajustam automaticamente à posição flutuante.
+        </p>
+        <app-docs-example>
+          <form cForm cFormFloating>
+            <input
+              cFormControl
+              id="floatingInputValue"
+              placeholder="nome@exemplo.com"
+              type="email"
+              value="teste@exemplo.com"
+            />
+            <label cLabel for="floatingInputValue">Campo com valor</label>
+          </form>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Rótulos flutuantes Angular</strong> <small>Áreas de texto</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Por padrão, os <code>&lt;CFormTextarea&gt;</code>s terão a mesma altura que os
+          <code>&lt;input&gt;</code>s.
+        </p>
+        <app-docs-example>
+          <div cFormFloating>
+            <input
+              cFormControl
+              id="floatingTextarea"
+              placeholder="Deixe um comentário aqui"
+              type="text"
+            >
+            <label cLabel for="floatingTextarea">Comentários</label>
+          </div>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Para definir uma altura personalizada no seu <code>&lt;CFormTextarea;&gt;</code>, não use o
+          atributo <code>rows</code>. Em vez disso, defina um <code>height</code> explícito (seja
+          inline ou via CSS personalizado).
+        </p>
+        <app-docs-example>
+          <div cFormFloating>
+            <textarea [ngStyle]="{ 'height.px': 100 }"
+                      cFormControl
+                      id="floatingTextarea2"
+                      placeholder="Deixe um comentário aqui"
+            ></textarea>
+            <label cLabel for="floatingTextarea2">Comentários</label>
+          </div>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Rótulos flutuantes Angular</strong> <small>Seleções</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Além do <code>&lt;input&gt;</code>, rótulos flutuantes só estão disponíveis em
+          <code>&lt;cSelect&gt;</code>s. Eles funcionam da mesma forma, mas, ao contrário dos
+          <code>&lt;input&gt;</code>s, sempre mostram o
+          <code>&lt;label&gt;</code> no estado flutuante.
+          <strong>
+            Seleções com <code>size</code> e <code>multiple</code> não são suportadas.
+          </strong>
+        </p>
+        <app-docs-example>
+          <div cFormFloating>
+            <select aria-label="Exemplo de seleção com rótulo flutuante" cSelect id="floatingSelect">
+              <option>Abra este menu de seleção</option>
+              <option value="1">Um</option>
+              <option value="2">Dois</option>
+              <option value="3">Três</option>
+            </select>
+            <label cLabel for="floatingSelect">Funciona com seleções</label>
+          </div>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Rótulos flutuantes Angular</strong> <small>Layout</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Ao trabalhar com o sistema de grid, coloque os elementos do
+          formulário dentro de classes de coluna.
+        </p>
+        <app-docs-example>
+          <c-row [gutter]="{g: 2}">
+            <c-col md>
+              <div cFormFloating>
+                <input
+                  cFormControl
+                  id="floatingInputGrid"
+                  placeholder="nome@exemplo.com"
+                  type="email"
+                  value="email@exemplo.com"
+                />
+                <label cLabel for="floatingInputGrid">Endereço de e-mail</label>
+              </div>
+            </c-col>
+            <c-col md>
+              <div cFormFloating>
+                <select aria-label="Exemplo de seleção com rótulo flutuante" cSelect id="floatingSelectGrid">
+                  <option>Abra este menu de seleção</option>
+                  <option value="1">Um</option>
+                  <option value="2">Dois</option>
+                  <option value="3">Três</option>
+                </select>
+                <label cLabel for="floatingSelectGrid">Funciona com seleções</label>
+              </div>
+            </c-col>
+          </c-row>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+

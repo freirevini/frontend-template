@@ -1,0 +1,88 @@
+// Segment cards: brand primary gradient with white content, in both themes (the dark values of
+// --brand-primary / --brand-primary-high come from _theme-dark.scss). Kept under the 4kb style budget.
+:host {
+  --stat-bg: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-high) 100%);
+  --stat-accent: var(--brand-primary);
+}
+
+// Petrol tone (Scalation): brand cyan-high to navy; white text above 7:1 on both ends
+:host(.tone-petrol) {
+  --stat-bg: linear-gradient(135deg, var(--brand-highlight-high) 0%, var(--brand-sidebar) 100%);
+  --stat-accent: var(--brand-highlight-high);
+}
+
+.brand-stat-card {
+  --card-fg: rgb(var(--cui-white-rgb));
+  position: relative;
+  overflow: hidden;
+  color: var(--card-fg);
+  background: var(--stat-bg);
+  border: 0;
+
+  // Soft highlight glow in the corner (cyan, very low alpha)
+  &::after {
+    position: absolute;
+    top: -3rem;
+    right: -3rem;
+    width: 9rem;
+    height: 9rem;
+    content: "";
+    background: radial-gradient(circle, var(--brand-highlight), transparent 70%);
+    opacity: .28;
+    pointer-events: none;
+  }
+
+  // Value: Inter 600, tabular digits
+  ::ng-deep .fs-4 {
+    font-size: 1.75rem !important;
+    font-weight: 600;
+    letter-spacing: -.02em;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+  }
+
+  // Segment name row
+  ::ng-deep .card-body > div > div:last-child {
+    margin-top: .25rem;
+    font-size: .875rem;
+    font-weight: 500;
+    opacity: .9;
+  }
+}
+
+.segment-icon {
+  width: 1rem;
+  height: 1rem;
+  opacity: .85;
+}
+
+.brand-stat-value {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+}
+
+.brand-stat-card {
+  transition: opacity .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.brand-stat-card.is-filtered {
+  box-shadow: 0 0 0 2px var(--brand-highlight), var(--brand-elevation-2);
+}
+
+.brand-stat-card.is-dimmed {
+  opacity: .5;
+}
+
+.brand-stat-chart {
+  display: block;
+  margin: .75rem 1rem 0;
+}
+
+// Dark theme: the dark --brand-primary pair is lighter, so a translucent dark layer keeps white text legible.
+:host-context([data-theme="dark"]) .brand-stat-card {
+  background:
+    linear-gradient(135deg, rgba(var(--cui-black-rgb), .16), rgba(var(--cui-black-rgb), .3)),
+    var(--stat-bg);
+}

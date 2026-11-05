@@ -1,0 +1,69 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <app-docs-callout name="Popover"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Popover Angular</strong> <small>Exemplo básico</small>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <button [cPopover]="popoverHtml"
+                  cPopoverPlacement="right"
+                  [cPopoverTrigger]="'click'"
+                  [cPopoverVisible]="visible"
+                  cButton
+                  class="m-1"
+                  color="danger"
+                  size="lg">
+            Clique para alternar o popover
+            <ng-template #popoverHtml>
+              <h3 class="popover-header">
+                Título do popover
+              </h3>
+              <div class="popover-body">
+                E aqui está um conteúdo incrível. É muito envolvente. Não é?
+              </div>
+            </ng-template>
+          </button>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Popover Angular</strong> <small>Quatro direções</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Quatro opções estão disponíveis: alinhado acima, à direita, abaixo e à esquerda.
+        </p>
+        <app-docs-example>
+          <button [cPopoverTrigger]="'hover'" cButton [cPopover]="tooltipHtml"
+                  cPopoverPlacement="top" class="me-1"
+                  color="secondary">Popover acima
+            <ng-template #tooltipHtml>
+              <div class="popover-body">
+                Vivamus sagittis lacus vel augue laoreet rutrum faucibus. Acima!
+              </div>
+            </ng-template>
+          </button>
+          <button [cPopoverTrigger]="'hover'" cButton cPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus. À direita!"
+                  cPopoverPlacement="right"
+                  class="me-1" color="secondary">Popover à direita
+          </button>
+          <button [cPopoverTrigger]="'hover'" cButton cPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus. Abaixo!"
+                  cPopoverPlacement="bottom"
+                  class="me-1" color="secondary">Popover abaixo
+          </button>
+          <button [cPopoverTrigger]="'hover'" cButton cPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus. À esquerda!"
+                  cPopoverPlacement="left" class="me-1"
+                  color="secondary">Popover à esquerda
+          </button>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

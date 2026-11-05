@@ -1,0 +1,159 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": false
+  },
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "landing-analitica": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": "dist/landing-analitica",
+            "index": "src/index.html",
+            "polyfills": [
+              "@angular/localize/init",
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "preserveSymlinks": true,
+            "assets": [
+              "src/assets"
+            ],
+            "styles": [
+              "node_modules/@fontsource/inter/latin-400.css",
+              "node_modules/@fontsource/inter/latin-ext-400.css",
+              "node_modules/@fontsource/inter/latin-500.css",
+              "node_modules/@fontsource/inter/latin-ext-500.css",
+              "node_modules/@fontsource/inter/latin-600.css",
+              "node_modules/@fontsource/inter/latin-ext-600.css",
+              "node_modules/@fontsource/inter/latin-700.css",
+              "node_modules/@fontsource/inter/latin-ext-700.css",
+              "src/scss/styles.scss"
+            ],
+            "scripts": [],
+            "browser": "src/main.ts",
+            "allowedCommonJsDependencies": [
+              "exceljs/dist/exceljs.min.js"
+            ],
+            "stylePreprocessorOptions": {
+              "sass": {
+                "silenceDeprecations": [
+                  "import"
+                ]
+              }
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1500kb",
+                  "maximumError": "6mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all",
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "landing-analitica:build:production"
+            },
+            "development": {
+              "buildTarget": "landing-analitica:build:development"
+            }
+          },
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n",
+          "options": {
+            "buildTarget": "landing-analitica:build"
+          }
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing",
+              "@angular/localize/init"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/assets"
+            ],
+            "styles": [
+              "node_modules/@fontsource/inter/latin-400.css",
+              "node_modules/@fontsource/inter/latin-ext-400.css",
+              "node_modules/@fontsource/inter/latin-500.css",
+              "node_modules/@fontsource/inter/latin-ext-500.css",
+              "node_modules/@fontsource/inter/latin-600.css",
+              "node_modules/@fontsource/inter/latin-ext-600.css",
+              "node_modules/@fontsource/inter/latin-700.css",
+              "node_modules/@fontsource/inter/latin-ext-700.css",
+              "src/scss/styles.scss"
+            ],
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "sass": {
+                "silenceDeprecations": [
+                  "import"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

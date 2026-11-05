@@ -1,0 +1,42 @@
+<c-row>
+  <c-col *ngFor="let segment of segments; index as i" sm="6" xl="3">
+    <c-widget-stat-a
+      class="mb-4 brand-stat-card"
+      [class.is-filtered]="activeSegment === segment.id"
+      [class.is-dimmed]="activeSegment !== null && activeSegment !== segment.id"
+      [title]="segment.label"
+    >
+      <ng-template cTemplateId="widgetTitleTemplate">
+        <span class="d-inline-flex align-items-center gap-1">
+          <svg cIcon [name]="segment.icon" class="segment-icon" aria-hidden="true"></svg>
+          {{ segment.label }}
+        </span>
+      </ng-template>
+      <ng-template cTemplateId="widgetValueTemplate">
+        <span class="brand-stat-value">
+          <span>{{ segment.total | number: '1.0-0' }}</span>
+          <button
+            *ngIf="filterable; else pendingText"
+            type="button"
+            class="brand-stat-pending"
+            data-segment-filter
+            [attr.aria-pressed]="activeSegment === segment.id"
+            [attr.title]="activeSegment === segment.id
+              ? 'Remover filtro de normas a classificar'
+              : 'Filtrar a página pelas normas a classificar de ' + segment.label"
+            (click)="selectToClassify(segment.id)"
+          >
+            {{ segment.toClassify | number: '1.0-0' }} a classificar
+          </button>
+          <ng-template #pendingText>
+            <span class="brand-stat-pending">{{ segment.toClassify | number: '1.0-0' }} a classificar</span>
+          </ng-template>
+        </span>
+      </ng-template>
+      <ng-template cTemplateId="widgetChartTemplate">
+        <c-chart [data]="data[i]" [options]="options[i]" class="brand-stat-chart" height="70" type="line"></c-chart>
+      </ng-template>
+    </c-widget-stat-a>
+  </c-col>
+</c-row>
+<p *ngIf="loadError" class="small text-medium-emphasis mb-4" role="alert">Não foi possível carregar os segmentos.</p>

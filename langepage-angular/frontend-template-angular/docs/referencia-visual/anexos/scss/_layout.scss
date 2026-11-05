@@ -1,0 +1,24 @@
+.wrapper {
+  width: 100%;
+  // Chart.js HTML tooltips (c-chart custom tooltips) stay in the DOM, invisible, at their last position; clip them
+  // so a tooltip left near the right edge never adds horizontal scroll on small screens. `clip` keeps sticky headers working.
+  overflow-x: clip;
+  @include ltr-rtl("padding-left", var(--cui-sidebar-occupy-start, 0));
+  @include ltr-rtl("padding-right", var(--cui-sidebar-occupy-end, 0));
+  will-change: auto;
+  @include transition(padding .15s);
+}
+
+// Page surface behind the cards (the .bg-light utility is the page token in both themes)
+.wrapper.bg-light {
+  background-color: var(--brand-surface-page) !important;
+}
+
+// Body: keep content inside the viewport on narrow screens
+.body {
+  min-width: 0;
+
+  > .container-lg {
+    min-width: 0;
+  }
+}

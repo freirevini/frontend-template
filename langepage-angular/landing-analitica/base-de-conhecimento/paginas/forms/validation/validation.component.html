@@ -1,0 +1,433 @@
+<c-row>
+  <c-col xs="12">
+    <app-docs-callout name="Validação"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Validação</strong> <small>Estilos personalizados</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Para mensagens de validação de formulário personalizadas, você precisará adicionar a
+          propriedade booleana <code>noValidate</code> ao seu <code>&lt;CForm&gt;</code>. Isso
+          desativa as dicas de feedback padrão do navegador, mas ainda dá acesso às APIs de
+          validação de formulário em JavaScript. Tente enviar o formulário abaixo; nosso JavaScript
+          interceptará o botão de envio e mostrará o feedback para você. Ao tentar enviar,
+          você verá os estilos <code>:invalid</code> e <code>:valid</code> aplicados aos
+          controles do formulário.
+        </p>
+        <p class="text-medium-emphasis small">
+          Os estilos de feedback personalizados aplicam cores, bordas, estilos de foco e ícones de
+          fundo personalizados para comunicar melhor o feedback.
+        </p>
+        <app-docs-example>
+
+          <form #customStylesForm="ngForm"
+                (ngSubmit)="onSubmit1()"
+                [validated]="customStylesValidated"
+                cForm
+                class="row g-3 needs-validation"
+          >
+            <c-col md="4">
+              <label cLabel for="validationCustom01">Nome</label>
+              <input cFormControl id="validationCustom01" required type="text" value="Mark" />
+              <c-form-feedback [valid]="true">Tudo certo!</c-form-feedback>
+            </c-col>
+            <c-col md="4">
+              <label cLabel for="validationCustom02">Sobrenome</label>
+              <input cFormControl id="validationCustom02" required type="text" value="Otto" />
+              <c-form-feedback [valid]="true">Tudo certo!</c-form-feedback>
+            </c-col>
+            <c-col md="4">
+              <label cLabel for="validationCustomUsername">Usuário</label>
+              <c-input-group class="has-validation">
+                <span cInputGroupText id="inputGroupPrepend">@</span>
+                <input aria-describedby="inputGroupPrepend"
+                       cFormControl
+                       id="validationCustomUsername"
+                       required
+                       type="text"
+                />
+                <c-form-feedback [valid]="false">Escolha um nome de usuário.</c-form-feedback>
+              </c-input-group>
+            </c-col>
+            <c-col md="6">
+              <label cLabel for="validationCustom03">Cidade</label>
+              <input cFormControl id="validationCustom03" required type="text" />
+              <c-form-feedback [valid]="false">Informe uma cidade válida.</c-form-feedback>
+            </c-col>
+            <c-col md="3">
+              <label cLabel for="validationCustom04">Estado</label>
+              <select cSelect id="validationCustom04" required>
+                <option value="">Escolha...</option>
+                <option>...</option>
+              </select>
+              <c-form-feedback [valid]="false">Informe um estado válido.</c-form-feedback>
+            </c-col>
+            <c-col md="3">
+              <label cLabel for="validationCustom05">CEP</label>
+              <input cFormControl id="validationCustom05" required type="text" />
+              <c-form-feedback [valid]="false">Informe um CEP válido.</c-form-feedback>
+            </c-col>
+            <c-col xs="12">
+              <c-form-check>
+                <input cFormCheckInput id="invalidCheck" name="invalidCheck" required type="checkbox" />
+                <label cFormCheckLabel for="invalidCheck">Concordo com os termos e condições</label>
+              </c-form-check>
+              <c-form-feedback [valid]="false">Você precisa concordar antes de enviar.</c-form-feedback>
+            </c-col>
+            <c-col xs="12">
+              <button cButton class="me-1" color="primary" type="submit">
+                Enviar formulário
+              </button>
+              <button (click)="onReset1()" cButton color="secondary" type="reset">
+                Redefinir
+              </button>
+            </c-col>
+          </form>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Validação</strong> <small>Padrões do navegador</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Não quer mensagens de feedback de validação personalizadas nem escrever JavaScript para mudar
+          o comportamento do formulário? Tudo bem, você pode usar os padrões do navegador. Tente enviar
+          o formulário abaixo. Dependendo do seu navegador e sistema operacional, você verá um estilo
+          de feedback um pouco diferente.
+        </p>
+        <p class="text-medium-emphasis small">
+          Embora esses estilos de feedback não possam ser estilizados com CSS, você ainda pode
+          personalizar o texto do feedback via JavaScript.
+        </p>
+        <app-docs-example>
+
+          <form #browserDefaultsForm="ngForm"
+                (ngSubmit)="onSubmit2()"
+                [validated]="browserDefaultsValidated"
+                cForm
+                class="row g-3"
+                ngNativeValidate
+          >
+            <c-col md="4">
+              <label cLabel for="validationDefault01">E-mail</label>
+              <input cFormControl id="validationDefault01" required type="text" value="Mark" />
+              <c-form-feedback [valid]="true">Tudo certo!</c-form-feedback>
+            </c-col>
+            <c-col md="4">
+              <label cLabel for="validationDefault02">E-mail</label>
+              <input cFormControl id="validationDefault02" required type="text" value="Otto" />
+              <c-form-feedback [valid]="true">Tudo certo!</c-form-feedback>
+            </c-col>
+            <c-col md="4">
+              <label cLabel for="validationDefaultUsername">Usuário</label>
+              <c-input-group class="has-validation">
+                <span cInputGroupText id="inputGroupPrepend1">@</span>
+                <input aria-describedby="inputGroupPrepend1"
+                       cFormControl
+                       id="validationDefaultUsername"
+                       required
+                       type="text"
+                />
+                <c-form-feedback [valid]="false">Escolha um nome de usuário.</c-form-feedback>
+              </c-input-group>
+            </c-col>
+            <c-col md="6">
+              <label cLabel for="validationDefault03">Cidade</label>
+              <input cFormControl id="validationDefault03" required type="text" />
+              <c-form-feedback [valid]="false">Informe uma cidade válida.</c-form-feedback>
+            </c-col>
+            <c-col md="3">
+              <label cLabel for="validationDefault04">Estado</label>
+              <select cSelect id="validationDefault04" required>
+                <option value="">Escolha...</option>
+                <option>...</option>
+              </select>
+              <c-form-feedback [valid]="false">Informe um estado válido.</c-form-feedback>
+            </c-col>
+            <c-col md="3">
+              <label cLabel for="validationDefault05">CEP</label>
+              <input cFormControl id="validationDefault05" required type="text" />
+              <c-form-feedback [valid]="false">Informe um CEP válido.</c-form-feedback>
+            </c-col>
+            <c-col xs="12">
+              <c-form-check>
+                <input cFormCheckInput id="invalidCheck1" name="invalidCheck" required type="checkbox" />
+                <label cFormCheckLabel for="invalidCheck1">Concordo com os termos e condições</label>
+              </c-form-check>
+              <c-form-feedback [valid]="false">Você precisa concordar antes de enviar.</c-form-feedback>
+            </c-col>
+            <c-col xs="12">
+              <button cButton class="me-1" color="primary" type="submit">
+                Enviar formulário
+              </button>
+              <button (click)="onReset2()" cButton color="secondary" type="reset">
+                Redefinir
+              </button>
+            </c-col>
+          </form>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Validação</strong> <small>Lado do servidor</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Recomendamos usar validação no lado do cliente, mas, caso precise de validação no lado do
+          servidor, você pode indicar campos inválidos e válidos com as propriedades booleanas
+          <code>invalid</code> e <code>valid</code>.
+        </p>
+        <p class="text-medium-emphasis small">
+          Para campos inválidos, garanta que a mensagem de feedback/erro esteja associada ao
+          campo correspondente usando <code>aria-describedby</code> (observando que esse
+          atributo permite referenciar mais de um <code>id</code>, caso o campo
+          já aponte para um texto de ajuda adicional).
+        </p>
+        <app-docs-example>
+          <form cForm class="row g-3 needs-validation" ngNativeValidate>
+            <c-col md="4">
+              <label cLabel for="validationServer01">Nome</label>
+              <input [valid]="true"
+                     cFormControl
+                     id="validationServer01"
+                     required
+                     type="text"
+                     value="Mark"
+              />
+              <c-form-feedback [valid]="true">Tudo certo!</c-form-feedback>
+            </c-col>
+            <c-col md="4">
+              <label cLabel for="validationServer02">Sobrenome</label>
+              <input [valid]="true"
+                     cFormControl
+                     id="validationServer02"
+                     required
+                     type="text"
+                     value="Otto"
+              />
+              <c-form-feedback [valid]="true">Tudo certo!</c-form-feedback>
+            </c-col>
+            <c-col md="4">
+              <label cLabel for="validationServerUsername">Usuário</label>
+              <c-input-group class="has-validation">
+                <span cInputGroupText id="inputGroupPrepend03">@</span>
+                <input [valid]="false"
+                       aria-describedby="inputGroupPrepend03"
+                       cFormControl
+                       id="validationServerUsername"
+                       required
+                       type="text"
+                />
+                <c-form-feedback [valid]="false">Escolha um nome de usuário.</c-form-feedback>
+              </c-input-group>
+            </c-col>
+            <c-col md="6">
+              <label cLabel for="validationServer03">Cidade</label>
+              <input [valid]="false" cFormControl id="validationServer03" required type="text" />
+              <c-form-feedback [valid]="false">Informe uma cidade válida.</c-form-feedback>
+            </c-col>
+            <c-col md="3">
+              <label cLabel for="validationServer04">Estado</label>
+              <select [valid]="false" cSelect id="validationServer04">
+                <option disabled>Escolha...</option>
+                <option>...</option>
+              </select>
+              <c-form-feedback [valid]="false">Informe um estado válido.</c-form-feedback>
+            </c-col>
+            <c-col md="3">
+              <label cLabel for="validationServer05">CEP</label>
+              <input [valid]="false" cFormControl id="validationServer05" required type="text" />
+              <c-form-feedback [valid]="false">Informe um CEP válido.</c-form-feedback>
+            </c-col>
+            <c-col xs="12">
+              <c-form-check class="mb-3">
+                <input [valid]="false" cFormCheckInput id="invalidCheckServer" required type="checkbox">
+                <label cFormCheckLabel for="invalidCheckServer">Concordo com os termos e condições</label>
+              </c-form-check>
+              <c-form-feedback [valid]="false">Você precisa concordar antes de enviar.</c-form-feedback>
+            </c-col>
+            <c-col xs="12">
+              <button cButton color="primary" type="submit">
+                Enviar formulário
+              </button>
+            </c-col>
+          </form>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Validação</strong> <small>Elementos suportados</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Os estilos de validação estão disponíveis para os seguintes controles e componentes de formulário:
+        </p>
+        <ul [flush]="true" cListGroup class="mb-3">
+          <li cListGroupItem>
+            <code>&lt;input cFormControl&gt;</code>
+          </li>
+          <li cListGroupItem>
+            <code>&lt;select cSelect&gt;</code>
+          </li>
+          <li cListGroupItem>
+            <code>&lt;c-form-check&gt;</code>
+          </li>
+        </ul>
+        <app-docs-example>
+          <form [validated]="true" cForm>
+            <div class="mb-3">
+              <label cLabel class="form-label" for="validationTextarea">
+                Área de texto
+              </label>
+              <textarea [valid]="false"
+                        cFormControl
+                        id="validationTextarea"
+                        placeholder="Exemplo de área de texto obrigatória"
+                        required
+              ></textarea>
+              <c-form-feedback [valid]="false">Digite uma mensagem na área de texto.</c-form-feedback>
+            </div>
+            <c-form-check class="mb-3">
+              <input cFormCheckInput id="validationFormCheck1" name="validationFormCheck1" required type="checkbox" />
+              <label cFormCheckLabel for="validationFormCheck1">Marque esta caixa de seleção</label>
+            </c-form-check>
+            <c-form-feedback [valid]="false">Exemplo de texto de feedback inválido</c-form-feedback>
+
+            <c-form-check>
+              <input cFormCheckInput id="validationFormCheck2" name="radio-stacked" required type="radio" />
+              <label cFormCheckLabel for="validationFormCheck2">Marque este rádio</label>
+            </c-form-check>
+
+            <c-form-check class="mb-3">
+              <input cFormCheckInput id="validationFormCheck3" name="radio-stacked" required type="radio" />
+              <label cFormCheckLabel for="validationFormCheck3">Marque este rádio</label>
+            </c-form-check>
+
+            <c-form-feedback [valid]="false">Mais um exemplo de texto de feedback inválido</c-form-feedback>
+
+            <div class="mb-3">
+              <select aria-label="exemplo de seleção" cSelect required>
+                <option value="">Abra este menu de seleção</option>
+                <option value="1">Um</option>
+                <option value="2">Dois</option>
+                <option value="3">Três</option>
+              </select>
+              <c-form-feedback [valid]="false">Exemplo de feedback inválido de seleção</c-form-feedback>
+            </div>
+
+            <div class="mb-3">
+              <input aria-label="exemplo de arquivo"
+                     cFormControl
+                     id="validationText1"
+                     required
+                     type="file"
+              />
+              <c-form-feedback [valid]="false">Exemplo de feedback inválido de arquivo</c-form-feedback>
+            </div>
+
+            <div class="mb-3">
+              <button cButton color="primary" disabled type="submit">
+                Enviar formulário
+              </button>
+            </div>
+          </form>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Validação</strong> <small>Dicas</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Se o layout do seu formulário permitir, você pode trocar o texto pela dica para exibir o
+          feedback de validação em uma dica estilizada. Garanta que exista um elemento pai com
+          <code>position: relative</code> para o posicionamento da dica. No exemplo abaixo,
+          nossas classes de coluna já fazem isso, mas seu projeto pode exigir uma configuração
+          diferente.
+        </p>
+        <app-docs-example>
+
+          <form #tooltipForm="ngForm"
+                (ngSubmit)="onSubmit3()"
+                [validated]="tooltipValidated"
+                cForm
+                class="row g-3 needs-validation"
+          >
+            <c-col class="position-relative" md="4">
+              <label cLabel for="validationTooltip01">Nome</label>
+              <input cFormControl id="validationTooltip01" required type="text" value="Mark" />
+              <c-form-feedback [valid]="true" tooltip>Tudo certo!</c-form-feedback>
+            </c-col>
+            <c-col class="position-relative" md="4">
+              <label cLabel for="validationTooltip02">Sobrenome</label>
+              <input cFormControl id="validationTooltip02" required type="text" value="Otto" />
+              <c-form-feedback [valid]="true" tooltip>Tudo certo!</c-form-feedback>
+            </c-col>
+            <c-col class="position-relative" md="4">
+              <label cLabel for="validationTooltipUsername">Usuário</label>
+              <c-input-group class="has-validation">
+                <span cInputGroupText id="inputGroupPrependTooltip">@</span>
+                <input aria-describedby="inputGroupPrependTooltip"
+                       cFormControl
+                       id="validationTooltipUsername"
+                       required
+                       type="text"
+                />
+                <c-form-feedback [valid]="false" tooltip>Escolha um nome de usuário.</c-form-feedback>
+              </c-input-group>
+            </c-col>
+            <c-col class="position-relative" md="6">
+              <label cLabel for="validationTooltip03">Cidade</label>
+              <input cFormControl id="validationTooltip03" required type="text" />
+              <c-form-feedback [valid]="false" tooltip>Informe uma cidade válida.</c-form-feedback>
+            </c-col>
+            <c-col class="position-relative" md="3">
+              <label cLabel for="validationTooltip04">Estado</label>
+              <select cSelect id="validationTooltip04" required>
+                <option value="">Escolha...</option>
+                <option value="1">...</option>
+              </select>
+              <c-form-feedback [valid]="false" tooltip>Informe um estado válido.</c-form-feedback>
+            </c-col>
+            <c-col class="position-relative" md="3">
+              <label cLabel for="validationTooltip05">CEP</label>
+              <input cFormControl id="validationTooltip05" required type="text" />
+              <c-form-feedback [valid]="false" tooltip>Informe um CEP válido.</c-form-feedback>
+            </c-col>
+            <c-col class="position-relative" xs="12">
+              <c-form-check>
+                <input cFormCheckInput id="invalidCheckTooltip" name="invalidCheckTooltip" required type="checkbox" />
+                <label cFormCheckLabel for="invalidCheckTooltip">Concordo com os termos e condições</label>
+              </c-form-check>
+              <c-form-feedback [valid]="false" tooltip>Você precisa concordar antes de enviar.</c-form-feedback>
+            </c-col>
+            <c-col xs="12">
+              <button cButton class="me-1" color="primary" type="submit">
+                Enviar formulário
+              </button>
+              <button (click)="onReset3()" cButton color="secondary" type="reset">
+                Redefinir
+              </button>
+            </c-col>
+          </form>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

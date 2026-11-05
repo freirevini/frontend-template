@@ -1,0 +1,113 @@
+<!-- data-page-filter: sorting, paging and export keep the page filters this table reflects. -->
+<c-card class="mb-4" aria-labelledby="analytic-title" data-page-filter>
+  <c-card-body>
+    <div class="analytic-header">
+      <div>
+        <h4 class="card-title mb-0" id="analytic-title">Tabela Analítica</h4>
+        <div class="small text-medium-emphasis">
+          {{ subtitle }}@if (state === 'ready') {
+          · {{ formatNumber(total) }} {{ total === 1 ? 'norma' : 'normas' }}
+        }
+      </div>
+    </div>
+    @if (state === 'ready') {
+      <button
+        type="button"
+        class="btn btn-outline-primary btn-sm analytic-export"
+        [disabled]="exporting || !total"
+        (click)="exportXlsx()"
+        >
+        <svg cIcon name="cilSpreadsheet" size="sm" aria-hidden="true"></svg>
+        {{ exporting ? exportLabel : 'Exportar Excel' }}
+      </button>
+    }
+  </div>
+
+  <p class="analytic-filters small mb-0" role="status">
+    @if (activeFilters.length) {
+      Filtros aplicados:
+      @for (filter of activeFilters; track filter) {
+        <span class="analytic-filter">{{ filter }}</span>
+      }
+    } @else {
+      Sem filtros: todas as normas classificadas no período do gráfico Normativos Recebidos.
+    }
+  </p>
+  @if (exportError) {
+    <p class="small text-danger mt-2 mb-0" role="alert"><app-api-error-text [error]="exportProblem" [fallback]="exportError"></app-api-error-text></p>
+  }
+
+  @switch (state) {
+    @case ('loading') {
+      <div class="classification-placeholder text-medium-emphasis">
+        <c-spinner size="sm" label="Carregando..." class="me-2"></c-spinner>
+        Carregando dados...
+      </div>
+    }
+    @case ('error') {
+      <div class="classification-placeholder text-medium-emphasis" role="alert">
+        <app-api-error-text [error]="loadProblem" fallback="Não foi possível carregar a tabela analítica."></app-api-error-text>
+      </div>
+    }
+    @case ('ready') {
+      @if (!total) {
+        <p class="classification-placeholder text-medium-emphasis mb-0">Nenhuma norma para os filtros aplicados.</p>
+      }
+      @if (total) {
+        <div class="analytic-scroll" role="region" tabindex="0" aria-label="Tabela analítica. Role para o lado para ver todas as colunas.">
+          <table cTable [small]="true" [hover]="true" class="mb-0 align-middle analytic-table">
+            <caption class="visually-hidden">Normas classificadas, {{ subtitle }}, página {{ page }} de {{ pageCount }}</caption>
+            <thead>
+              <tr>
+                @for (column of columns; track column) {
+                  <th scope="col" [attr.aria-sort]="ariaSort(column.key)">
+                    <button type="button" class="analytic-sort" [class.is-sorted]="sortKey === column.key" (click)="sortBy(column.key)">
+                      {{ column.label }}
+                      <svg
+                        cIcon
+                        [name]="sortKey === column.key && sortDirection === 'asc' ? 'cilArrowTop' : 'cilArrowBottom'"
+                        size="sm"
+                        class="analytic-sort-icon"
+                        aria-hidden="true"
+                      ></svg>
+                    </button>
+                  </th>
+                }
+                <th scope="col" class="analytic-ask-col"><span class="visually-hidden">Agente da Agenda</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (norma of pageRows; track norma) {
+                <tr>
+                  @for (column of columns; track column) {
+                    <td [class]="'analytic-' + column.key">{{ cell(norma, column.key) }}</td>
+                  }
+                  <td class="analytic-ask-col">
+                    <button
+                      type="button"
+                      class="analytic-ask"
+                      [attr.aria-label]="askLabel(norma)"
+                      [title]="askLabel(norma)"
+                      (click)="askAssistant(norma)"
+                      >
+                      <svg cIcon name="cilSpeech" size="sm" aria-hidden="true"></svg>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <nav class="analytic-pager" aria-label="Paginação da tabela analítica">
+          <span class="small text-medium-emphasis">{{ rangeLabel }}</span>
+          <div class="analytic-pager-buttons">
+            <button type="button" class="filter-chip" [disabled]="page === 1" (click)="goTo(page - 1)">Anterior</button>
+            <span class="small" aria-live="polite">Página {{ page }} de {{ pageCount }}</span>
+            <button type="button" class="filter-chip" [disabled]="page === pageCount" (click)="goTo(page + 1)">Próxima</button>
+          </div>
+        </nav>
+      }
+    }
+  }
+</c-card-body>
+</c-card>

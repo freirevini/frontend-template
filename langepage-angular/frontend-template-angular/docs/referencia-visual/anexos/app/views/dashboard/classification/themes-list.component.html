@@ -1,0 +1,54 @@
+<c-card class="h-100" aria-labelledby="themes-title">
+  <c-card-body>
+    <h4 class="card-title mb-0" id="themes-title">Assunto das Normas {{ listsNotApplicable ? 'Não Aplicáveis' : 'Aplicáveis' }}</h4>
+    <div class="small text-medium-emphasis">
+      {{ subtitle }}
+      <ng-container *ngIf="segmentFilter"> · {{ filterLabel }}</ng-container>
+    </div>
+
+    <ng-container [ngSwitch]="state">
+      <div *ngSwitchCase="'loading'" class="classification-placeholder text-medium-emphasis">
+        <c-spinner size="sm" label="Carregando..." class="me-2"></c-spinner>
+        Carregando dados...
+      </div>
+
+      <div *ngSwitchCase="'error'" class="classification-placeholder text-medium-emphasis" role="alert">
+        Não foi possível carregar a classificação das normas.
+      </div>
+
+      <ng-container *ngSwitchCase="'ready'">
+        <p *ngIf="aggregate && aggregate.themesTotal === 0" class="classification-placeholder text-medium-emphasis mb-0">
+          Nenhuma norma {{ listsNotApplicable ? 'não aplicável' : 'aplicável' }} neste período.
+        </p>
+
+        <ol
+          *ngIf="aggregate && aggregate.themesTotal > 0"
+          class="theme-bars"
+          [attr.aria-label]="'Temas por número de normas ' + (listsNotApplicable ? 'não aplicáveis' : 'aplicáveis') + '; escolha um tema para filtrar a pizza'"
+        >
+          <li *ngFor="let theme of aggregate.themes">
+            <button
+              type="button"
+              class="theme-row"
+              data-page-filter
+              [class.is-active]="themeFilter === theme.label"
+              [class.is-dimmed]="isDimmed(theme)"
+              [attr.aria-pressed]="themeFilter === theme.label"
+              [attr.title]="themeFilter === theme.label ? 'Remover filtro' : theme.label + ': filtrar a pizza por este tema'"
+              (click)="select(theme)"
+            >
+              <span class="theme-label">{{ theme.label }}</span>
+              <span class="theme-track" aria-hidden="true"><span class="theme-fill" [class.is-not-applicable]="listsNotApplicable" [style.width.%]="barWidth(theme.width)"></span></span>
+              <span class="theme-value">{{ formatNumber(theme.count) }} <span>{{ formatPercent(theme.share) }}</span></span>
+            </button>
+          </li>
+          <li *ngIf="aggregate.others as others" class="theme-row is-other">
+            <span class="theme-label">{{ others.label }} ({{ others.grouped }} {{ others.grouped === 1 ? 'tema' : 'temas' }})</span>
+            <span class="theme-track" aria-hidden="true"></span>
+            <span class="theme-value">{{ formatNumber(others.count) }} <span>{{ formatPercent(others.share) }}</span></span>
+          </li>
+        </ol>
+      </ng-container>
+    </ng-container>
+  </c-card-body>
+</c-card>

@@ -1,0 +1,219 @@
+// "E-mails de sugestão de classificação" card: legend, list of the latest e-mails and normas table (tokens only).
+// Global on purpose: the component stylesheet would exceed the anyComponentStyle budget (docs/portabilidade.md 4.11).
+// Legend under the chart (or table), centered on the plot.
+.emails-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .25rem .5rem;
+  margin: .75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.emails-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  padding: .25rem .625rem;
+  font-size: .875rem;
+  color: var(--brand-content-high);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--brand-radius-sm);
+  cursor: pointer;
+  transition: opacity .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+
+  &:hover {
+    background-color: var(--brand-surface-mid);
+  }
+
+  &.is-active {
+    background-color: var(--brand-primary-low);
+    border-color: rgba(var(--brand-primary-rgb), .35);
+  }
+
+  &.is-dimmed {
+    opacity: .45;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+}
+
+.emails-list-title {
+  margin: 1.5rem 0 .5rem;
+  font-size: .875rem;
+  font-weight: 600;
+  color: var(--brand-content-low);
+}
+
+.emails-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--brand-border);
+}
+
+.emails-item {
+  border-bottom: 1px solid var(--brand-border);
+}
+
+.emails-item-head {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .25rem .75rem;
+  width: 100%;
+  padding: .625rem .25rem;
+  font-size: .875rem;
+  color: var(--brand-content-high);
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--brand-surface-mid);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: -2px;
+  }
+}
+
+.emails-chevron {
+  color: var(--brand-content-low);
+  transition: transform .15s ease-in-out;
+
+  &.is-open {
+    transform: rotate(90deg);
+  }
+}
+
+.emails-item-date {
+  color: var(--brand-content-low);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.emails-item-subject {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emails-item-meta {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+// Normas of an open e-mail: 7 columns that keep their width and scroll sideways (thin visible scrollbar),
+// with the Órgão column pinned so each row stays identifiable while scrolling.
+.emails-normas {
+  margin: 0 .25rem .75rem 1.75rem;
+  overflow-x: auto;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-sm);
+  scrollbar-width: thin;
+  scrollbar-color: var(--brand-surface-high) transparent;
+  -webkit-overflow-scrolling: touch;
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--brand-surface-high);
+    border-radius: var(--brand-radius-pill);
+  }
+}
+
+.emails-normas-table {
+  min-width: 56rem;
+  font-size: .8125rem;
+
+  th,
+  td {
+    padding: .5rem .625rem;
+    white-space: nowrap;
+    vertical-align: top;
+  }
+
+  thead th {
+    font-weight: 600;
+    color: var(--brand-content-low);
+    background-color: var(--brand-surface-mid);
+    border-bottom-color: var(--brand-border);
+  }
+
+  tbody tr:last-child > * {
+    border-bottom: 0;
+  }
+
+  // Pinned first column: opaque background and a hairline so scrolled cells pass under it.
+  th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: var(--cui-card-bg, var(--brand-surface-card));
+    box-shadow: inset -1px 0 0 var(--brand-border);
+  }
+
+  thead th:first-child {
+    background-color: var(--brand-surface-mid);
+  }
+
+  tbody th {
+    font-weight: 600;
+  }
+}
+
+.emails-normas-number {
+  font-variant-numeric: tabular-nums;
+}
+
+// Long themes wrap inside a fixed width instead of stretching the table.
+.emails-normas-theme {
+  min-width: 14rem;
+  max-width: 18rem;
+  white-space: normal !important;
+}
+
+// Phones: date and norma count on the first line, segment below the date.
+@media (max-width: 575.98px) {
+  .emails-item-head {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "chevron date meta"
+      ". subject subject";
+
+    .emails-chevron { grid-area: chevron; }
+    .emails-item-date { grid-area: date; }
+    .emails-item-subject { grid-area: subject; }
+    .emails-item-meta { grid-area: meta; }
+  }
+
+  .emails-normas {
+    margin-left: .25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .emails-legend-item,
+  .emails-chevron {
+    transition: none;
+  }
+}

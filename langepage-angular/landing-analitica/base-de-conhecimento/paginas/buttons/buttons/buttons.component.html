@@ -1,0 +1,340 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <app-docs-callout name="Botão"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4" id="AngularButton">
+      <c-card-header>
+        <strong>Botão Angular</strong>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          O painel inclui vários componentes de botão predefinidos, cada um com seu próprio
+          propósito semântico. Os botões mostram qual ação acontecerá quando o usuário clicar ou
+          tocar neles. Os botões são usados para iniciar operações, tanto em segundo
+          plano quanto em primeiro plano de uma experiência.
+        </p>
+        <app-docs-example fragment="AngularButton">
+          <c-row *ngFor="let state of states; index as i" class="align-items-center mb-3">
+            <c-col class="mb-3 mb-xl-0" xl="2" xs="12">
+              {{stateLabels[state]}}
+            </c-col>
+            <c-col>
+              <button *ngFor="let color of colors; index as i"
+                      [active]="state === 'active'"
+                      [color]="color"
+                      [disabled]="state === 'disabled'"
+                      cButton
+                      class="me-1"
+              >
+                {{colorLabels[color]}}
+              </button>
+            </c-col>
+          </c-row>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4" id="AngularButtonWithIcons">
+      <c-card-header>
+        <strong>Botão Angular</strong> <small>com ícones</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Você pode combinar botões com ícones.
+        </p>
+        <app-docs-example fragment="AngularButtonWithIcons">
+          <c-row *ngFor="let state of states; index as i" class="align-items-center mb-3">
+            <c-col class="mb-3 mb-xl-0" xl="2" xs="12">
+              {{stateLabels[state]}}
+            </c-col>
+            <c-col>
+              <button *ngFor="let color of colors; index as i"
+                      [active]="state === 'active'"
+                      [color]="color"
+                      [disabled]="state === 'disabled'"
+                      cButton
+                      class="me-1"
+              >
+                <svg cIcon class="me-2" name="cil-bell"></svg>
+                {{colorLabels[color]}}
+              </button>
+            </c-col>
+          </c-row>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Botão Angular</strong> <small>Componentes de botão</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          O componente <code>&lt;button&gt;</code> foi projetado para elementos
+          <code>&lt;button&gt;</code> , <code>&lt;a&gt;</code> ou <code>&lt;input&gt;</code>
+          (embora alguns navegadores possam aplicar uma renderização um pouco diferente).
+        </p>
+        <p class="text-medium-emphasis small">
+          Se você estiver usando o componente <code>&lt;button&gt;</code> como elementos
+          <code>&lt;a&gt;</code> que disparam alguma funcionalidade, ex.: recolher conteúdo, esses links
+          devem receber <code>role=&#34;button&#34;</code> para comunicar adequadamente seu
+          significado a tecnologias assistivas, como leitores de tela.
+        </p>
+        <app-docs-example>
+          <a cButton class="me-1" color="primary" routerLink="./">
+            Link
+          </a>
+          <button cButton class="me-1" color="primary" type="submit">
+            Botão
+          </button>
+          <input cButton class="me-1" color="primary" type="button" value="Entrada">
+          <input cButton class="me-1" color="primary" type="submit" value="Enviar">
+          <input cButton class="me-1" color="primary" type="reset" value="Redefinir">
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Botão Angular</strong> <small>contorno</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Se você precisa de um botão, mas sem as cores de fundo fortes, defina a propriedade
+          <code>variant=&#34;outline&#34;</code> para remover todas as cores de fundo.
+        </p>
+        <app-docs-example>
+          <c-row *ngFor="let state of states; index as i" class="align-items-center mb-3">
+            <c-col class="mb-3 mb-xl-0" xl="2" xs="12">
+              {{stateLabels[state]}}
+            </c-col>
+            <c-col>
+              <ng-container *ngFor="let color of colors; index as i; last as isLast">
+                <button
+                  *ngIf="!isLast"
+                  [active]="state === 'active'"
+                  [color]="color"
+                  [disabled]="state === 'disabled'"
+                  cButton
+                  class="me-1"
+                  variant="outline"
+                >
+                  {{colorLabels[color]}}
+                </button>
+              </ng-container>
+            </c-col>
+          </c-row>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Botão Angular</strong> <small>fantasma</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Se você precisa de uma variante fantasma do botão, defina a propriedade
+          <code>variant=&#34;ghost&#34;</code> para remover todas as cores de fundo.
+        </p>
+        <app-docs-example>
+          <c-row *ngFor="let state of states; index as i" class="align-items-center mb-3">
+            <c-col class="mb-3 mb-xl-0" xl="2" xs="12">
+              {{stateLabels[state]}}
+            </c-col>
+            <c-col>
+              <ng-container *ngFor="let color of colors; index as i; last as isLast">
+                <button
+                  *ngIf="!isLast"
+                  [active]="state === 'active'"
+                  [color]="color"
+                  [disabled]="state === 'disabled'"
+                  cButton
+                  class="me-1"
+                  variant="ghost"
+                >
+                  {{colorLabels[color]}}
+                </button>
+              </ng-container>
+            </c-col>
+          </c-row>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Botão Angular</strong> <small>Tamanhos</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Botões maiores ou menores? Adicione <code>size=&#34;lg&#34;</code>
+          <code>size=&#34;sm&#34;</code> para tamanhos adicionais.
+        </p>
+        <app-docs-example>
+          <button cButton class="mb-3" color="primary" size="lg">
+            Botão grande
+          </button>
+          <button cButton class="mb-3" color="secondary" size="lg">
+            Botão grande
+          </button>
+        </app-docs-example>
+        <app-docs-example>
+          <br>
+          <button cButton class="mb-3" color="primary" size="sm">
+            Botão pequeno
+          </button>
+          <button cButton class="mb-3" color="secondary" size="sm">
+            Botão pequeno
+          </button>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Botão Angular</strong> <small>Pílula</small>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <ng-container *ngFor="let color of colors; index as i; last as isLast">
+            <button
+              *ngIf="!isLast"
+              [color]="color"
+              cButton
+              class="me-1"
+              shape="rounded-pill"
+            >
+              {{colorLabels[color]}}
+            </button>
+          </ng-container>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Botão Angular</strong> <small>Quadrado</small>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <ng-container *ngFor="let color of colors; index as i; last as isLast">
+            <button
+              *ngIf="!isLast"
+              [color]="color"
+              cButton
+              class="me-1"
+              shape="rounded-0"
+            >
+              {{colorLabels[color]}}
+            </button>
+          </ng-container>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Botão Angular</strong> <small>Estado desabilitado</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione a propriedade booleana <code>disabled</code> a qualquer componente
+          <code>&lt;button&gt;</code> para deixar os botões com aparência inativa. O botão desabilitado
+          recebe <code>pointer-events: none</code>, impedindo que os estados de hover e ativo sejam
+          acionados.
+        </p>
+        <app-docs-example>
+          <button cButton color="primary" disabled size="lg">
+            Botão primário
+          </button>
+          <button cButton color="secondary" disabled size="lg">
+            Botão
+          </button>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Botões desabilitados que usam o componente <code>&lt;a&gt;</code> se comportam de forma um pouco diferente:
+        </p>
+        <p class="text-medium-emphasis small">
+          Elementos <code>&lt;a&gt;</code> não suportam o atributo <code>disabled</code>, então
+          é preciso adicionar a classe <code>.disabled</code> para deixar os botões com aparência inativa.
+          Também é preciso adicionar ao componente de botão desabilitado o atributo
+          <code>aria-disabled=&#34;true&#34;</code> para informar o estado do componente
+          às tecnologias assistivas.
+        </p>
+        <app-docs-example>
+          <a cButton color="primary" disabled [routerLink]="[]" size="lg">
+            Link primário
+          </a>
+          <a cButton color="secondary" disabled [routerLink]="[]" size="lg">
+            Link
+          </a>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Botão Angular</strong> <small>Botões em bloco</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Crie botões que ocupam toda a largura do elemento pai usando utilitários.
+        </p>
+        <app-docs-example>
+          <div class="d-grid gap-2">
+            <button cButton color="primary">Botão</button>
+            <button cButton color="primary">Botão</button>
+          </div>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Aqui criamos uma variação responsiva, começando com botões empilhados verticalmente até
+          o breakpoint <code>md</code>, onde <code>.d-md-block</code> substitui a classe
+          <code>.d-grid</code>, anulando assim o utilitário <code>gap-2</code>. Redimensione
+          o navegador para vê-los mudar.
+        </p>
+        <app-docs-example>
+          <div class="d-grid gap-2 d-md-block">
+            <button cButton color="primary">Botão</button>
+            <button cButton color="primary">Botão</button>
+          </div>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Você pode ajustar a largura dos botões em bloco com as classes de largura de coluna do grid. Por
+          exemplo, para um &#34;botão em bloco&#34; com metade da largura, use <code>.col-6</code>. Centralize-o
+          horizontalmente com <code>.mx-auto</code> também.
+        </p>
+        <app-docs-example>
+          <div class="d-grid gap-2 col-6 mx-auto">
+            <button cButton color="primary">Botão</button>
+            <button cButton color="primary">Botão</button>
+          </div>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Utilitários adicionais podem ser usados para ajustar o alinhamento dos botões quando estão na horizontal.
+          Aqui pegamos o exemplo responsivo anterior e adicionamos alguns utilitários flex e
+          um utilitário de margem no botão para alinhar os botões à direita quando eles não estão mais
+          empilhados.
+        </p>
+        <app-docs-example>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button cButton class="me-md-2" color="primary">
+              Botão
+            </button>
+            <button cButton color="primary">Botão</button>
+          </div>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

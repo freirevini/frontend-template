@@ -1,0 +1,241 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <app-docs-callout name="Controle de formulário"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Controle de formulário Angular</strong>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <form cForm>
+            <div class="mb-3">
+              <label cLabel for="exampleFormControlInput1">Endereço de e-mail</label>
+              <input cFormControl
+                     id="exampleFormControlInput1"
+                     placeholder="nome@exemplo.com"
+                     type="email"
+              />
+            </div>
+            <div class="mb-3">
+              <label cLabel for="exampleFormControlTextarea1">Exemplo de área de texto</label>
+              <textarea cFormControl id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+          </form>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Controle de formulário Angular</strong> <small>Tamanhos</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Defina alturas usando a propriedade <code>sizing</code>, como <code>sizing=&#34;lg&#34;</code> e
+          <code>sizing=&#34;sm&#34;</code>.
+        </p>
+        <app-docs-example>
+          <input aria-label="exemplo de campo grande"
+                 cFormControl
+                 placeholder="Campo grande"
+                 sizing="lg"
+                 type="text"
+          />
+          <br />
+          <input aria-label="exemplo de campo padrão"
+                 cFormControl
+                 placeholder="Campo padrão"
+                 type="text"
+          />
+          <br />
+          <input aria-label="exemplo de campo pequeno"
+                 cFormControl
+                 placeholder="Campo pequeno"
+                 sizing="sm"
+                 type="text"
+          />
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Controle de formulário Angular</strong> <small>Desabilitado</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione o atributo booleano <code>disabled</code> a um campo para deixá-lo com aparência
+          acinzentada e remover os eventos de ponteiro.
+        </p>
+        <app-docs-example>
+          <input aria-label="Exemplo de campo desabilitado"
+                 cFormControl
+                 disabled
+                 placeholder="Campo desabilitado"
+                 type="text"
+          />
+          <br />
+          <input aria-label="Exemplo de campo desabilitado"
+                 cFormControl
+                 disabled
+                 placeholder="Campo desabilitado e somente leitura"
+                 readOnly
+                 type="text"
+          />
+          <br />
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Controle de formulário Angular</strong> <small>Somente leitura</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione o atributo booleano <code>readOnly</code> a um campo para impedir a alteração
+          do seu valor. Campos somente leitura aparecem mais claros (assim como os desabilitados),
+          mas mantêm o cursor padrão.
+        </p>
+        <app-docs-example>
+          <input aria-label="exemplo de campo somente leitura"
+                 cFormControl
+                 placeholder="Campo somente leitura aqui..."
+                 readOnly
+                 type="text"
+          />
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Controle de formulário Angular</strong> <small>Texto simples somente leitura</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Se quiser que os elementos <code>&lt;input readonly&gt;</code> do seu formulário tenham
+          estilo de texto simples, use a propriedade booleana <code>plainText</code> para remover o
+          estilo padrão do campo e preservar a margem e o espaçamento corretos.
+        </p>
+        <app-docs-example>
+          <c-row class="mb-3">
+            <label cLabel class="col-sm-2 col-form-label" for="staticEmail">
+              E-mail
+            </label>
+            <div class="col-sm-10">
+              <input [plaintext]="true"
+                     cFormControl
+                     id="staticEmail"
+                     readonly
+                     type="text"
+                     value="email@exemplo.com"
+              />
+            </div>
+          </c-row>
+          <c-row class="mb-3">
+            <label cLabel class="col-sm-2 col-form-label" for="inputPassword">
+              Senha
+            </label>
+            <div class="col-sm-10">
+              <input cFormControl id="inputPassword" type="password" />
+            </div>
+          </c-row>
+        </app-docs-example>
+        <app-docs-example>
+          <form cForm class="row g-3">
+            <div class="col-auto">
+              <label cLabel class="visually-hidden" for="staticEmail2">
+                E-mail
+              </label>
+              <input [plaintext]="true"
+                     cFormControl
+                     id="staticEmail2"
+                     readonly
+                     type="text"
+                     value="email@exemplo.com"
+              />
+            </div>
+            <div class="col-auto">
+              <label cLabel class="visually-hidden" for="inputPassword2">
+                Senha
+              </label>
+              <input cFormControl id="inputPassword2" placeholder="Senha" type="password" />
+            </div>
+            <div class="col-auto">
+              <button cButton class="mb-3" type="submit">
+                Confirmar identidade
+              </button>
+            </div>
+          </form>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Controle de formulário Angular</strong> <small>Campo de arquivo</small>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <div class="mb-3">
+            <label cLabel for="formFile">Exemplo de campo de arquivo padrão</label>
+            <input cFormControl id="formFile" type="file" />
+          </div>
+          <div class="mb-3">
+            <label cLabel for="formFileMultiple">Exemplo de campo com vários arquivos</label>
+            <input cFormControl id="formFileMultiple" multiple type="file" />
+          </div>
+          <div class="mb-3">
+            <label cLabel for="formFileDisabled">Exemplo de campo de arquivo desabilitado</label>
+            <input cFormControl disabled id="formFileDisabled" type="file" />
+          </div>
+          <div class="mb-3">
+            <label cLabel for="formFileSm">Exemplo de campo de arquivo pequeno</label>
+            <input cFormControl id="formFileSm" sizing="sm" type="file" />
+          </div>
+          <div>
+            <label cLabel for="formFileLg">Exemplo de campo de arquivo grande</label>
+            <input cFormControl id="formFileLg" sizing="lg" type="file" />
+          </div>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Controle de formulário Angular</strong> <small>Cor</small>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <c-row class="align-items-center g-2">
+            <c-col xs="auto">
+              <label cLabel="col" for="exampleColorInput">Seletor de cor</label>
+            </c-col>
+            <c-col xs="auto">
+              <input [(ngModel)]="favoriteColor"
+                     cFormControl
+                     id="exampleColorInput"
+                     title="Escolha sua cor"
+                     type="color">
+            </c-col>
+            <c-col xs="auto">
+              <div [ngStyle]="{'backgroundColor': favoriteColor}" class="color-box p-1 m-1"></div>
+            </c-col>
+            <c-col xs="auto">
+              <strong>{{favoriteColor}}</strong>
+            </c-col>
+          </c-row>        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+

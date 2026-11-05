@@ -1,0 +1,39 @@
+/* Triagent (src/views/triagent.py). */
+
+/* Chips under the HTML legends and theme bars (compat.clicklist, ADR-004): centered like the legends. */
+.st-key-clicklist-triagent-traffic-legend, .st-key-clicklist-triagent-pie-legend, .st-key-clicklist-triagent-emails-legend { align-items: center; }
+.st-key-clicklist-triagent-traffic-legend [data-testid="stButtonGroup"] > div, .st-key-clicklist-triagent-pie-legend [data-testid="stButtonGroup"] > div,
+.st-key-clicklist-triagent-emails-legend [data-testid="stButtonGroup"] > div { justify-content: center; }
+
+/* Range label beside the pager of the Tabela Analítica. */
+.st-key-triagent-table-nav [data-testid="stHorizontalBlock"] { align-items: center; }
+.st-key-triagent-table-sortbar [data-testid="stHorizontalBlock"] { align-items: center; }
+/* The grid inside keeps its measured width; scroll it sideways inside the card (the landing's table-responsive). */
+.st-key-card-normativos-recebidos [data-testid="stDataFrame"], .st-key-card-fluxo-de-email [data-testid="stDataFrame"],
+.st-key-card-tabela-analitica [data-testid="stDataFrame"] { overflow-x: auto; }
+
+/* "Últimos e-mails": each st.expander styled as a row of the landing's .emails-list (ui.email_row). Summary: chevron
+   first (Streamlit's icon moved and rotated: right when closed, down when open), date in <em> (muted, the segment
+   swatch is its ::after, colored by the segment id in the container key), segment name, count in <strong> at the right.
+   Hairline above the list and under each row; the normas table indented like .emails-normas. */
+.st-key-triagent-emails-list { gap: 0; border-top: 1px solid var(--brand-border); }
+.st-key-triagent-emails-list [data-testid="stVerticalBlock"] { gap: 0; }
+.st-key-triagent-emails-list [data-testid="stExpander"] details { border: 0; border-bottom: 1px solid var(--brand-border); border-radius: 0; background: transparent; }
+.st-key-triagent-emails-list [data-testid="stExpander"] summary { display: flex; align-items: center; gap: .75rem; padding: .625rem .25rem; color: var(--brand-content-high); }
+.st-key-triagent-emails-list [data-testid="stExpander"] summary:hover { color: var(--brand-content-high); background: var(--brand-surface-mid); }
+.st-key-triagent-emails-list [data-testid="stExpander"] summary:focus-visible { outline: 2px solid var(--brand-primary); outline-offset: -2px; }
+.st-key-triagent-emails-list [data-testid="stExpander"] summary > span, .st-key-triagent-emails-list [data-testid="stExpander"] summary [data-testid="stMarkdownContainer"] { flex: 1 1 auto; width: 100%; min-width: 0; }
+.st-key-triagent-emails-list [data-testid="stExpanderToggleIcon"] { order: -1; flex: 0 0 auto; width: 1rem; height: 1rem; color: var(--brand-content-low); transform: rotate(-90deg); transition: transform .15s ease-in-out; }
+/* Open: 1.40 swaps the icon to "expand_less" (up), so half a turn points it down like the landing */
+.st-key-triagent-emails-list details[open] [data-testid="stExpanderToggleIcon"] { transform: rotate(-180deg); }
+.st-key-triagent-emails-list [data-testid="stExpander"] summary p { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem .75rem; margin: 0; font-size: .875rem; line-height: 1.5; color: var(--brand-content-high); }
+.st-key-triagent-emails-list [data-testid="stExpander"] summary p em { display: inline-flex; align-items: center; font-style: normal; color: var(--brand-content-low); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.st-key-triagent-emails-list [data-testid="stExpander"] summary p em::after { content: ""; display: inline-block; flex-shrink: 0; width: .75rem; height: .75rem; margin-left: .75rem; border-radius: 2px; background: var(--segment-color, var(--brand-content-disabled)); }
+.st-key-triagent-emails-list [data-testid="stExpander"] summary p strong { margin-left: auto; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+[class*="st-key-triagent-emails-item-"][class*="-atacado"] { --segment-color: var(--app-series-1); }
+[class*="st-key-triagent-emails-item-"][class*="-corporativo"] { --segment-color: var(--app-series-2); }
+[class*="st-key-triagent-emails-item-"][class*="-plataforma"] { --segment-color: var(--app-series-3); }
+[class*="st-key-triagent-emails-item-"][class*="-varejo"] { --segment-color: var(--app-series-4); }
+.st-key-triagent-emails-list [data-testid="stExpanderDetails"] { padding: 0 .25rem .75rem 1.75rem; }
+@media (max-width: 575px) { .st-key-triagent-emails-list [data-testid="stExpanderDetails"] { padding-left: .25rem; } }
+@media (prefers-reduced-motion: reduce) { .st-key-triagent-emails-list [data-testid="stExpanderToggleIcon"] { transition: none; } }

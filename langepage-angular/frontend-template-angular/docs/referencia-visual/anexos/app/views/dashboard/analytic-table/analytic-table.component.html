@@ -1,0 +1,97 @@
+<!-- data-page-filter: sorting, paging and export keep the page filters this table reflects. -->
+<c-card class="mb-4" aria-labelledby="analytic-title" data-page-filter>
+  <c-card-body>
+    <div class="analytic-header">
+      <div>
+        <h4 class="card-title mb-0" id="analytic-title">Tabela Analítica</h4>
+        <div class="small text-medium-emphasis">
+          {{ subtitle }}<ng-container *ngIf="state === 'ready'"> · {{ formatNumber(rows.length) }} {{ rows.length === 1 ? 'norma' : 'normas' }}</ng-container>
+        </div>
+      </div>
+      <button
+        *ngIf="state === 'ready'"
+        type="button"
+        class="btn btn-outline-primary btn-sm analytic-export"
+        [disabled]="exporting || !rows.length"
+        (click)="exportXlsx()"
+      >
+        <svg cIcon name="cilSpreadsheet" size="sm" aria-hidden="true"></svg>
+        {{ exporting ? 'Gerando arquivo...' : 'Exportar Excel' }}
+      </button>
+    </div>
+
+    <p class="analytic-filters small mb-0" role="status">
+      <ng-container *ngIf="activeFilters.length; else noFilters">
+        Filtros aplicados:
+        <span *ngFor="let filter of activeFilters" class="analytic-filter">{{ filter }}</span>
+      </ng-container>
+      <ng-template #noFilters>Sem filtros: todas as normas classificadas no período do gráfico Normativos Recebidos.</ng-template>
+    </p>
+    <p *ngIf="exportError" class="small text-danger mt-2 mb-0" role="alert">{{ exportError }}</p>
+
+    <ng-container [ngSwitch]="state">
+      <div *ngSwitchCase="'loading'" class="classification-placeholder text-medium-emphasis">
+        <c-spinner size="sm" label="Carregando..." class="me-2"></c-spinner>
+        Carregando dados...
+      </div>
+
+      <div *ngSwitchCase="'error'" class="classification-placeholder text-medium-emphasis" role="alert">
+        Não foi possível carregar a tabela analítica.
+      </div>
+
+      <ng-container *ngSwitchCase="'ready'">
+        <p *ngIf="!rows.length" class="classification-placeholder text-medium-emphasis mb-0">Nenhuma norma para os filtros aplicados.</p>
+
+        <ng-container *ngIf="rows.length">
+          <div class="analytic-scroll" role="region" tabindex="0" aria-label="Tabela analítica. Role para o lado para ver todas as colunas.">
+            <table cTable [small]="true" [hover]="true" class="mb-0 align-middle analytic-table">
+              <caption class="visually-hidden">Normas classificadas, {{ subtitle }}, página {{ page }} de {{ pageCount }}</caption>
+              <thead>
+                <tr>
+                  <th *ngFor="let column of columns" scope="col" [attr.aria-sort]="ariaSort(column.key)">
+                    <button type="button" class="analytic-sort" [class.is-sorted]="sortKey === column.key" (click)="sortBy(column.key)">
+                      {{ column.label }}
+                      <svg
+                        cIcon
+                        [name]="sortKey === column.key && sortDirection === 'asc' ? 'cilArrowTop' : 'cilArrowBottom'"
+                        size="sm"
+                        class="analytic-sort-icon"
+                        aria-hidden="true"
+                      ></svg>
+                    </button>
+                  </th>
+                  <th scope="col" class="analytic-ask-col"><span class="visually-hidden">Agente da Agenda</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let norma of pageRows">
+                  <td *ngFor="let column of columns" [class]="'analytic-' + column.key">{{ cell(norma, column.key) }}</td>
+                  <td class="analytic-ask-col">
+                    <button
+                      type="button"
+                      class="analytic-ask"
+                      [attr.aria-label]="askLabel(norma)"
+                      [title]="askLabel(norma)"
+                      (click)="askAssistant(norma)"
+                    >
+                      <svg cIcon name="cilSpeech" size="sm" aria-hidden="true"></svg>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <nav class="analytic-pager" aria-label="Paginação da tabela analítica">
+            <span class="small text-medium-emphasis">{{ rangeLabel }}</span>
+            <div class="analytic-pager-buttons">
+              <button type="button" class="filter-chip" [disabled]="page === 1" (click)="goTo(page - 1)">Anterior</button>
+              <span class="small" aria-live="polite">Página {{ page }} de {{ pageCount }}</span>
+              <button type="button" class="filter-chip" [disabled]="page === pageCount" (click)="goTo(page + 1)">Próxima</button>
+            </div>
+          </nav>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </c-card-body>
+</c-card>

@@ -1,0 +1,525 @@
+<c-row>
+  <c-col xs="12">
+    <app-docs-callout name="Grupo de entrada"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Grupo de entrada Angular</strong> <small>Exemplo básico</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Coloque um complemento ou botão em qualquer um dos lados de um campo. Você também pode
+          colocar um em cada lado. Lembre-se de colocar os <code>&lt;label&gt;</code>s fora do
+          grupo de entrada.
+        </p>
+        <app-docs-example>
+          <c-input-group class="mb-3">
+            <span cInputGroupText id="basic-addon1">@</span>
+            <input aria-describedby="basic-addon1"
+                   aria-label="Usuário"
+                   cFormControl
+                   placeholder="Usuário"
+            />
+          </c-input-group>
+          <c-input-group class="mb-3">
+            <input aria-describedby="basic-addon2"
+                   aria-label="Usuário do destinatário"
+                   cFormControl
+                   placeholder="Usuário do destinatário"
+            />
+            <span cInputGroupText id="basic-addon2">@exemplo.com</span>
+          </c-input-group>
+          <label cLabel for="basic-url">Sua URL personalizada</label>
+          <c-input-group class="mb-3">
+            <span cInputGroupText id="basic-addon3">https://exemplo.com/usuarios/</span>
+            <input aria-describedby="basic-addon3" cFormControl id="basic-url"/>
+          </c-input-group>
+          <c-input-group class="mb-3">
+            <span cInputGroupText>R$</span>
+            <input aria-label="Valor (arredondado para o real mais próximo)" cFormControl/>
+            <span cInputGroupText>,00</span>
+          </c-input-group>
+          <c-input-group class="mb-3">
+            <input aria-label="Usuário" cFormControl placeholder="Usuário"/>
+            <span cInputGroupText>@</span>
+            <input aria-label="Servidor" cFormControl placeholder="Servidor"/>
+          </c-input-group>
+          <c-input-group>
+            <span cInputGroupText>Com área de texto</span>
+            <textarea aria-label="Com área de texto" cFormControl></textarea>
+          </c-input-group>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Grupo de entrada Angular</strong> <small>Quebra de linha</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Os grupos de entrada quebram linha por padrão via <code>flex-wrap: wrap</code> para
+          acomodar a validação personalizada de campos dentro de um grupo de entrada. Você pode
+          desativar isso com <code>.flex-nowrap</code>.
+        </p>
+        <app-docs-example>
+          <c-input-group class="flex-nowrap">
+            <span cInputGroupText id="addon-wrapping">@</span>
+            <input aria-describedby="addon-wrapping"
+                   aria-label="Usuário"
+                   cFormControl
+                   placeholder="Usuário"
+            />
+          </c-input-group>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Grupo de entrada Angular</strong> <small>Tamanhos</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione as classes de tamanho de formulário ao próprio <code>&lt;c-input-group&gt;</code>
+          e o conteúdo interno será redimensionado automaticamente, sem precisar repetir as classes
+          de tamanho dos controles em cada elemento.
+        </p>
+        <p class="text-medium-emphasis small">
+          <strong>Não há suporte para definir o tamanho de elementos individuais do grupo de entrada.</strong>
+        </p>
+        <app-docs-example>
+          <c-input-group class="mb-3" sizing="sm">
+            <span cInputGroupText id="inputGroup-sizing-sm">Pequeno</span>
+            <input aria-describedby="inputGroup-sizing-sm"
+                   aria-label="Exemplo de campo com tamanho"
+                   cFormControl
+            />
+          </c-input-group>
+          <c-input-group class="mb-3">
+            <span cInputGroupText id="inputGroup-sizing-default">Padrão</span>
+            <input aria-describedby="inputGroup-sizing-default"
+                   aria-label="Exemplo de campo com tamanho"
+                   cFormControl
+            />
+          </c-input-group>
+          <c-input-group sizing="lg">
+            <span cInputGroupText id="inputGroup-sizing-lg">Grande</span>
+            <input aria-describedby="inputGroup-sizing-lg"
+                   aria-label="Exemplo de campo com tamanho"
+                   cFormControl
+            />
+          </c-input-group>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Grupo de entrada Angular</strong> <small>Caixas de seleção e rádios</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Coloque qualquer caixa de seleção ou opção de rádio no complemento de um grupo de entrada, em vez de texto.
+        </p>
+        <app-docs-example>
+          <c-input-group class="mb-3">
+            <span cInputGroupText>
+              <div>
+                <input cFormCheckInput id="checkOne" type="checkbox"/>
+              </div>
+            </span>
+            <input aria-label="Campo de texto com caixa de seleção" cFormControl/>
+          </c-input-group>
+          <c-input-group>
+            <span cInputGroupText>
+              <div>
+                <input cFormCheckInput id="radioOne" type="radio"/>
+              </div>
+            </span>
+            <input aria-label="Campo de texto com botão de rádio" cFormControl/>
+          </c-input-group>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Grupo de entrada Angular</strong> <small>Vários campos</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Embora vários <code>&lt;CFormInput&gt;</code>s sejam suportados visualmente, os estilos de
+          validação só estão disponíveis para grupos de entrada com um único
+          <code>cFormControl</code>.
+        </p>
+        <app-docs-example>
+          <c-input-group>
+            <span cInputGroupText>Nome e sobrenome</span>
+            <input aria-label="Nome" cFormControl/>
+            <input aria-label="Sobrenome" cFormControl/>
+          </c-input-group>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Grupo de entrada Angular</strong> <small>Vários complementos</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Vários complementos são suportados e podem ser combinados com as versões de caixa de
+          seleção e de rádio.
+        </p>
+        <app-docs-example>
+          <c-input-group class="mb-3">
+            <span cInputGroupText>R$</span>
+            <span cInputGroupText>0,00</span>
+            <input aria-label="Valor em reais (com vírgula e duas casas decimais)" cFormControl/>
+          </c-input-group>
+          <c-input-group>
+            <input aria-label="Valor em reais (com vírgula e duas casas decimais)" cFormControl/>
+            <span cInputGroupText>R$</span>
+            <span cInputGroupText>0,00</span>
+          </c-input-group>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Grupo de entrada Angular</strong> <small>Complementos de botão</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Complementos de botão são suportados.
+        </p>
+        <app-docs-example>
+          <c-input-group class="mb-3">
+            <button cButton color="secondary" id="button-addon1" type="button" variant="outline">
+              Botão
+            </button>
+            <input aria-describedby="button-addon1"
+                   aria-label="Exemplo de texto com complemento de botão"
+                   cFormControl
+                   placeholder=""
+            />
+          </c-input-group>
+          <c-input-group class="mb-3">
+            <input aria-describedby="button-addon2"
+                   aria-label="Usuário do destinatário"
+                   cFormControl
+                   placeholder="Usuário do destinatário"
+            />
+            <button cButton color="secondary" id="button-addon2" type="button" variant="outline">
+              Botão
+            </button>
+          </c-input-group>
+          <c-input-group class="mb-3">
+            <button cButton color="secondary" type="button" variant="outline">
+              Botão
+            </button>
+            <button cButton color="secondary" type="button" variant="outline">
+              Botão
+            </button>
+            <input aria-label="Exemplo de texto com dois complementos de botão" cFormControl placeholder=""/>
+          </c-input-group>
+          <c-input-group>
+            <input aria-label="Usuário do destinatário com dois complementos de botão"
+                   cFormControl
+                   placeholder="Usuário do destinatário"
+            />
+            <button cButton color="secondary" type="button" variant="outline">
+              Botão
+            </button>
+            <button cButton color="secondary" type="button" variant="outline">
+              Botão
+            </button>
+          </c-input-group>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Grupo de entrada Angular</strong> <small>Botões com menus suspensos</small>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <c-input-group class="mb-3">
+            <c-dropdown>
+              <button cButton cDropdownToggle color="secondary" variant="outline">
+                Menu suspenso
+              </button>
+              <ul cDropdownMenu>
+                <li><a routerLink="./" cDropdownItem>Ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra opção aqui</a></li>
+                <li>
+                  <hr cDropdownDivider>
+                </li>
+                <li><a routerLink="./" cDropdownItem>Link separado</a></li>
+              </ul>
+            </c-dropdown>
+            <input aria-label="Campo de texto com botão de menu suspenso" cFormControl/>
+          </c-input-group>
+          <c-input-group class="mb-3">
+            <input aria-label="Campo de texto com botão de menu suspenso" cFormControl/>
+            <c-dropdown alignment="end">
+              <button cButton cDropdownToggle color="secondary" variant="outline">
+                Menu suspenso
+              </button>
+              <ul cDropdownMenu>
+                <li><a routerLink="./" cDropdownItem>Ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra opção aqui</a></li>
+                <li>
+                  <hr cDropdownDivider>
+                </li>
+                <li><a routerLink="./" cDropdownItem>Link separado</a></li>
+              </ul>
+            </c-dropdown>
+          </c-input-group>
+          <c-input-group>
+            <c-dropdown>
+              <button cButton cDropdownToggle color="secondary" variant="outline">
+                Menu suspenso
+              </button>
+              <ul cDropdownMenu>
+                <li><a routerLink="./" cDropdownItem>Ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra opção aqui</a></li>
+                <li>
+                  <hr cDropdownDivider>
+                </li>
+                <li><a routerLink="./" cDropdownItem>Link separado</a></li>
+              </ul>
+            </c-dropdown>
+            <input aria-label="Campo de texto com 2 botões de menu suspenso" cFormControl/>
+            <c-dropdown alignment="end">
+              <button cButton cDropdownToggle color="secondary" variant="outline">
+                Menu suspenso
+              </button>
+              <ul cDropdownMenu>
+                <li><a routerLink="./" cDropdownItem>Ação alternativa</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra opção aqui</a></li>
+                <li>
+                  <hr cDropdownDivider>
+                </li>
+                <li><a routerLink="./" cDropdownItem>Link separado</a></li>
+              </ul>
+            </c-dropdown>
+          </c-input-group>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Grupo de entrada Angular</strong> <small>Botões segmentados</small>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <c-input-group class="mb-3">
+            <c-dropdown>
+              <button cButton color="secondary" type="button" variant="outline">
+                Ação
+              </button>
+              <button [split]="true" cButton cDropdownToggle color="secondary" variant="outline">
+                <span class="visually-hidden">Alternar menu suspenso</span>
+              </button>
+              <ul cDropdownMenu>
+                <li><a routerLink="./" cDropdownItem>Ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra opção aqui</a></li>
+                <li>
+                  <hr cDropdownDivider>
+                </li>
+                <li><a routerLink="./" cDropdownItem>Link separado</a></li>
+              </ul>
+            </c-dropdown>
+            <input aria-label="Campo de texto com botão de menu suspenso segmentado" cFormControl/>
+          </c-input-group>
+          <c-input-group class="mb-3">
+            <input aria-label="Campo de texto com botão de menu suspenso segmentado" cFormControl/>
+            <c-dropdown alignment="end">
+              <button cButton color="secondary" variant="outline">
+                Ação
+              </button>
+              <button [split]="true" cButton cDropdownToggle color="secondary" variant="outline">
+                <span class="visually-hidden">Alternar menu suspenso</span>
+              </button>
+              <ul cDropdownMenu>
+                <li><a routerLink="./" cDropdownItem>Ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra opção aqui</a></li>
+                <li>
+                  <hr cDropdownDivider>
+                </li>
+                <li><a routerLink="./" cDropdownItem>Link separado</a></li>
+              </ul>
+            </c-dropdown>
+          </c-input-group>
+          <c-input-group>
+            <c-dropdown>
+              <button cButton color="secondary" type="button" variant="outline">
+                Ação
+              </button>
+              <button [split]="true" cButton cDropdownToggle color="secondary" variant="outline">
+                <span class="visually-hidden">Alternar menu suspenso</span>
+              </button>
+              <ul cDropdownMenu>
+                <li><a routerLink="./" cDropdownItem>Ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra opção aqui</a></li>
+                <li>
+                  <hr cDropdownDivider>
+                </li>
+                <li><a routerLink="./" cDropdownItem>Link separado</a></li>
+              </ul>
+            </c-dropdown>
+            <input aria-label="Campo de texto com botão de menu suspenso segmentado" cFormControl/>
+            <c-dropdown alignment="end">
+              <button cButton color="secondary" variant="outline">
+                Ação
+              </button>
+              <button [split]="true" cButton cDropdownToggle color="secondary" variant="outline">
+                <span class="visually-hidden">Alternar menu suspenso</span>
+              </button>
+              <ul cDropdownMenu>
+                <li><a routerLink="./" cDropdownItem>Ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra ação</a></li>
+                <li><a routerLink="./" cDropdownItem>Outra opção aqui</a></li>
+                <li>
+                  <hr cDropdownDivider>
+                </li>
+                <li><a routerLink="./" cDropdownItem>Link separado</a></li>
+              </ul>
+            </c-dropdown>
+          </c-input-group>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Grupo de entrada Angular</strong> <small>Seleção personalizada</small>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <c-input-group class="mb-3">
+            <label cInputGroupText for="inputGroupSelect01">
+              Opções
+            </label>
+            <select cSelect id="inputGroupSelect01">
+              <option>Escolha...</option>
+              <option value="1">Um</option>
+              <option value="2">Dois</option>
+              <option value="3">Três</option>
+            </select>
+          </c-input-group>
+          <c-input-group class="mb-3">
+            <select cSelect id="inputGroupSelect02">
+              <option>Escolha...</option>
+              <option value="1">Um</option>
+              <option value="2">Dois</option>
+              <option value="3">Três</option>
+            </select>
+            <label cInputGroupText for="inputGroupSelect02">
+              Opções
+            </label>
+          </c-input-group>
+          <c-input-group class="mb-3">
+            <button cButton color="secondary" type="button" variant="outline">
+              Botão
+            </button>
+            <select aria-label="Exemplo de seleção com complemento de botão" cSelect id="inputGroupSelect03">
+              <option>Escolha...</option>
+              <option value="1">Um</option>
+              <option value="2">Dois</option>
+              <option value="3">Três</option>
+            </select>
+          </c-input-group>
+          <c-input-group>
+            <select aria-label="Exemplo de seleção com complemento de botão" cSelect id="inputGroupSelect04">
+              <option>Escolha...</option>
+              <option value="1">Um</option>
+              <option value="2">Dois</option>
+              <option value="3">Três</option>
+            </select>
+            <button cButton color="secondary" type="button" variant="outline">
+              Botão
+            </button>
+          </c-input-group>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Grupo de entrada Angular</strong> <small>Campo de arquivo personalizado</small>
+      </c-card-header>
+      <c-card-body>
+        <app-docs-example>
+          <c-input-group class="mb-3">
+            <label cInputGroupText for="inputGroupFile01">
+              Enviar arquivo
+            </label>
+            <input cFormControl id="inputGroupFile01" type="file"/>
+          </c-input-group>
+          <c-input-group class="mb-3">
+            <input cFormControl id="inputGroupFile02" type="file"/>
+            <label cInputGroupText for="inputGroupFile02">
+              Enviar arquivo
+            </label>
+          </c-input-group>
+          <c-input-group class="mb-3">
+            <button cButton
+                    color="secondary"
+                    id="inputGroupFileAddon03"
+                    type="button"
+                    variant="outline"
+            >
+              Botão
+            </button>
+            <input aria-describedby="inputGroupFileAddon03"
+                   aria-label="Enviar arquivo"
+                   cFormControl
+                   id="inputGroupFile03"
+                   type="file"
+            />
+          </c-input-group>
+          <c-input-group>
+            <input aria-describedby="inputGroupFileAddon04"
+                   aria-label="Enviar arquivo"
+                   cFormControl
+                   id="inputGroupFile04"
+                   type="file"
+            />
+            <button cButton
+                    color="secondary"
+                    id="inputGroupFileAddon04"
+                    type="button"
+                    variant="outline"
+            >
+              Botão
+            </button>
+          </c-input-group>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

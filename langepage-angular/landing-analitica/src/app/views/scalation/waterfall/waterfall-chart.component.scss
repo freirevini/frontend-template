@@ -1,0 +1,68 @@
+// Colors come from the brand tokens (--app-wf-*, --app-chart-*, --cui-*): no local color definitions.
+:host {
+  display: block;
+}
+
+// Title + period subtitle on the left; unit and view chip groups on the right (wrap below 375px-ish widths).
+.waterfall-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .75rem 1rem;
+}
+
+.waterfall-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+}
+
+.waterfall-chart {
+  position: relative;
+  height: 320px;
+}
+
+.waterfall-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+}
+
+.waterfall-result strong {
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.waterfall-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: .875rem;
+  color: var(--cui-body-color);
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+  }
+}
+
+.waterfall-swatch {
+  width: .75rem;
+  height: .75rem;
+  border-radius: 2px;
+}
+
+.waterfall-connector {
+  width: 1rem;
+  border-top: 1px solid var(--app-wf-connector);
+}
+
+.waterfall-number {
+  font-variant-numeric: tabular-nums;
+}

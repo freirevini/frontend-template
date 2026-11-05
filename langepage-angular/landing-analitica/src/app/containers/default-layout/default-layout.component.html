@@ -1,0 +1,44 @@
+<!--sidebar-->
+<c-sidebar
+  class="d-print-none sidebar sidebar-fixed"
+  colorScheme="dark"
+  id="sidebar"
+  visible
+>
+  <c-sidebar-brand>
+    <a routerLink="/" class="brand-lockup" aria-label="Agenda Normativa, ir para o início">
+      <img class="brand-mark" src="assets/img/brand/brand-mark-white.svg" width="32" height="28" alt="" aria-hidden="true" />
+      <span class="brand-name">Agenda <strong>Normativa</strong></span>
+    </a>
+  </c-sidebar-brand>
+  <ng-scrollbar pointerEventsMethod="scrollbar" visibility="hover">
+  <!--
+    dropdownMode "none": CoreUI 4 compares the group url with the address split by "/", so "/triagent#tabela-analitica"
+    does not match "/triagent" and the group would close on every section link. Groups open and close only on click.
+  -->
+  <c-sidebar-nav
+    [navItems]="navItems"
+    dropdownMode="none"
+  >
+  </c-sidebar-nav>
+  </ng-scrollbar>
+</c-sidebar>
+
+<!--main-->
+<div class="wrapper d-flex flex-column min-vh-100 bg-light dark:bg-transparent">
+  <!--app-header-->
+  <app-default-header class="mb-4 d-print-none header header-sticky" position="sticky" sidebarId="sidebar"></app-default-header>
+  <!--app-body-->
+  <div class="body flex-grow-1 px-3">
+    <c-container breakpoint="lg" class="h-auto">
+      <!-- 401 held back by the redirect-loop breaker: text + "Entrar novamente" (LoginRedirectService). -->
+      <app-session-expired-notice></app-session-expired-notice>
+      <router-outlet></router-outlet>
+    </c-container>
+  </div>
+  <!--app footer-->
+  <app-default-footer></app-default-footer>
+</div>
+
+<!--assistant chat (floating)-->
+<app-chat-widget class="d-print-none"></app-chat-widget>

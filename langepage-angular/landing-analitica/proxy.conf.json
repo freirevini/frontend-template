@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "http://HOST_DEV_BFF:PORTA",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "info"
+  }
+}

@@ -1,0 +1,258 @@
+<h1 class="visually-hidden">Scalation</h1>
+<!-- Section ids (#segmentos, #cascata, #trafego-e-vendas) are the sidebar sub-items (_nav.ts). -->
+<app-widgets-dropdown id="segmentos" class="page-section" tone="petrol" [filterable]="false"></app-widgets-dropdown>
+<app-waterfall-chart id="cascata" class="page-section"></app-waterfall-chart>
+
+<c-row>
+  <c-col xs>
+    <c-card class="mb-4" id="trafego-e-vendas">
+      <c-card-header>Tráfego e vendas</c-card-header>
+      <c-card-body>
+        <c-row>
+          <c-col md="6" xl="6" xs="12">
+            <c-row>
+              <c-col sm="6">
+                <div
+                  class="border-start border-start-4 border-start-info py-1 px-3 mb-3"
+                >
+                  <div class="text-medium-emphasis small">Novos clientes</div>
+                  <div class="fs-5 fw-semibold">9,123</div>
+                </div>
+              </c-col>
+              <c-col sm="6">
+                <div
+                  class="border-start border-start-4 border-start-danger py-1 px-3 mb-3"
+                >
+                  <div class="text-medium-emphasis small">
+                    Clientes recorrentes
+                  </div>
+                  <div class="fs-5 fw-semibold">22,643</div>
+                </div>
+              </c-col>
+            </c-row>
+
+            <hr class="mt-0" />
+
+            <div class="progress-group mb-4">
+              <div class="progress-group-prepend">
+                <span class="text-medium-emphasis small">Segunda</span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="info" value="34"></c-progress-bar>
+                </c-progress>
+                <c-progress thin>
+                  <c-progress-bar color="danger" value="78"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+            <div class="progress-group mb-4">
+              <div class="progress-group-prepend">
+                <span class="text-medium-emphasis small">Terça</span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="info" value="56"></c-progress-bar>
+                </c-progress>
+                <c-progress thin>
+                  <c-progress-bar color="danger" value="94"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+            <div class="progress-group mb-4">
+              <div class="progress-group-prepend">
+                <span class="text-medium-emphasis small">Quarta</span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="info" value="12"></c-progress-bar>
+                </c-progress>
+                <c-progress thin>
+                  <c-progress-bar color="danger" value="67"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+            <div class="progress-group mb-4">
+              <div class="progress-group-prepend">
+                <span class="text-medium-emphasis small">Quinta</span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="info" value="43"></c-progress-bar>
+                </c-progress>
+                <c-progress thin>
+                  <c-progress-bar color="danger" value="91"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+            <div class="progress-group mb-4">
+              <div class="progress-group-prepend">
+                <span class="text-medium-emphasis small">Sexta</span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="info" value="22"></c-progress-bar>
+                </c-progress>
+                <c-progress thin>
+                  <c-progress-bar color="danger" value="73"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+            <div class="progress-group mb-4">
+              <div class="progress-group-prepend">
+                <span class="text-medium-emphasis small">Sábado</span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="info" value="53"></c-progress-bar>
+                </c-progress>
+                <c-progress thin>
+                  <c-progress-bar color="danger" value="82"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+            <div class="progress-group mb-4">
+              <div class="progress-group-prepend">
+                <span class="text-medium-emphasis small">Domingo</span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="info" value="9"></c-progress-bar>
+                </c-progress>
+                <c-progress thin>
+                  <c-progress-bar color="danger" value="69"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+            <div class="legend text-center" ngPreserveWhitespaces>
+              <small>
+                <sup>
+                  <span class="badge badge-pill badge-sm bg-info">&nbsp;</span>
+                </sup>
+                <span>Novos clientes</span>
+                &nbsp;&nbsp;
+                <sup>
+                  <span class="badge badge-pill badge-sm bg-danger">&nbsp;</span>
+                </sup>
+                <span>Clientes recorrentes</span>
+              </small>
+            </div>
+          </c-col>
+
+          <c-col md="6" xl="6" xs="12">
+            <c-row>
+              <c-col sm="6">
+                <div class="border-start border-start-4 border-start-warning py-1 px-3 mb-3">
+                  <div class="text-medium-emphasis small">Visualizações de página</div>
+                  <div class="fs-5 fw-semibold">78,623</div>
+                </div>
+              </c-col>
+              <c-col sm="6">
+                <div class="border-start border-start-4 border-start-success py-1 px-3 mb-3">
+                  <div class="text-medium-emphasis small">Orgânico</div>
+                  <div class="fs-5 fw-semibold">49,123</div>
+                </div>
+              </c-col>
+            </c-row>
+
+            <hr class="mt-0" />
+
+            <div class="progress-group mb-4">
+              <div class="progress-group-header">
+                <svg cIcon class="icon icon-lg me-2" name="cilUser"></svg>
+                <span>Masculino</span>
+                <span class="ms-auto font-semibold">43%</span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="warning" value="43"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+            <div class="progress-group mb-5">
+              <div class="progress-group-header">
+                <svg cIcon class="icon icon-lg me-2" name="cilUserFemale"></svg>
+                <span>Feminino</span>
+                <span class="ms-auto font-semibold">37%</span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="warning" value="37"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+
+            <div class="progress-group">
+              <div class="progress-group-header">
+                <svg cIcon class="icon icon-lg me-2" name="cibGoogle"></svg>
+                <span>Busca orgânica</span>
+                <span class="ms-auto font-semibold">
+                  191,235 <span class="text-medium-emphasis small">(56%)</span>
+                </span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="success" value="56"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+            <div class="progress-group">
+              <div class="progress-group-header">
+                <svg cIcon class="icon icon-lg me-2" name="cibFacebook"></svg>
+                <span>Facebook</span>
+                <span class="ms-auto font-semibold">
+                  51,223 <span class="text-medium-emphasis small">(15%)</span>
+                </span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="success" value="15"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+            <div class="progress-group">
+              <div class="progress-group-header">
+                <svg cIcon class="icon icon-lg me-2" name="cibTwitter"></svg>
+                <span>Twitter</span>
+                <span class="ms-auto font-semibold">
+                  37,564 <span class="text-medium-emphasis small">(11%)</span>
+                </span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="success" value="11"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+            <div class="progress-group">
+              <div class="progress-group-header">
+                <svg cIcon class="icon icon-lg me-2" name="cibLinkedin"></svg>
+                <span>LinkedIn</span>
+                <span class="ms-auto font-semibold">
+                  27,319 <span class="text-medium-emphasis small">(8%)</span>
+                </span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="success" value="8"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+            <div class="divider d-flex justify-content-center">
+              <button
+                cButton
+                class="text-muted btn-link"
+                color="transparent"
+                size="sm"
+                type="button"
+                aria-label="Mais opções"
+              >
+                <svg cIcon name="cil-options"></svg>
+              </button>
+            </div>
+          </c-col>
+        </c-row>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

@@ -1,0 +1,5 @@
+# Versões exatas usadas na verificação (2026-11-03, Python 3.12.13). Streamlit exige Python >= 3.11.
+streamlit==1.66.1
+plotly==7.1.0
+pandas==3.1.0
+openpyxl==3.1.5

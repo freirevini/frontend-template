@@ -1,0 +1,21 @@
+// Chart.js external tooltip (@coreui/chartjs) on the chart tokens from _brand.scss
+
+.chartjs-tooltip {
+  font-family: var(--app-chart-font-family);
+  font-size: .8125rem;
+  color: var(--app-chart-tooltip-color);
+  background: var(--app-chart-tooltip-bg);
+  border-radius: var(--brand-radius-sm);
+  box-shadow: var(--brand-elevation-2);
+}
+
+.chartjs-tooltip-header-item {
+  font-weight: 600;
+}
+
+.chartjs-tooltip-body-item > td {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  font-size: smaller;
+  font-variant-numeric: tabular-nums;
+}

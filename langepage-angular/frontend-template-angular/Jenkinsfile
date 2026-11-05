@@ -1,0 +1,235 @@
+// Delivery pipeline of the panel (declarative Jenkinsfile; generic stages, ADR-005). A derived project keeps the stages
+// and fills the placeholders; nothing here is specific to one product.
+// Nothing environment-specific is versioned here (R6): images, registries, URLs and the deploy mechanism come
+// from the Jenkins folder configuration or from credentials. Every value marked PLACEHOLDER must be adjusted in the
+// corporate Jenkins before the first run. Explanation stage by stage: docs/dependencias-e-ambiente.md section 6.
+//
+// Folder variables (Jenkins > folder > Configure > Environment variables), no default on purpose:
+//   NODE_IMAGE        Node 22 image with Chromium headless for Karma (sets CHROME_BIN), from the corporate registry
+//   WEB_IMAGE         corporate non-root Nginx image (final stage of the Dockerfile)
+//   PLAYWRIGHT_IMAGE  Node 22 image with the browsers of Playwright 1.64.1 (version of e2e/package.json)
+//   IMAGE_REPOSITORY  repository of the app image in the corporate registry, without tag
+//   E2E_BASE_URL_DES  address of the panel in DES; the E2E smoke runs against it
+//
+// Promotion (one image, built once per commit, tag = first 12 characters of the commit):
+//   develop   -> build, push, deploy DES, E2E against DES
+//   release/* -> build, push, deploy UAT
+//   tag       -> no rebuild: the image of the tagged commit (pushed by release/*) goes to PRD after the GMUD input
+
+// PLACEHOLDER values, written as literals where they are used (declarative directives do not see script variables):
+//   credential 'npm-registry-url'  Secret text: URL of the npm proxy of the Nexus (npm-all)
+//   credential 'npm-userconfig'    Secret file: npm user config with the auth line of that registry
+//   credential 'image-registry'    Username with password: corporate image registry
+//   agent label 'docker'           Jenkins nodes with Docker
+//   submitter 'PLACEHOLDER-grupo-aprovador-prd'  group allowed to promote to PRD
+
+// PLACEHOLDER: deploy through the corporate mechanism (Portal Tech: Helm, ArgoCD or kubectl). The image is the same in
+// every environment; only the ConfigMap of assets/env.json and the Ingress route /api/* change (docs/portabilidade.md).
+def deployTo(String target) {
+  echo "PLACEHOLDER: implantar ${env.IMAGE_REPOSITORY}:${env.IMAGE_TAG} em ${target} pelo mecanismo da esteira corporativa."
+}
+
+pipeline {
+  agent none
+
+  options {
+    timestamps()
+    disableConcurrentBuilds()
+    buildDiscarder(logRotator(numToKeepStr: '30'))
+    timeout(time: 90, unit: 'MINUTES')
+    skipDefaultCheckout()
+  }
+
+  environment {
+    // Read by .npmrc and e2e/.npmrc (registry=${NPM_REGISTRY}) in every npm command; masked in the log.
+    NPM_REGISTRY = credentials('npm-registry-url')
+    CI = 'true'
+  }
+
+  stages {
+    stage('Integração') {
+      agent { label 'docker' }
+      stages {
+        stage('Checkout') {
+          steps {
+            checkout scm
+            script {
+              env.IMAGE_TAG = sh(script: 'git rev-parse HEAD', returnStdout: true).trim().take(12)
+            }
+          }
+        }
+
+        stage('Node 22') {
+          agent {
+            docker {
+              image "${env.NODE_IMAGE}"
+              reuseNode true
+            }
+          }
+          environment {
+            // The container user has no home: npm cache and Chrome profile go to /tmp.
+            HOME = '/tmp'
+            npm_config_cache = '/tmp/.npm'
+          }
+          stages {
+            stage('npm ci') {
+              steps {
+                withCredentials([file(credentialsId: 'npm-userconfig', variable: 'NPM_CONFIG_USERCONFIG')]) {
+                  sh 'node -v && npm -v && npm ci'
+                }
+              }
+            }
+            stage('npm run verify') {
+              steps {
+                // Karma (ChromeHeadless) uses the browser of the chromium-headless image through CHROME_BIN.
+                sh 'echo "CHROME_BIN=${CHROME_BIN:?defina CHROME_BIN na imagem Node 22 com Chromium ou na pasta do Jenkins}" && npm run verify'
+                sh '''
+                  if grep -rEl "localhost|appdes|appuat|HOST_DEV_BFF" dist/coreui-free-angular-admin-template; then
+                    echo "host proibido no dist (R6)"; exit 1
+                  fi
+                  echo "ok: nenhum host proibido no dist"
+                '''
+              }
+            }
+          }
+        }
+
+        stage('Varreduras') {
+          parallel {
+            stage('SonarQube') {
+              steps {
+                // PLACEHOLDER: withSonarQubeEnv('<instalação>') { sh 'sonar-scanner -Dsonar.projectKey=<chave> ...' }
+                // with the Karma coverage report (coverage/, when coverage is turned on).
+                echo 'PLACEHOLDER: análise SonarQube e quality gate.'
+              }
+            }
+            stage('Veracode') {
+              steps {
+                // PLACEHOLDER: package dist/coreui-free-angular-admin-template/browser and call the corporate Veracode step
+                // (upload-and-scan or pipeline scan) with the credential of the team.
+                echo 'PLACEHOLDER: varredura Veracode (SAST e SCA).'
+              }
+            }
+          }
+        }
+
+        stage('Imagem') {
+          when {
+            anyOf { branch 'develop'; branch 'release/*' }
+          }
+          steps {
+            withCredentials([
+              file(credentialsId: 'npm-userconfig', variable: 'NPM_USERCONFIG'),
+              usernamePassword(credentialsId: 'image-registry', usernameVariable: 'REGISTRY_USER', passwordVariable: 'REGISTRY_PASSWORD')
+            ]) {
+              sh '''
+                set -eu
+                echo "$REGISTRY_PASSWORD" | docker login --username "$REGISTRY_USER" --password-stdin "${IMAGE_REPOSITORY%%/*}"
+                DOCKER_BUILDKIT=1 docker build \
+                  --build-arg NODE_IMAGE="$NODE_IMAGE" \
+                  --build-arg WEB_IMAGE="$WEB_IMAGE" \
+                  --build-arg NPM_REGISTRY="$NPM_REGISTRY" \
+                  --secret id=npmrc,src="$NPM_USERCONFIG" \
+                  --tag "$IMAGE_REPOSITORY:$IMAGE_TAG" .
+                docker push "$IMAGE_REPOSITORY:$IMAGE_TAG"
+              '''
+            }
+          }
+        }
+
+        stage('Imagem do release') {
+          when { buildingTag() }
+          steps {
+            withCredentials([usernamePassword(credentialsId: 'image-registry', usernameVariable: 'REGISTRY_USER', passwordVariable: 'REGISTRY_PASSWORD')]) {
+              // PRD receives the image already validated in UAT: the tag must point to a commit built by release/*.
+              sh '''
+                set -eu
+                echo "$REGISTRY_PASSWORD" | docker login --username "$REGISTRY_USER" --password-stdin "${IMAGE_REPOSITORY%%/*}"
+                docker manifest inspect "$IMAGE_REPOSITORY:$IMAGE_TAG" > /dev/null \
+                  || { echo "imagem $IMAGE_TAG não existe: a tag precisa apontar para um commit de release/* já implantado em UAT"; exit 1; }
+              '''
+            }
+          }
+        }
+      }
+    }
+
+    stage('Deploy DES') {
+      when { branch 'develop' }
+      agent { label 'docker' }
+      steps {
+        script { deployTo('DES') }
+      }
+    }
+
+    stage('E2E DES') {
+      when { branch 'develop' }
+      agent {
+        docker {
+          image "${env.PLAYWRIGHT_IMAGE}"
+          label 'docker'
+        }
+      }
+      environment {
+        E2E_BASE_URL = "${env.E2E_BASE_URL_DES}"
+        HOME = '/tmp'
+        npm_config_cache = '/tmp/.npm'
+      }
+      steps {
+        checkout scm
+        withCredentials([file(credentialsId: 'npm-userconfig', variable: 'NPM_CONFIG_USERCONFIG')]) {
+          // e2e/ has no lockfile until the first install in the corporate registry; its single dependency chain is
+          // pinned (@playwright/test -> playwright -> playwright-core, exact versions), so install is deterministic.
+          sh '''
+            set -eu
+            : "${E2E_BASE_URL:?defina E2E_BASE_URL_DES na pasta do Jenkins}"
+            if [ -f e2e/package-lock.json ]; then npm --prefix e2e ci; else npm --prefix e2e install --no-audit --no-fund; fi
+            npm run e2e
+          '''
+        }
+      }
+      post {
+        always {
+          junit allowEmptyResults: true, testResults: 'e2e/test-results/junit.xml'
+          archiveArtifacts allowEmptyArchive: true, artifacts: 'e2e/playwright-report/**'
+        }
+      }
+    }
+
+    stage('Deploy UAT') {
+      when { branch 'release/*' }
+      agent { label 'docker' }
+      steps {
+        script { deployTo('UAT') }
+      }
+    }
+
+    stage('Deploy PRD') {
+      // beforeInput/beforeAgent: the tag check runs on the controller, and no executor is held while the GMUD input waits
+      // (the stage agent is allocated only after approval).
+      when {
+        beforeAgent true
+        beforeInput true
+        buildingTag()
+      }
+      input {
+        message 'Promover a imagem validada em UAT para PRD?'
+        ok 'Promover'
+        submitter 'PLACEHOLDER-grupo-aprovador-prd'
+        parameters {
+          string(name: 'GMUD', defaultValue: '', description: 'Número da GMUD aprovada')
+        }
+      }
+      agent { label 'docker' }
+      steps {
+        script {
+          if (!env.GMUD?.trim()) {
+            error('Promoção para PRD sem número de GMUD.')
+          }
+          echo "GMUD ${env.GMUD.trim()}"
+          deployTo('PRD')
+        }
+      }
+    }
+  }
+}

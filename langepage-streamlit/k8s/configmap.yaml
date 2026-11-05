@@ -1,0 +1,13 @@
+# PLACEHOLDER: substituir pelo ConfigMap do Cookiecutter do Titan (ADR-001). Um por ambiente (des/uat/prd).
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: agenda-normativa-config
+  labels:
+    app: agenda-normativa
+data:
+  ENV: "des"              # des | uat | prd (outro valor: o app não sobe)
+  AUTH_MODE: "mock"       # DES: none|mock; UAT e PRD: gateway|oidc (fora disso o app não sobe)
+  CHAT_MOCK: "true"       # true até o BFF /api/v1/agente/* existir; UAT/PRD: false (obrigatório; true não sobe)
+  AUTH_LOGIN_URL: "/"     # 401 do BFF: destino do link "Entrar novamente" (o gateway reautentica)
+  FOOTER_ENTITIES: "[]"   # rodapé: JSON [{"name","cnpj","address"}] por ambiente; o valor real só no ambiente

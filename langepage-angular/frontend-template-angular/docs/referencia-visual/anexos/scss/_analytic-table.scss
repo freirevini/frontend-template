@@ -1,0 +1,176 @@
+// "Tabela Analítica" (app-analytic-table), tokens only.
+// Global: the component has no stylesheet of its own (anyComponentStyle budget, docs/portabilidade.md 4.11).
+.analytic-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .75rem 1rem;
+}
+
+.analytic-export {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  border-radius: var(--brand-radius-pill);
+}
+
+// Filters the table reflects, as quiet pills.
+.analytic-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .375rem;
+  margin-top: .75rem;
+  color: var(--brand-content-low);
+}
+
+.analytic-filter {
+  padding: .125rem .5rem;
+  font-weight: 500;
+  color: var(--brand-primary);
+  background-color: var(--brand-primary-low);
+  border-radius: var(--brand-radius-pill);
+}
+
+// Scrolls sideways (thin visible scrollbar) when the 9 columns do not fit.
+.analytic-scroll {
+  margin-top: 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-sm);
+  scrollbar-width: thin;
+  scrollbar-color: var(--brand-surface-high) transparent;
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--brand-surface-high);
+    border-radius: var(--brand-radius-pill);
+  }
+}
+
+.analytic-table {
+  min-width: 64rem;
+  font-size: .8125rem;
+
+  th,
+  td {
+    padding: .5rem .625rem;
+    white-space: nowrap;
+  }
+
+  thead th {
+    padding: 0;
+    background-color: var(--brand-surface-mid);
+    border-bottom-color: var(--brand-border);
+  }
+
+  tbody tr:last-child > * {
+    border-bottom: 0;
+  }
+
+  .analytic-classifiedAt,
+  .analytic-numero {
+    font-variant-numeric: tabular-nums;
+  }
+
+  // Long themes wrap inside a fixed width instead of stretching the table.
+  .analytic-theme {
+    min-width: 16rem;
+    max-width: 22rem;
+    white-space: normal;
+  }
+}
+
+// Sortable header: the whole cell is the button; the arrow shows only on the sorted column (and on hover).
+.analytic-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  width: 100%;
+  padding: .5rem .625rem;
+  font-weight: 600;
+  color: var(--brand-content-low);
+  text-align: left;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  &:hover,
+  &.is-sorted {
+    color: var(--brand-content-high);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: -2px;
+  }
+}
+
+.analytic-sort-icon {
+  opacity: 0;
+}
+
+.analytic-sort:hover .analytic-sort-icon,
+.analytic-sort.is-sorted .analytic-sort-icon {
+  opacity: 1;
+}
+
+// Last column: asks the assistant about the row
+.analytic-ask-col {
+  width: 2.5rem;
+  text-align: center;
+}
+
+.analytic-ask {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  color: var(--brand-content-low);
+  background: none;
+  border: 0;
+  border-radius: var(--brand-radius-sm);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--brand-primary);
+    background-color: var(--brand-primary-low);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: -2px;
+  }
+}
+
+.analytic-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem 1rem;
+  margin-top: .75rem;
+}
+
+.analytic-pager-buttons {
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+
+  .filter-chip:disabled {
+    cursor: default;
+    opacity: .45;
+  }
+}

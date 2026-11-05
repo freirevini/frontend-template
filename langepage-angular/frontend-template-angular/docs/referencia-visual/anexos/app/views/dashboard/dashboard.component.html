@@ -1,0 +1,208 @@
+<!-- Section ids (#segmentos, #normativos-recebidos, ...) are the sidebar sub-items (_nav.ts). -->
+<app-widgets-dropdown id="segmentos" class="page-section" [activeSegment]="segmentFilter" (toClassifySelect)="onToClassifySelect($event)"></app-widgets-dropdown>
+<div *ngIf="segmentFilter" class="segment-filter-notice mb-4" role="status">
+  <svg cIcon name="cilFilter" aria-hidden="true"></svg>
+  <span>
+    Filtro: <strong>normas a classificar · {{ segmentFilterLabel }}</strong>. Aplicado aos cards, aos gráficos Normativos
+    Recebidos, Normas Aplicáveis e Assunto das Normas Aplicáveis, ao Fluxo de e-mail - Triagem e à Tabela Analítica. Clique fora ou pressione Esc para remover.
+  </span>
+  <button type="button" class="filter-chip" (click)="clearSegmentFilter()">Remover filtro</button>
+</div>
+<c-card class="mb-4" id="normativos-recebidos">
+  <c-card-body>
+    <div class="traffic-header">
+      <div class="traffic-heading">
+        <h4 class="card-title mb-0" id="traffic">Normativos Recebidos</h4>
+        <div class="small text-medium-emphasis">{{ mainChart['subtitle'] }}</div>
+      </div>
+      <div class="traffic-controls">
+        <div class="filter-bar" role="group" aria-label="Forma de exibição">
+          <button
+            type="button"
+            class="filter-chip"
+            [class.is-active]="trafficView === 'chart'"
+            [attr.aria-pressed]="trafficView === 'chart'"
+            (click)="setTrafficView('chart')"
+          >
+            <svg cIcon name="cilChartLine" size="sm" aria-hidden="true"></svg>
+            Gráfico
+          </button>
+          <button
+            type="button"
+            class="filter-chip"
+            [class.is-active]="trafficView === 'table'"
+            [attr.aria-pressed]="trafficView === 'table'"
+            (click)="setTrafficView('table')"
+          >
+            <svg cIcon name="cilList" size="sm" aria-hidden="true"></svg>
+            Tabela
+          </button>
+        </div>
+        <button
+          *ngIf="trafficView === 'table'"
+          cButton
+          color="primary"
+          size="sm"
+          type="button"
+          class="traffic-export"
+          [disabled]="exporting"
+          (click)="exportTrafficXlsx()"
+        >
+          <svg cIcon name="cilSpreadsheet" size="sm" aria-hidden="true"></svg>
+          {{ exporting ? 'Gerando arquivo...' : 'Exportar Excel' }}
+        </button>
+      </div>
+    </div>
+    <app-period-filter
+      id="traffic-period"
+      label="Período dos normativos recebidos"
+      class="d-block mt-3"
+      [period]="trafficPeriod"
+      [range]="trafficRange"
+      [bounds]="trafficBounds"
+      (selectionChange)="onTrafficPeriod($event)"
+    ></app-period-filter>
+    <p *ngIf="exportError" class="small text-danger mt-2 mb-0" role="alert">{{ exportError }}</p>
+    <c-chart
+      *ngIf="trafficView === 'chart'"
+      [data]="mainChart.data"
+      [height]="300"
+      [ngStyle]="{ 'marginTop.px': 24 }"
+      [options]="mainChart.options"
+      [plugins]="trafficPlugins"
+      [type]="mainChart.type"
+    >
+      Gráfico principal
+    </c-chart>
+    <div *ngIf="trafficView === 'table'" class="table-responsive traffic-table mt-3">
+      <table cTable [hover]="true" [small]="true" class="mb-0 align-middle">
+        <caption class="visually-hidden">Normativos recebidos por segmento: {{ mainChart['subtitle'] }}</caption>
+        <thead>
+          <tr>
+            <th scope="col">Período</th>
+            <th
+              *ngFor="let column of trafficTable.columns; index as i"
+              scope="col"
+              class="text-end"
+              [class.is-dimmed]="isLegendDimmed(i)"
+            >
+              <span class="traffic-legend-key" [class.traffic-legend-key--dashed]="column.dashed" [style.border-top-color]="column.color" aria-hidden="true"></span>
+              {{ column.label }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of trafficTable.rows">
+            <th scope="row" class="fw-normal">{{ row.period }}</th>
+            <td *ngFor="let value of row.values; index as i" class="text-end tabular-nums" [class.is-dimmed]="isLegendDimmed(i)">
+              {{ value | number: '1.0-0' }}
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th scope="row">Total</th>
+            <td *ngFor="let total of trafficTable.totals; index as i" class="text-end fw-semibold tabular-nums" [class.is-dimmed]="isLegendDimmed(i)">
+              {{ total | number: '1.0-0' }}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </c-card-body>
+  <c-card-footer>
+    <c-row
+      class="text-center"
+      [md]="5"
+      [xs]="1"
+      role="group"
+      aria-label="Legenda do gráfico Normativos Recebidos. Clique em um item para destacá-lo."
+    >
+      <c-col *ngFor="let item of trafficSummary; index as i" class="mb-sm-2 mb-0">
+        <button
+          type="button"
+          class="traffic-legend-item"
+          [class.is-active]="highlighted === i"
+          [class.is-dimmed]="isLegendDimmed(i)"
+          [attr.aria-pressed]="highlighted === i"
+          [attr.title]="highlighted === i ? 'Mostrar todas as séries' : 'Destacar ' + item.label + ' no gráfico'"
+          (click)="toggleHighlight(i)"
+        >
+          <span class="d-block text-medium-emphasis">
+            <span
+              class="traffic-legend-key"
+              [class.traffic-legend-key--dashed]="item.dashed"
+              [style.border-top-color]="item.color"
+              aria-hidden="true"
+            ></span>
+            {{ item.label }}
+            <span *ngIf="item.filter" class="small"> · {{ item.filter }}</span>
+          </span>
+          <strong class="d-block">{{ item.total | number: '1.0-0' }} normas ({{ item.share | percent: '1.0-0' }})</strong>
+          <span class="traffic-legend-bar d-block pt-2">
+          <span class="progress progress-thin d-flex">
+            <span
+              class="progress-bar"
+              role="progressbar"
+              [style.width.%]="item.share * 100"
+              [style.background-color]="item.color"
+              [attr.aria-valuenow]="item.share * 100 | number: '1.0-0'"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [attr.aria-label]="'Participação de ' + item.label"
+            ></span>
+          </span>
+          </span>
+        </button>
+      </c-col>
+    </c-row>
+  </c-card-footer>
+</c-card>
+
+<!--
+  Classification cards: no period filter of their own; they follow the Tráfego period and the segment filter.
+  Clicking a value of one card cross-filters the other (applicabilityFilter / themeFilter).
+-->
+<div *ngIf="applicabilityFilter !== null || themeFilter !== null" class="segment-filter-notice mb-4" role="status">
+  <svg cIcon name="cilFilter" aria-hidden="true"></svg>
+  <span>
+    Filtro: <strong>{{ classificationFilterLabel }}</strong>. Aplicado aos gráficos Normas Aplicáveis e Assunto das Normas Aplicáveis e à Tabela Analítica. Clique fora ou
+    pressione Esc para remover.
+  </span>
+  <button type="button" class="filter-chip" (click)="clearClassificationFilters()">Remover filtro</button>
+</div>
+<c-row class="mb-4 g-4">
+  <c-col lg="5" id="normas-aplicaveis">
+    <app-applicability-chart
+      [period]="trafficPeriod"
+      [bounds]="trafficBounds"
+      [segmentFilter]="segmentFilter"
+      [applicabilityFilter]="applicabilityFilter"
+      [themeFilter]="themeFilter"
+      (applicabilitySelect)="onApplicabilitySelect($event)"
+    ></app-applicability-chart>
+  </c-col>
+  <c-col lg="7" id="assunto-das-normas">
+    <app-themes-list
+      [period]="trafficPeriod"
+      [bounds]="trafficBounds"
+      [segmentFilter]="segmentFilter"
+      [applicabilityFilter]="applicabilityFilter"
+      [themeFilter]="themeFilter"
+      (themeSelect)="onThemeSelect($event)"
+    ></app-themes-list>
+  </c-col>
+</c-row>
+
+<app-emails-chart id="fluxo-de-email" [segmentFilter]="segmentFilter"></app-emails-chart>
+
+<!-- Tabela Analítica: rows behind the cards above, with every page filter applied (Tráfego period, segment, pie slice, theme). -->
+<app-analytic-table
+  id="tabela-analitica"
+  class="page-section"
+  [period]="trafficPeriod"
+  [bounds]="trafficBounds"
+  [segmentFilter]="segmentFilter"
+  [applicabilityFilter]="applicabilityFilter"
+  [themeFilter]="themeFilter"
+></app-analytic-table>

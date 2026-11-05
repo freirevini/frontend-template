@@ -1,0 +1,394 @@
+<c-row>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Layout</strong> <small>Grid do formulário</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Formulários mais complexos podem ser criados com nossas classes de grid. Use-as em layouts
+          de formulário que exigem várias colunas, larguras variadas e opções adicionais de alinhamento.
+        </p>
+        <app-docs-example>
+          <c-row>
+            <c-col xs>
+              <input aria-label="Nome" cFormControl placeholder="Nome" />
+            </c-col>
+            <c-col xs>
+              <input aria-label="Sobrenome" cFormControl placeholder="Sobrenome" />
+            </c-col>
+          </c-row>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Layout</strong> <small>Espaçamentos</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Ao adicionar classes modificadoras de espaçamento
+          , você controla a largura do espaçamento tanto na direção inline quanto na direção de bloco.
+        </p>
+        <app-docs-example>
+          <c-row class="g-3">
+            <c-col xs>
+              <input aria-label="Nome" cFormControl placeholder="Nome" />
+            </c-col>
+            <c-col xs>
+              <input aria-label="Sobrenome" cFormControl placeholder="Sobrenome" />
+            </c-col>
+          </c-row>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Layouts mais complexos também podem ser criados com o sistema de grid.
+        </p>
+        <app-docs-example>
+          <form cForm class="row g-3">
+            <c-col md="6">
+              <label cLabel for="inputEmail4">E-mail</label>
+              <input cFormControl id="inputEmail4" type="email" />
+            </c-col>
+            <c-col md="6">
+              <label cLabel for="inputPassword4">Senha</label>
+              <input cFormControl id="inputPassword4" type="password" />
+            </c-col>
+            <c-col xs="12">
+              <label cLabel for="inputAddress">Endereço</label>
+              <input cFormControl id="inputAddress" placeholder="Rua Principal, 1234" />
+            </c-col>
+            <c-col xs="12">
+              <label cLabel for="inputAddress2">Endereço 2</label>
+              <input cFormControl id="inputAddress2" placeholder="Apartamento, sala ou andar" />
+            </c-col>
+            <c-col md="6">
+              <label cLabel for="inputCity">Cidade</label>
+              <input cFormControl id="inputCity" />
+            </c-col>
+            <c-col md="4">
+              <label cLabel for="inputState">Estado</label>
+              <select cSelect id="inputState">
+                <option>Escolha...</option>
+                <option>...</option>
+              </select>
+            </c-col>
+            <c-col md="2">
+              <label cLabel for="inputZip">CEP</label>
+              <input cFormControl id="inputZip" />
+            </c-col>
+            <c-col xs="12">
+              <c-form-check>
+                <input cFormCheckInput id="gridCheck" name="gridCheck" type="checkbox" />
+                <label cFormCheckLabel for="gridCheck">Marque-me</label>
+              </c-form-check>
+            </c-col>
+            <c-col xs="12">
+              <button cButton type="submit">Entrar</button>
+            </c-col>
+          </form>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Layout</strong> <small>Formulário horizontal</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Crie formulários horizontais com o grid adicionando a classe <code>.row</code> aos grupos
+          do formulário e usando as classes <code>.col-*-*</code> para definir a largura dos rótulos
+          e controles. Adicione também <code>.col-form-label</code> aos seus
+          <code>&lt;label&gt;</code>s para que fiquem centralizados verticalmente com os
+          controles de formulário associados.
+        </p>
+        <p class="text-medium-emphasis small">
+          Às vezes, pode ser necessário usar utilitários de margem ou espaçamento interno para obter o
+          alinhamento perfeito. Por exemplo, removemos o <code>padding-top</code> do rótulo dos
+          rádios empilhados para alinhar melhor a linha de base do texto.
+        </p>
+        <app-docs-example>
+          <form>
+            <c-row class="mb-3">
+              <label cLabel class="col-sm-2 col-form-label" for="inputEmail3">
+                E-mail
+              </label>
+              <c-col sm="10">
+                <input cFormControl id="inputEmail3" type="email" />
+              </c-col>
+            </c-row>
+            <c-row class="mb-3">
+              <label cLabel class="col-sm-2 col-form-label" for="inputPassword3">
+                Senha
+              </label>
+              <c-col sm="10">
+                <input cFormControl id="inputPassword3" type="password" />
+              </c-col>
+            </c-row>
+            <fieldset class="row mb-3">
+              <legend class="col-form-label col-sm-2 pt-0">Rádios</legend>
+              <c-col sm="10">
+                <c-form-check>
+                  <input cFormCheckInput checked id="gridRadios1" name="gridRadios" type="radio" value="option1" />
+                  <label cFormCheckLabel for="gridRadios1">Primeiro rádio</label>
+                </c-form-check>
+                <c-form-check>
+                  <input cFormCheckInput id="gridRadios2" name="gridRadios" type="radio" value="option2" />
+                  <label cFormCheckLabel for="gridRadios2">Segundo rádio</label>
+                </c-form-check>
+                <c-form-check>
+                  <input cFormCheckInput id="gridRadios3" name="gridRadios" type="radio" value="option3" />
+                  <label cFormCheckLabel for="gridRadios3">Terceiro rádio desabilitado</label>
+                </c-form-check>
+              </c-col>
+            </fieldset>
+            <c-row class="mb-3">
+              <c-col sm="10" class="offset-sm-2">
+                <c-form-check>
+                  <input cFormCheckInput id="gridCheck1" name="gridCheck1" type="checkbox" />
+                  <label cFormCheckLabel for="gridCheck1">Caixa de seleção de exemplo</label>
+                </c-form-check>
+              </c-col>
+            </c-row>
+            <button cButton type="submit">Entrar</button>
+          </form>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Layout</strong> <small>Tamanho dos rótulos em formulário horizontal</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Use <code>.col-form-label-sm</code> ou <code>.col-form-label-lg</code> nos seus
+          <code>&lt;label&gt;</code>s ou <code>&lt;legend&gt;</code>s para acompanhar corretamente
+          o tamanho de <code>.form-control-lg</code> e <code>.form-control-sm</code>.
+        </p>
+        <app-docs-example>
+          <c-row class="mb-3">
+            <label cLabel
+                   class="col-sm-2 col-form-label col-form-label-sm"
+                   for="colFormLabelSm"
+            >
+              E-mail
+            </label>
+            <c-col sm="10">
+              <input cFormControl
+                     class="form-control form-control-sm"
+                     id="colFormLabelSm"
+                     placeholder="col-form-label-sm"
+                     type="email"
+              />
+            </c-col>
+          </c-row>
+          <c-row class="mb-3">
+            <label cLabel class="col-sm-2 col-form-label" for="colFormLabel">
+              E-mail
+            </label>
+            <c-col sm="10">
+              <input cFormControl id="colFormLabel" placeholder="col-form-label" type="email" />
+            </c-col>
+          </c-row>
+          <c-row>
+            <label cLabel
+                   class="col-sm-2 col-form-label col-form-label-lg"
+                   for="colFormLabelLg"
+            >
+              E-mail
+            </label>
+            <c-col sm="10">
+              <input cFormControl
+                     class="form-control form-control-lg"
+                     id="colFormLabelLg"
+                     placeholder="col-form-label-lg"
+                     type="email"
+              />
+            </c-col>
+          </c-row>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Layout</strong> <small>Tamanho das colunas</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Como mostrado nos exemplos anteriores, nosso sistema de grid permite colocar qualquer
+          quantidade de <code>&lt;c-col&gt;</code>s dentro de um <code>&lt;c-row&gt;</code>. Eles dividem
+          a largura disponível igualmente entre si. Você também pode escolher algumas colunas para
+          ocupar mais ou menos espaço, enquanto os <code>&lt;c-col&gt;</code>s restantes dividem
+          igualmente o resto, usando classes de coluna específicas como
+          <code>&lt;c-col sm=&#34;7&#34;&gt;</code>.
+        </p>
+        <app-docs-example>
+          <c-row class="g-3">
+            <c-col sm="7">
+              <input aria-label="Cidade" cFormControl placeholder="Cidade" />
+            </c-col>
+            <c-col sm>
+              <input aria-label="Estado" cFormControl placeholder="Estado" />
+            </c-col>
+            <c-col sm>
+              <input aria-label="CEP" cFormControl placeholder="CEP" />
+            </c-col>
+          </c-row>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Layout</strong> <small>Tamanho automático</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          O exemplo abaixo usa um utilitário de flexbox para centralizar verticalmente o conteúdo e troca
+          <code>&lt;c-col&gt;</code> por <code>&lt;c-col xs=&#34;auto&#34;&gt;</code> para que as
+          colunas ocupem apenas o espaço necessário. Em outras palavras, a coluna se dimensiona
+          de acordo com o conteúdo.
+        </p>
+        <app-docs-example>
+          <form cForm class="row gy-2 gx-3 align-items-center">
+            <c-col xs="auto">
+              <label cLabel class="visually-hidden" for="autoSizingInput">
+                Nome
+              </label>
+              <input cFormControl id="autoSizingInput" placeholder="Jane Doe" />
+            </c-col>
+            <c-col xs="auto">
+              <label cLabel class="visually-hidden" for="autoSizingInputGroup">
+                Usuário
+              </label>
+              <c-input-group>
+                <span cInputGroupText>@</span>
+                <input cFormControl id="autoSizingInputGroup" placeholder="Usuário" />
+              </c-input-group>
+            </c-col>
+            <c-col xs="auto">
+              <label cLabel class="visually-hidden" for="autoSizingSelect">
+                Preferência
+              </label>
+              <select cSelect id="autoSizingSelect">
+                <option>Escolha...</option>
+                <option value="1">Um</option>
+                <option value="2">Dois</option>
+                <option value="3">Três</option>
+              </select>
+            </c-col>
+            <c-col xs="auto">
+              <c-form-check>
+                <input cFormCheckInput id="autoSizingCheck" name="autoSizingCheck" type="checkbox" />
+                <label cFormCheckLabel for="autoSizingCheck">Lembrar de mim</label>
+              </c-form-check>
+            </c-col>
+            <c-col xs="auto">
+              <button cButton type="submit">Enviar</button>
+            </c-col>
+          </form>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Depois, você pode combinar isso novamente com classes de coluna de tamanho específico.
+        </p>
+        <app-docs-example>
+          <form cForm class="row gx-3 gy-2 align-items-center">
+            <c-col sm="3">
+              <label cLabel class="visually-hidden" for="specificSizeInputName">
+                Nome
+              </label>
+              <input cFormControl id="specificSizeInputName" placeholder="Jane Doe" />
+            </c-col>
+            <c-col sm="3">
+              <label cLabel class="visually-hidden" for="specificSizeInputGroupUsername">
+                Usuário
+              </label>
+              <c-input-group>
+                <span cInputGroupText>@</span>
+                <input cFormControl id="specificSizeInputGroupUsername" placeholder="Usuário" />
+              </c-input-group>
+            </c-col>
+            <c-col sm="3">
+              <label cLabel class="visually-hidden" for="specificSizeSelect">
+                Preferência
+              </label>
+              <select cSelect id="specificSizeSelect">
+                <option>Escolha...</option>
+                <option value="1">Um</option>
+                <option value="2">Dois</option>
+                <option value="3">Três</option>
+              </select>
+            </c-col>
+            <c-col xs="auto">
+              <c-form-check>
+                <input cFormCheckInput id="autoSizingCheck2" name="autoSizingCheck2" type="checkbox" />
+                <label cFormCheckLabel for="autoSizingCheck2">Lembrar de mim</label>
+              </c-form-check>
+            </c-col>
+            <c-col xs="auto">
+              <button cButton type="submit">Enviar</button>
+            </c-col>
+          </form>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Layout</strong> <small>Formulários em linha</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Use a classe <code>&lt;c-col xs=&#34;auto&#34;&gt;</code> para criar layouts
+          horizontais. Ao adicionar
+          classes modificadoras de espaçamento,
+          teremos espaçamentos nas direções horizontal e vertical. A classe
+          <code>.align-items-center</code> alinha os elementos do formulário ao centro, fazendo o
+          <code>&lt;CFormCheck&gt;</code> se alinhar corretamente.
+        </p>
+        <app-docs-example>
+          <form cForm class="row row-cols-lg-auto g-3 align-items-center">
+            <c-col xs="12">
+              <label cLabel class="visually-hidden" for="inlineFormInputGroupUsername">
+                Usuário
+              </label>
+              <c-input-group>
+                <span cInputGroupText>@</span>
+                <input cFormControl id="inlineFormInputGroupUsername" placeholder="Usuário" />
+              </c-input-group>
+            </c-col>
+            <c-col xs="12">
+              <label cLabel class="visually-hidden" for="inlineFormSelectPref">
+                Preferência
+              </label>
+              <select cSelect id="inlineFormSelectPref">
+                <option>Escolha...</option>
+                <option value="1">Um</option>
+                <option value="2">Dois</option>
+                <option value="3">Três</option>
+              </select>
+            </c-col>
+            <c-col xs="12">
+              <c-form-check inline>
+                <input cFormCheckInput id="inlineFormCheck" name="inlineFormCheck" type="checkbox" />
+                <label cFormCheckLabel for="inlineFormCheck">Lembrar de mim</label>
+              </c-form-check>
+            </c-col>
+            <c-col xs="12">
+              <button cButton type="submit">Enviar</button>
+            </c-col>
+          </form>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

@@ -1,0 +1,56 @@
+<c-card class="h-100" aria-labelledby="applicability-title">
+  <c-card-body>
+    <h4 class="card-title mb-0" id="applicability-title">Normas Aplicáveis</h4>
+    <div class="small text-medium-emphasis">
+      {{ subtitle }}
+      <ng-container *ngIf="segmentFilter"> · {{ filterLabel }}</ng-container>
+      <ng-container *ngIf="themeFilter"> · Tema: {{ themeFilter }}</ng-container>
+    </div>
+
+    <ng-container [ngSwitch]="state">
+      <div *ngSwitchCase="'loading'" class="classification-placeholder text-medium-emphasis">
+        <c-spinner size="sm" label="Carregando..." class="me-2"></c-spinner>
+        Carregando dados...
+      </div>
+
+      <div *ngSwitchCase="'error'" class="classification-placeholder text-medium-emphasis" role="alert">
+        Não foi possível carregar a classificação das normas.
+      </div>
+
+      <ng-container *ngSwitchCase="'ready'">
+        <p *ngIf="aggregate && aggregate.total === 0" class="classification-placeholder text-medium-emphasis mb-0">
+          Nenhuma norma classificada neste período.
+        </p>
+
+        <div *ngIf="aggregate && aggregate.total > 0" class="applicability-body">
+          <div class="applicability-chart" role="img" [attr.aria-label]="ariaSummary" data-page-filter>
+            <c-chart type="doughnut" [data]="chartData" [options]="chartOptions" [redraw]="true" [customTooltips]="false" [height]="220"></c-chart>
+            <div class="applicability-center" aria-hidden="true">
+              <strong>{{ formatNumber(aggregate.total) }}</strong>
+              <span>{{ aggregate.total === 1 ? 'classificada' : 'classificadas' }}</span>
+            </div>
+          </div>
+          <ul class="applicability-legend" aria-label="Filtrar os temas por aplicabilidade">
+            <li *ngFor="let slice of slices">
+              <button
+                type="button"
+                class="applicability-legend-item"
+                data-page-filter
+                [class.is-active]="applicabilityFilter === slice.value"
+                [class.is-dimmed]="isDimmed(slice)"
+                [attr.aria-pressed]="applicabilityFilter === slice.value"
+                [attr.title]="applicabilityFilter === slice.value ? 'Remover filtro' : 'Mostrar os temas das normas ' + slice.label.toLowerCase()"
+                (click)="select(slice)"
+              >
+                <span class="applicability-legend-label">
+                  <span class="classification-key" [style.background-color]="slice.color" aria-hidden="true"></span>{{ slice.label }}
+                </span>
+                <span class="applicability-legend-value">{{ formatNumber(slice.count) }} <span>{{ formatPercent(slice.share) }}</span></span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+    </ng-container>
+  </c-card-body>
+</c-card>

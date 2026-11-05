@@ -1,0 +1,156 @@
+import { Component, ElementRef } from '@angular/core';
+import type { ActiveElement, ChartData, ChartEvent, ChartOptions, ScriptableContext, TooltipItem } from 'chart.js';
+import { Observable, takeUntil } from 'rxjs';
+
+import { ThemeService } from '../../../core/services/theme.service';
+import { withAlpha } from '../chart-colors';
+import { ClassificationAggregate, ClassificationFilters } from './classification-derive';
+import { ApiErrorTextComponent } from '../../../core/http/api-error-text.component';
+import { ClassificationDataService } from './classification-data.service';
+import { ClassificationViewBase } from './classification-view.base';
+import { CardComponent, CardBodyComponent, SpinnerComponent } from '@coreui/angular';
+
+import { ChartjsComponent } from '@coreui/angular-chartjs';
+
+export interface ApplicabilitySlice {
+  /** true = Aplicáveis, false = Não aplicáveis (the value of the cross filter). */
+  value: boolean;
+  label: string;
+  count: number;
+  share: number;
+  color: string;
+}
+
+/** Fallbacks (light brand values) for when the tokens are unavailable, e.g. detached tests. */
+const FALLBACK_APPLICABLE = '#0e1650';
+const FALLBACK_NOT_APPLICABLE = '#a7b2be';
+const DIMMED_ALPHA = 0.16;
+/** Picked slice is pulled out of the ring by this many pixels (fading alone is weak between navy and gray). */
+const PICKED_OFFSET = 10;
+
+/**
+ * "Aplicabilidade ao banco": pie (doughnut) of the normas classified as applicable vs not applicable,
+ * total in the center and a legend with count and share. Follows the Tráfego period and the segment filter; the theme
+ * picked in the themes list narrows it to that theme. Clicking a slice or a legend item filters the themes list.
+ */
+@Component({
+    selector: 'app-applicability-chart',
+    templateUrl: './applicability-chart.component.html',
+    imports: [CardComponent, CardBodyComponent, SpinnerComponent, ChartjsComponent, ApiErrorTextComponent]
+})
+export class ApplicabilityChartComponent extends ClassificationViewBase<ClassificationAggregate> {
+  slices: ApplicabilitySlice[] = [];
+  chartData?: ChartData<'doughnut', number[], string>;
+  chartOptions?: ChartOptions<'doughnut'>;
+
+  constructor(
+    dataService: ClassificationDataService,
+    private readonly themeService: ThemeService,
+    private readonly host: ElementRef<HTMLElement>
+  ) {
+    super(dataService);
+  }
+
+  override ngOnInit(): void {
+    super.ngOnInit();
+    // Canvas cannot read CSS: rebuild colors whenever the applied theme changes.
+    this.themeService.appliedTheme$.pipe(takeUntil(this.destroy$)).subscribe(() => this.onAggregate());
+  }
+
+  /** A slice other than the picked one is drawn faded. */
+  isDimmed(slice: ApplicabilitySlice): boolean {
+    return this.applicabilityFilter !== null && this.applicabilityFilter !== slice.value;
+  }
+
+  /** Offset of a slice: pulled out of the ring when it is the picked one. */
+  pickedOffset(index: number): number {
+    return this.slices[index] && this.applicabilityFilter === this.slices[index].value ? PICKED_OFFSET : 0;
+  }
+
+  select(slice: ApplicabilitySlice): void {
+    this.applicabilitySelect.emit(slice.value);
+  }
+
+  /** The pie ignores its own filter (it highlights the slice instead) and narrows to the picked theme. */
+  protected request(): Observable<ClassificationAggregate> {
+    return this.summary();
+  }
+
+  protected receive(aggregate: ClassificationAggregate): void {
+    this.applySummary(aggregate);
+  }
+
+  protected filters(): ClassificationFilters {
+    return { theme: this.themeFilter };
+  }
+
+  /** Accessible reading of the pie. */
+  get ariaSummary(): string {
+    const data = this.aggregate;
+    if (!data) {
+      return '';
+    }
+    const theme = this.themeFilter ? ` do tema ${this.themeFilter}` : '';
+    return `Gráfico de pizza${theme}: ${this.formatNumber(data.applicable)} aplicáveis (${this.formatPercent(data.applicableShare)}) e ${this.formatNumber(data.notApplicable)} não aplicáveis (${this.formatPercent(1 - data.applicableShare)}) de ${this.formatNumber(data.total)} normas classificadas.`;
+  }
+
+  protected override onAggregate(): void {
+    const data = this.aggregate;
+    if (!data) {
+      return;
+    }
+    const style = getComputedStyle(this.host.nativeElement);
+    const read = (name: string, fallback: string) => style.getPropertyValue(name).trim() || fallback;
+    const surface = read('--cui-card-bg', '') || read('--brand-surface-card', '#ffffff');
+    this.slices = [
+      { value: true, label: 'Aplicáveis', count: data.applicable, share: data.applicableShare, color: read('--app-applicable', FALLBACK_APPLICABLE) },
+      { value: false, label: 'Não aplicáveis', count: data.notApplicable, share: data.total ? 1 - data.applicableShare : 0, color: read('--app-not-applicable', FALLBACK_NOT_APPLICABLE) }
+    ];
+    const fills = this.slices.map((slice) => (this.isDimmed(slice) ? withAlpha(slice.color, DIMMED_ALPHA) : slice.color));
+    // New objects on every render: c-chart redraws when its data input changes.
+    this.chartData = {
+      labels: this.slices.map((slice) => slice.label),
+      datasets: [{
+        data: this.slices.map((slice) => slice.count),
+        backgroundColor: fills,
+        hoverBackgroundColor: fills,
+        // 2px gap in the card color between the slices.
+        borderColor: surface,
+        hoverBorderColor: surface,
+        borderWidth: 2
+      }]
+    };
+    this.chartOptions = {
+      maintainAspectRatio: false,
+      cutout: '62%',
+      layout: { padding: PICKED_OFFSET },
+      elements: { arc: { offset: (context: ScriptableContext<'doughnut'>) => this.pickedOffset(context.dataIndex) } },
+      animation: { duration: 400 },
+      // Click a slice to filter the themes list by its class; pointer only over a slice.
+      onClick: (_event: ChartEvent, elements: ActiveElement[]) => {
+        if (elements.length) {
+          this.select(this.slices[elements[0].index]);
+        }
+      },
+      onHover: (event: ChartEvent, elements: ActiveElement[]) => {
+        const canvas = event.native?.target as HTMLElement | undefined;
+        if (canvas) {
+          canvas.style.cursor = elements.length ? 'pointer' : 'default';
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          usePointStyle: true,
+          callbacks: {
+            label: (item: TooltipItem<'doughnut'>) => {
+              const slice = this.slices[item.dataIndex];
+              return `${slice.label}: ${this.formatNumber(slice.count)} (${this.formatPercent(slice.share)})`;
+            },
+            labelPointStyle: () => ({ pointStyle: 'rect', rotation: 0 })
+          }
+        }
+      }
+    };
+  }
+}

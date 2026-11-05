@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="604" viewBox="0 0 920 604" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif">
+<rect width="920" height="604" fill="#ffffff"/>
+<text x="20" y="34" font-size="18" font-weight="600" fill="#20262c">Cores de gráficos, tema claro (sobre card #ffffff)</text>
+<text x="20" y="101" font-size="13" font-weight="600" fill="#20262c">Séries categóricas</text>
+<rect x="190" y="60" width="132" height="72" rx="8" fill="#223ad2" stroke="none" stroke-width="1"/>
+<text x="200" y="82" font-size="12" font-weight="600" fill="#ffffff">#223ad2</text>
+<text x="200" y="100" font-size="11" fill="#ffffff">8,06:1 / #ffffff</text>
+<text x="190" y="148" font-size="11" fill="#4b5968">--app-series-1</text>
+<rect x="332" y="60" width="132" height="72" rx="8" fill="#1099bc" stroke="none" stroke-width="1"/>
+<text x="342" y="82" font-size="12" font-weight="600" fill="#0b0b0b">#1099bc</text>
+<text x="342" y="100" font-size="11" fill="#0b0b0b">3,33:1 / #ffffff</text>
+<text x="332" y="148" font-size="11" fill="#4b5968">--app-series-2</text>
+<rect x="474" y="60" width="132" height="72" rx="8" fill="#288f28" stroke="none" stroke-width="1"/>
+<text x="484" y="82" font-size="12" font-weight="600" fill="#0b0b0b">#288f28</text>
+<text x="484" y="100" font-size="11" fill="#0b0b0b">4,16:1 / #ffffff</text>
+<text x="474" y="148" font-size="11" fill="#4b5968">--app-series-3</text>
+<rect x="616" y="60" width="132" height="72" rx="8" fill="#ae6ae6" stroke="none" stroke-width="1"/>
+<text x="626" y="82" font-size="12" font-weight="600" fill="#0b0b0b">#ae6ae6</text>
+<text x="626" y="100" font-size="11" fill="#0b0b0b">3,50:1 / #ffffff</text>
+<text x="616" y="148" font-size="11" fill="#4b5968">--app-series-4</text>
+<rect x="758" y="60" width="132" height="72" rx="8" fill="#dc1832" stroke="none" stroke-width="1"/>
+<text x="768" y="82" font-size="12" font-weight="600" fill="#ffffff">#dc1832</text>
+<text x="768" y="100" font-size="11" fill="#ffffff">4,98:1 / #ffffff</text>
+<text x="758" y="148" font-size="11" fill="#4b5968">--app-series-reference</text>
+<text x="20" y="207" font-size="13" font-weight="600" fill="#20262c">Cascata: total</text>
+<rect x="190" y="166" width="132" height="72" rx="8" fill="#17278c" stroke="none" stroke-width="1"/>
+<text x="200" y="188" font-size="12" font-weight="600" fill="#ffffff">#17278c</text>
+<text x="190" y="254" font-size="11" fill="#4b5968">--app-wf-total-1</text>
+<rect x="332" y="166" width="132" height="72" rx="8" fill="#223ad2" stroke="none" stroke-width="1"/>
+<text x="342" y="188" font-size="12" font-weight="600" fill="#ffffff">#223ad2</text>
+<text x="332" y="254" font-size="11" fill="#4b5968">--app-wf-total-2</text>
+<rect x="474" y="166" width="132" height="72" rx="8" fill="#8c9ae8" stroke="none" stroke-width="1"/>
+<text x="484" y="188" font-size="12" font-weight="600" fill="#0b0b0b">#8c9ae8</text>
+<text x="474" y="254" font-size="11" fill="#4b5968">--app-wf-total-3</text>
+<text x="20" y="313" font-size="13" font-weight="600" fill="#20262c">Cascata: redução</text>
+<rect x="190" y="272" width="132" height="72" rx="8" fill="#a51226" stroke="none" stroke-width="1"/>
+<text x="200" y="294" font-size="12" font-weight="600" fill="#ffffff">#a51226</text>
+<text x="190" y="360" font-size="11" fill="#4b5968">--app-wf-decrease-1</text>
+<rect x="332" y="272" width="132" height="72" rx="8" fill="#dc1832" stroke="none" stroke-width="1"/>
+<text x="342" y="294" font-size="12" font-weight="600" fill="#ffffff">#dc1832</text>
+<text x="332" y="360" font-size="11" fill="#4b5968">--app-wf-decrease-2</text>
+<rect x="474" y="272" width="132" height="72" rx="8" fill="#f07a89" stroke="none" stroke-width="1"/>
+<text x="484" y="294" font-size="12" font-weight="600" fill="#0b0b0b">#f07a89</text>
+<text x="474" y="360" font-size="11" fill="#4b5968">--app-wf-decrease-3</text>
+<rect x="616" y="272" width="132" height="72" rx="8" fill="#a7b2be" stroke="none" stroke-width="1"/>
+<text x="626" y="294" font-size="12" font-weight="600" fill="#0b0b0b">#a7b2be</text>
+<text x="616" y="360" font-size="11" fill="#4b5968">--app-wf-connector</text>
+<text x="20" y="419" font-size="13" font-weight="600" fill="#20262c">Classificação</text>
+<rect x="190" y="378" width="132" height="72" rx="8" fill="#0e1650" stroke="none" stroke-width="1"/>
+<text x="200" y="400" font-size="12" font-weight="600" fill="#ffffff">#0e1650</text>
+<text x="190" y="466" font-size="11" fill="#4b5968">--app-applicable</text>
+<rect x="332" y="378" width="132" height="72" rx="8" fill="#a7b2be" stroke="none" stroke-width="1"/>
+<text x="342" y="400" font-size="12" font-weight="600" fill="#0b0b0b">#a7b2be</text>
+<text x="332" y="466" font-size="11" fill="#4b5968">--app-not-applicable</text>
+<text x="20" y="525" font-size="13" font-weight="600" fill="#20262c">Texto e tooltip</text>
+<rect x="190" y="484" width="132" height="72" rx="8" fill="#4b5968" stroke="none" stroke-width="1"/>
+<text x="200" y="506" font-size="12" font-weight="600" fill="#ffffff">#4b5968</text>
+<text x="190" y="572" font-size="11" fill="#4b5968">--app-chart-color</text>
+<rect x="332" y="484" width="132" height="72" rx="8" fill="#20262c" stroke="none" stroke-width="1"/>
+<text x="342" y="506" font-size="12" font-weight="600" fill="#ffffff">#20262c</text>
+<text x="332" y="572" font-size="11" fill="#4b5968">--app-chart-tooltip-bg</text>
+<rect x="474" y="484" width="132" height="72" rx="8" fill="#223ad2" stroke="none" stroke-width="1"/>
+<text x="484" y="506" font-size="12" font-weight="600" fill="#ffffff">#223ad2</text>
+<text x="474" y="572" font-size="11" fill="#4b5968">--app-chat-accent</text>
+</svg>

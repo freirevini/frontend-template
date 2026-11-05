@@ -1,0 +1,21 @@
+# Build context of the Dockerfile: only what `npm ci` + `npm run build:prod` and the web stage need.
+node_modules
+dist
+.angular
+coverage
+out-tsc
+.git
+.githooks
+.rules
+.cursor
+.agents
+.claude
+.vscode
+.idea
+docs
+base-de-conhecimento
+e2e
+scripts
+*.md
+Dockerfile
+.dockerignore

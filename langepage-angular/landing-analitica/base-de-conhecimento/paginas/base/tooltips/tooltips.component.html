@@ -1,0 +1,57 @@
+<c-row>
+  <c-col xs="12">
+    <app-docs-callout name="Dica"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Dica Angular</strong> <small>Exemplo básico</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Passe o mouse sobre os links abaixo para ver as dicas:
+        </p>
+        <app-docs-example>
+          <p class="text-medium-emphasis">
+            Este parágrafo de exemplo mostra como as dicas funcionam em meio ao texto. Passe o mouse
+            <a cTooltip="Texto da dica" routerLink="./" [cTooltipVisible]="true"> sobre este link </a>
+            para ver a dica aparecer. Ela também funciona em links ao longo de frases mais longas, como
+            neste outro trecho
+            <a cTooltip="Texto da dica" routerLink="./"> com um link </a>
+            no meio do texto. Você pode usar dicas para explicar termos, atalhos ou ações sem poluir
+            a interface. Mais um exemplo
+            <a cTooltip="Texto da dica" href> qualquer coisa </a>
+            e, por fim, um link para o
+            <a cTooltip="Texto da dica" href> perfil no Twitter </a>
+            para encerrar o exemplo.
+          </p>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Passe o mouse sobre os botões abaixo para ver as quatro direções das dicas: acima, à direita,
+          abaixo e à esquerda.
+        </p>
+        <app-docs-example>
+          <button cButton cTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." cTooltipPlacement="top"
+                  class="me-1" color="secondary">Dica
+            acima
+          </button>
+          <button cButton cTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." cTooltipPlacement="right"
+                  class="me-1" color="secondary">Dica
+            à direita
+          </button>
+          <button cButton cTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                  cTooltipPlacement="bottom"
+                  class="me-1" color="secondary">Dica
+            abaixo
+          </button>
+          <button cButton [cTooltip]="tooltipContent" cTooltipPlacement="left"
+                  class="me-1" color="secondary">Dica à esquerda
+            <ng-template #tooltipContent>
+              Vivamus sagittis lacus vel augue laoreet rutrum <i cTextColor="warning">faucibus</i>.
+            </ng-template>
+          </button>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

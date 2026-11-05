@@ -1,0 +1,28 @@
+# Padrão do Titan Frontend Sample (porta, endereço, headless, CORS) + o que a aplicação precisa.
+# Streamlit 1.40: [theme] só aceita base, cores principais e font; o resto do tema da marca é CSS (src/static/app.css).
+[server]
+port = 8501
+address = "0.0.0.0"
+headless = true
+enableCORS = false
+enableXsrfProtection = true
+enableStaticServing = true
+maxUploadSize = 20
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+showSidebarNavigation = false
+# R6: an uncaught exception must never show the BFF host/port to the browser (ApiError carries it in __cause__).
+# 1.40: still shows the exception type and traceback with a generic message; pages must still catch ApiError themselves.
+showErrorDetails = false
+
+[theme]
+base = "light"
+primaryColor = "#223ad2"
+backgroundColor = "#f3f5f7"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#20262c"
+font = "sans serif"

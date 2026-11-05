@@ -1,0 +1,9 @@
+# Versões exatas (R1/R2). Instalar pelo proxy PyPI do Nexus corporativo:
+#   pip install -r requirements.txt -i <proxy pypi-all/simple do Nexus>
+# Streamlit na faixa homologada pela arquitetura corporativa (>= 1.38.0, 1.38.x–1.40.x); Python 3.11.
+streamlit==1.40.2
+plotly==5.24.1
+pandas==2.2.3
+openpyxl==3.1.5
+pyyaml==6.0.2
+requests==2.32.3

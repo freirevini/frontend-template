@@ -1,0 +1,363 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <app-docs-callout name="Grupo de listas"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Grupo de listas Angular</strong> <small>Exemplo básico</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          O grupo de listas padrão é uma lista não ordenada com itens e as classes
+          CSS apropriadas. Amplie-o com as opções a seguir ou com seu próprio
+          CSS, conforme necessário.
+        </p>
+        <app-docs-example>
+          <ul cListGroup>
+            <li cListGroupItem>Cras justo odio</li>
+            <li cListGroupItem>Dapibus ac facilisis in</li>
+            <li cListGroupItem>Morbi leo risus</li>
+            <li cListGroupItem>Porta ac consectetur ac</li>
+            <li cListGroupItem>Vestibulum at eros</li>
+          </ul>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Grupo de listas Angular</strong> <small>Itens ativos</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione a propriedade booleana <code>active</code> a um
+          <code>cListGroupItem</code> para indicar a seleção ativa atual.
+        </p>
+        <app-docs-example>
+          <ul cListGroup>
+            <li [active]="true" cListGroupItem>Cras justo odio</li>
+            <li cListGroupItem>Dapibus ac facilisis in</li>
+            <li cListGroupItem>Morbi leo risus</li>
+            <li cListGroupItem>Porta ac consectetur ac</li>
+            <li cListGroupItem>Vestibulum at eros</li>
+          </ul>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Grupo de listas Angular</strong> <small>Itens desabilitados</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione a propriedade booleana <code>disabled</code> a um
+          <code>cListGroupItem</code> para que ele apareça desabilitado.
+        </p>
+        <app-docs-example>
+          <div cListGroup>
+            <button cListGroupItem disabled>Cras justo odio</button>
+            <button cListGroupItem>Dapibus ac facilisis in</button>
+            <button cListGroupItem>Morbi leo risus</button>
+            <button cListGroupItem>Porta ac consectetur ac</button>
+            <button cListGroupItem>Vestibulum at eros</button>
+          </div>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Grupo de listas Angular</strong> <small>Links e botões</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Use elementos <code>&lt;a&gt;</code> ou <code>&lt;button&gt;</code> para criar
+          itens de grupo de listas <em>acionáveis</em>, com estados de hover, desabilitado e ativo,
+          adicionando <code>component=&#34;a|button&#34;</code>. Separamos
+          essas pseudoclasses para garantir que grupos de listas formados por
+          elementos não interativos (como <code>&lt;li&gt;</code> ou
+          <code>&lt;div&gt;</code>) não ofereçam indicação de clique ou toque.
+        </p>
+        <app-docs-example>
+          <div cListGroup>
+            <a [active]="true" cListGroupItem href>
+              Cras justo odio
+            </a>
+            <a cListGroupItem href>
+              Dapibus ac facilisis in
+            </a>
+            <a cListGroupItem href>
+              Morbi leo risus
+            </a>
+            <a cListGroupItem href>
+              Porta ac consectetur ac
+            </a>
+            <a cListGroupItem disabled href>
+              Vestibulum at eros
+            </a>
+          </div>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Grupo de listas Angular</strong> <small>Flush</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione a propriedade booleana <code>flush</code> para remover algumas bordas e
+          cantos arredondados e renderizar os itens do grupo de listas de ponta a ponta em um
+          contêiner pai (ex.: cartões).
+        </p>
+        <app-docs-example>
+          <ul [flush]="true" cListGroup>
+            <li cListGroupItem>Cras justo odio</li>
+            <li cListGroupItem>Dapibus ac facilisis in</li>
+            <li cListGroupItem>Morbi leo risus</li>
+            <li cListGroupItem>Porta ac consectetur ac</li>
+            <li cListGroupItem>Vestibulum at eros</li>
+          </ul>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Grupo de listas Angular</strong> <small>Horizontal</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione <code>layout=&#34;horizontal&#34;</code> para alterar o layout dos
+          itens do grupo de listas de vertical para horizontal em todos os breakpoints.
+          Como alternativa, escolha uma variante responsiva
+          <code
+          >.layout=&#34;horizontal-&#123;sm | md | lg | xl |
+            xxl&#125;&#34;</code
+          >
+          para tornar um grupo de listas horizontal a partir do
+          <code>min-width</code> desse breakpoint. Atualmente,
+          <strong
+          >grupos de listas horizontais não podem ser combinados com grupos de listas
+            flush.</strong
+          >
+        </p>
+        <app-docs-example>
+          <ul
+            *ngFor="let breakpoint of breakpoints; index as i"
+            [horizontal]="breakpoint"
+            cListGroup
+            class="mb-2"
+          >
+            <li cListGroupItem>Cras justo odio</li>
+            <li cListGroupItem>Dapibus ac facilisis in</li>
+            <li cListGroupItem>Morbi leo risus</li>
+          </ul>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Grupo de listas Angular</strong> <small>Classes contextuais</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Use classes contextuais para estilizar itens de lista com fundo e cor
+          que indicam estado.
+        </p>
+        <app-docs-example>
+          <ul cListGroup class="mb-3">
+            <li *ngFor="let color of colors" [color]="color" cListGroupItem>
+              Item simples de grupo de listas: {{ colorLabels[color] }}
+            </li>
+          </ul>
+        </app-docs-example>
+        <p class="text-medium-emphasis small mt-1">
+          As classes contextuais também funcionam com <code>&lt;a&gt;</code> ou
+          <code>&lt;button&gt;</code>. Observe a adição dos estilos de hover
+          aqui, que não aparecem no exemplo anterior. O estado
+          <code>active</code> também é suportado; aplique-o para indicar uma seleção ativa em
+          um item contextual do grupo de listas.
+        </p>
+        <app-docs-example>
+          <div cListGroup>
+            <a
+              *ngFor="let color of colors; index as i"
+              [color]="color"
+              cListGroupItem
+              href
+            >Item simples de grupo de listas: {{ colorLabels[color] }}</a
+            >
+          </div>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Grupo de listas Angular</strong> <small>Com selos</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione selos a qualquer item do grupo de listas para mostrar contagens de não lidos, atividade e
+          muito mais.
+        </p>
+        <app-docs-example>
+          <div cListGroup>
+            <button
+              cListGroupItem
+              class="d-flex justify-content-between align-items-center"
+            >
+              Cras justo odio
+              <c-badge color="primary" shape="rounded-pill">14</c-badge>
+            </button>
+            <button
+              cListGroupItem
+              class="d-flex justify-content-between align-items-center"
+            >
+              Dapibus ac facilisis in
+              <c-badge color="primary" shape="rounded-pill">2</c-badge>
+            </button>
+            <button
+              cListGroupItem
+              class="d-flex justify-content-between align-items-center"
+            >
+              Morbi leo risus
+              <c-badge color="primary" shape="rounded-pill">1</c-badge>
+            </button>
+            <button
+              cListGroupItem
+              class="d-flex justify-content-between align-items-center"
+            >
+              Porta ac consectetur
+              <c-badge color="primary" shape="rounded-pill">1</c-badge>
+            </button>
+            <button
+              cListGroupItem
+              class="d-flex justify-content-between align-items-center"
+              disabled
+            >
+              Vestibulum at eros
+              <c-badge color="secondary" shape="rounded-pill">42</c-badge>
+            </button>
+          </div>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Grupo de listas Angular</strong> <small>Conteúdo personalizado</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione praticamente qualquer HTML dentro dos itens, até mesmo em grupos de listas com links como o
+          abaixo, com a ajuda dos
+          utilitários de flexbox.
+        </p>
+        <app-docs-example>
+          <div cListGroup>
+            <a [active]="true" cListGroupItem href>
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Título do item do grupo de listas</h5>
+                <small>3 dias atrás</small>
+              </div>
+              <p class="mb-1">
+                Donec id elit non mi porta gravida at eget metus. Maecenas sed
+                diam eget risus varius blandit.
+              </p>
+              <small>Donec id elit non mi porta.</small>
+            </a>
+            <a cListGroupItem href>
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Título do item do grupo de listas</h5>
+                <small class="text-medium-emphasis">3 dias atrás</small>
+              </div>
+              <p class="mb-1">
+                Donec id elit non mi porta gravida at eget metus. Maecenas sed
+                diam eget risus varius blandit.
+              </p>
+              <small class="text-medium-emphasis"
+              >Donec id elit non mi porta.</small
+              >
+            </a>
+            <a cListGroupItem href>
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Título do item do grupo de listas</h5>
+                <small class="text-medium-emphasis">3 dias atrás</small>
+              </div>
+              <p class="mb-1">
+                Donec id elit non mi porta gravida at eget metus. Maecenas sed
+                diam eget risus varius blandit.
+              </p>
+              <small class="text-medium-emphasis"
+              >Donec id elit non mi porta.</small
+              >
+            </a>
+          </div>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Grupo de listas Angular</strong> <small>Caixas de seleção e rádios</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Coloque as caixas de seleção e os rádios dentro dos itens do grupo de listas e
+          personalize conforme necessário.
+        </p>
+        <app-docs-example>
+          <form [formGroup]="checkBoxes" (ngSubmit)="logValue()" cForm>
+            <ul [flush]="true" cListGroup>
+              <button (click)="setValue('one');" cListGroupItem type="button">
+                <c-form-check>
+                  <input cFormCheckInput formControlName="one" type="checkbox"/>
+                  <label cFormCheckLabel>Cras justo odio</label>
+                </c-form-check>
+              </button>
+              <label cListGroupItem style="cursor: pointer;">
+                <c-form-check>
+                  <input cFormCheckInput formControlName="two" type="checkbox"/>
+                  Dapibus ac facilisis in
+                </c-form-check>
+              </label>
+              <li cListGroupItem>
+                <c-form-check>
+                  <input cFormCheckInput formControlName="three" type="checkbox"/>
+                  <label cFormCheckLabel>Morbi leo risus</label>
+                </c-form-check>
+              </li>
+              <li cListGroupItem>
+                <c-form-check>
+                  <input cFormCheckInput formControlName="four" type="checkbox"/>
+                  <label cFormCheckLabel>Orta ac consectetur ac</label>
+                </c-form-check>
+              </li>
+              <li cListGroupItem>
+                <c-form-check>
+                  <input cFormCheckInput formControlName="five" type="checkbox"/>
+                  <label cFormCheckLabel>Vestibulum at eros</label>
+                </c-form-check>
+              </li>
+            </ul>
+            <button cButton class="mt-3" type="submit">Enviar</button>
+          </form>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

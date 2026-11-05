@@ -1,0 +1,186 @@
+/* Agente da Agenda (core/chat.py): floating button + popover panel. Port of src/scss/_chat-widget.scss of the landing.
+   Tokens only (R10): --brand-*, --app-chat-accent, --cui-white-rgb; selectors only st-key-* / data-testid / own chat-* classes.
+   Layers: above the sidebar (1030), below modals (1055). */
+
+/* Floating button (the popover's own button) */
+.st-key-chat-fab { position: fixed; right: 1.5rem; bottom: 1.5rem; z-index: 1035; width: auto !important; }
+.st-key-chat-fab [data-testid="stPopover"] { width: auto; }
+.st-key-chat-fab [data-testid="stPopover"] button {
+  height: 3.25rem; padding: 0 1.125rem 0 .9375rem; gap: .5rem; color: rgb(var(--cui-white-rgb)); background-color: var(--app-chat-accent);
+  border: 0; border-radius: var(--brand-radius-pill) var(--brand-radius-pill) var(--brand-radius-xs) var(--brand-radius-pill); box-shadow: var(--brand-elevation-2);
+  font-size: .875rem; transition: transform .15s ease-in-out;
+}
+.st-key-chat-fab [data-testid="stPopover"] button:hover { filter: brightness(.92); color: rgb(var(--cui-white-rgb)); }
+.st-key-chat-fab [data-testid="stPopover"] button:active { transform: scale(.96); }
+.st-key-chat-fab [data-testid="stPopover"] button:focus-visible { outline: 2px solid var(--brand-highlight); outline-offset: 2px; }
+.st-key-chat-fab [data-testid="stPopover"] button p,
+.st-key-chat-fab [data-testid="stPopover"] button span { color: rgb(var(--cui-white-rgb)); font-size: .875rem; }
+/* The chevron Streamlit adds after the label is not part of the brand button */
+.st-key-chat-fab [data-testid="stPopoverButton"] > div:not([data-testid]) { display: none; }
+
+/* Panel: 380 px wide (popover body is portaled, so it is found by its content) */
+[data-testid="stPopoverBody"]:has(.st-key-chat-log) {
+  width: 23.75rem; max-width: calc(100vw - 2rem); max-height: calc(100vh - 6rem); padding: 0 0 .25rem; overflow-x: hidden;
+  color: var(--brand-content-high); background-color: var(--brand-surface-card); border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-lg); box-shadow: var(--brand-elevation-3);
+}
+[data-testid="stPopoverBody"]:has(.st-key-chat-log) > div > [data-testid="stVerticalBlock"],
+[data-testid="stPopoverBody"]:has(.st-key-chat-log) [data-testid="stVerticalBlock"] { gap: .5rem; }
+
+/* Header: accent band with the title and "Recomeçar" */
+.st-key-chat-head {
+  flex-direction: row !important; align-items: center; justify-content: space-between; padding: .5rem .5rem .5rem 1rem;
+  color: rgb(var(--cui-white-rgb)); background-color: var(--app-chat-accent);
+}
+.st-key-chat-head > div { width: auto !important; }
+.chat-panel__title { margin: 0; padding: 0; font-size: 1rem; font-weight: 600; color: rgb(var(--cui-white-rgb)); }
+.st-key-chat-head button {
+  min-height: 2.75rem; padding: 0 .75rem; color: rgb(var(--cui-white-rgb)); background: transparent; border: 0;
+  border-radius: var(--brand-radius-pill);
+}
+.st-key-chat-head button p { font-size: .8125rem; font-weight: 500; color: rgb(var(--cui-white-rgb)); }
+.st-key-chat-head button:hover:not(:disabled) { background-color: rgba(var(--cui-white-rgb), .16); color: rgb(var(--cui-white-rgb)); }
+.st-key-chat-head button:disabled { opacity: .55; background: transparent; }
+
+/* Message log */
+.st-key-chat-log { padding: .5rem 1rem; overscroll-behavior: contain; }
+.st-key-chat-log [data-testid="stVerticalBlock"] { gap: .375rem; }
+.chat-msg__author { display: flex; gap: .375rem; align-items: center; margin: .375rem 0 0; font-size: .75rem; font-weight: 600; color: var(--brand-content-low); }
+.chat-msg__author--user { justify-content: flex-end; }
+.chat-msg__avatar {
+  display: inline-flex; align-items: center; justify-content: center; width: 1.375rem; height: 1.375rem;
+  color: rgb(var(--cui-white-rgb)); background-color: var(--app-chat-accent); border-radius: 50%;
+}
+.chat-msg__avatar::before {
+  content: ""; width: .75rem; height: .75rem; background-color: currentColor;
+  -webkit-mask: url("./app/static/icons/cil-speech.svg") center / contain no-repeat; mask: url("./app/static/icons/cil-speech.svg") center / contain no-repeat;
+}
+
+/* Bubble = the message container (key chat-b-<role>-<variant>-<id>) */
+[class*="st-key-chat-b-"] {
+  width: fit-content !important; max-width: 88%; min-width: 0; padding: .625rem .875rem; gap: .5rem !important;
+  font-size: .875rem; line-height: 1.45; overflow-wrap: anywhere; color: var(--brand-content-high);
+  background-color: var(--brand-surface-mid); border-radius: var(--brand-radius-md); border-bottom-left-radius: var(--brand-radius-xs);
+}
+[class*="st-key-chat-b-user-"] {
+  margin-left: auto; color: rgb(var(--cui-white-rgb)); background-color: var(--app-chat-accent);
+  border-radius: var(--brand-radius-md); border-bottom-right-radius: var(--brand-radius-xs);
+}
+[class*="st-key-chat-b-user-"] * { color: rgb(var(--cui-white-rgb)); }
+[class*="st-key-chat-b-system-"] { margin: 0 auto; max-width: 100%; padding: .25rem .5rem; font-size: .75rem; text-align: center; color: var(--brand-content-low); background: transparent; }
+[class*="st-key-chat-b-system-"] * { color: var(--brand-content-low); font-size: .75rem; }
+[class*="st-key-chat-b-"][class*="-clarify-"] { border-left: 3px solid var(--brand-highlight-dark); }
+[class*="st-key-chat-b-"][class*="-notice-"] { border-left: 3px solid var(--brand-warning); }
+[class*="st-key-chat-b-"][class*="-error-"] { background-color: var(--brand-danger-low); border-left: 3px solid var(--brand-danger); }
+[class*="st-key-chat-b-"][class*="-answer-"] { border-left: 3px solid var(--brand-success); }
+[class*="st-key-chat-b-"] [data-testid="stElementContainer"],
+[class*="st-key-chat-b-"] [data-testid="element-container"] { width: auto !important; }
+
+.chat-msg__text p { margin: 0 0 .5rem; font-size: .875rem; }
+.chat-msg__text > :last-child { margin-bottom: 0; }
+.chat-msg__text ul, .chat-msg__text ol { padding-left: 1.25rem; margin: 0 0 .5rem; }
+.chat-msg__text li { font-size: .875rem; }
+.chat-msg__text a { color: inherit; text-decoration: underline; }
+.chat-msg__text code { padding: 0 .25rem; font-size: .8125rem; color: inherit; background-color: rgba(var(--cui-black-rgb), .08); border-radius: var(--brand-radius-xs); }
+.chat-msg__file { display: flex; flex-direction: column; margin: 0 0 .25rem; }
+.chat-msg__file-name { font-weight: 600; }
+.chat-msg__file-meta, .chat-msg__source-id { font-size: .75rem; }
+.chat-msg__block { padding-top: .5rem; margin-top: .5rem; border-top: 1px solid var(--brand-border); }
+.chat-msg__block-title { margin: 0 0 .25rem; font-size: .75rem; font-weight: 600; color: var(--brand-content-low); text-transform: uppercase; letter-spacing: .02em; }
+.chat-msg__list { padding-left: 1.125rem; margin: 0; }
+.chat-msg__list li { font-size: .875rem; }
+.chat-msg__list li + li { margin-top: .375rem; }
+.chat-msg__sources, .chat-msg__contacts { padding-left: 0; list-style: none; }
+.chat-msg__excerpt { display: block; font-style: italic; }
+.chat-msg__source-id { display: block; color: var(--brand-content-low); }
+.chat-msg__contacts a { color: var(--brand-primary); text-decoration: underline; }
+
+/* Norm list and documents table blocks (keys chat-norms-<id>, chat-norms-files-<id>) */
+[class*="st-key-chat-norms-"] { padding-top: .5rem; border-top: 1px solid var(--brand-border); gap: .5rem !important; }
+[class*="st-key-chat-norms-"] [data-testid="stButtonGroup"] button,
+[class*="st-key-chat-norms-"] [data-testid="stPills"] button { min-height: 1.75rem; padding: .125rem .625rem; font-size: .75rem; }
+.chat-norms__list { padding-left: 0; list-style: none; }
+.chat-norms__item { display: flex; flex-direction: column; padding: .375rem .5rem; background-color: var(--brand-surface-card); border-radius: var(--brand-radius-sm); }
+.chat-norms__detail, .chat-norms__meta { font-size: .75rem; }
+.chat-norms__meta { color: var(--brand-content-low); }
+.chat-norms__table-wrap { max-width: 100%; overflow-x: auto; background-color: var(--brand-surface-card); border-radius: var(--brand-radius-sm); }
+.chat-norms__table-wrap:focus-visible { outline: 2px solid var(--brand-primary); outline-offset: 2px; }
+.chat-norms__table { width: 100%; font-size: .75rem; border-collapse: collapse; }
+.chat-norms__table th, .chat-norms__table td { padding: .375rem .5rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--brand-border); font-size: .75rem; }
+.chat-norms__table th { font-weight: 600; color: var(--brand-content-low); white-space: nowrap; }
+.chat-norms__table tbody tr:last-child td { border-bottom: 0; }
+.chat-norms__table .chat-norms__title { font-weight: 600; min-width: 9rem; }
+.chat-norms__table .chat-norms__nowrap { white-space: nowrap; }
+.chat-norms__table .chat-norms__rejected { font-weight: 600; color: var(--brand-danger); }
+
+/* Rows of small actions inside a bubble (keys chat-row-*) */
+[class*="st-key-chat-row-"] { flex-direction: row !important; flex-wrap: wrap; align-items: center; gap: .375rem .5rem !important; }
+[class*="st-key-chat-row-"] > div { width: auto !important; }
+[class*="st-key-chat-row-"] button {
+  min-height: 1.75rem; padding: .125rem .625rem; gap: .25rem; color: var(--brand-primary); background-color: var(--brand-surface-card);
+  border: 1px solid var(--brand-primary); border-radius: var(--brand-radius-pill);
+}
+[class*="st-key-chat-row-"] button p, [class*="st-key-chat-row-"] button span { font-size: .75rem; font-weight: 500; color: var(--brand-primary); }
+[class*="st-key-chat-row-"] button:hover { background-color: var(--brand-primary-low); }
+[class*="st-key-chat-row-feedback-"] { padding-top: .5rem; border-top: 1px solid var(--brand-border); }
+[class*="st-key-chat-row-feedback-"] button { color: var(--brand-content-high); border-color: var(--brand-border); }
+[class*="st-key-chat-row-feedback-"] button p, [class*="st-key-chat-row-feedback-"] button span { color: var(--brand-content-high); }
+[class*="st-key-chat-row-feedback-"] button:hover { border-color: var(--brand-primary); background-color: var(--brand-surface-card); }
+.chat-feedback__label { font-size: .75rem; line-height: 1.3; color: var(--brand-content-low); }
+.chat-feedback__error { display: block; margin: 0; font-size: .75rem; font-weight: 500; color: var(--brand-danger); }
+.st-key-chat-row-retry { margin-top: .25rem; }
+
+/* Suggestions: options of the step, ready answers, "Voltar", "Encerrar", "Recomeçar" */
+.st-key-chat-suggestions { flex-direction: row !important; flex-wrap: wrap; gap: .5rem !important; margin-top: .25rem; }
+.st-key-chat-suggestions > div { width: auto !important; }
+.st-key-chat-suggestions button {
+  min-height: 2.25rem; padding: .25rem .875rem; text-align: left; color: var(--brand-primary); background-color: var(--brand-surface-card);
+  border: 1px solid var(--brand-primary); border-radius: var(--brand-radius-pill);
+}
+.st-key-chat-suggestions button p, .st-key-chat-suggestions button span { font-size: .8125rem; font-weight: 500; color: var(--brand-primary); }
+.st-key-chat-suggestions button:hover { background-color: var(--brand-primary-low); color: var(--brand-primary); }
+.st-key-chat-suggestions [data-testid="stBaseButton-secondary"] { color: var(--brand-content-low); border-color: var(--brand-border); }
+.st-key-chat-suggestions [data-testid="stBaseButton-secondary"] p,
+.st-key-chat-suggestions [data-testid="stBaseButton-secondary"] span { color: var(--brand-content-low); }
+.st-key-chat-suggestions [data-testid="stBaseButton-secondary"]:hover { background-color: var(--brand-surface-mid); }
+
+/* Input area: text box or uploader */
+.st-key-chat-input, .st-key-chat-upload { padding: .5rem 1rem .5rem; border-top: 1px solid var(--brand-border); }
+.st-key-chat-input [data-testid="stChatInput"] { border-radius: var(--brand-radius-md); }
+.st-key-chat-upload [data-testid="stFileUploaderDropzone"] { padding: .5rem; background: transparent; border: 0; }
+/* Streamlit's English instructions are hidden; the pt-BR hint below says the same */
+.st-key-chat-upload [data-testid="stFileUploaderDropzoneInstructions"] { display: none; }
+.st-key-chat-upload [data-testid="stFileUploaderDropzone"] button {
+  min-height: 2.75rem; padding: .375rem 1rem; font-size: 0; color: var(--brand-primary); background-color: var(--brand-surface-card);
+  border: 1px solid var(--brand-primary); border-radius: var(--brand-radius-pill);
+}
+.st-key-chat-upload [data-testid="stFileUploaderDropzone"] button::after { content: "Anexar documentos"; font-size: .875rem; font-weight: 500; }
+.st-key-chat-upload [data-testid="stFileUploaderDropzone"] button:hover { background-color: var(--brand-primary-low); }
+.chat-input__hint, .chat-input__error { width: 100%; margin: 0; font-size: .75rem; }
+.chat-input__hint { color: var(--brand-content-low); }
+.chat-input__error { padding-left: 1rem; color: var(--brand-danger); }
+
+/* Small screens: the panel takes the screen width */
+@media (max-width: 575.98px) {
+  [data-testid="stPopoverBody"]:has(.st-key-chat-log) { width: calc(100vw - 1rem); max-width: calc(100vw - 1rem); }
+}
+
+/* Streamlit sizes every element to the popover's default width (inline px); inside the chat they follow the panel */
+[data-testid="stPopoverBody"]:has(.st-key-chat-log) [data-testid="stElementContainer"],
+[data-testid="stPopoverBody"]:has(.st-key-chat-log) [data-testid="stHtml"] { width: auto !important; max-width: 100%; }
+[data-testid="stPopoverBody"]:has(.st-key-chat-log) .visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+/* The empty chat message that pins the log to its end (core.chat.render_panel) */
+.st-key-chat-log [data-testid="stChatMessage"] { display: none; }
+/* Buttons in rows keep their own width (Streamlit writes the column width inline) */
+.st-key-chat-head [data-testid="stButton"],
+.st-key-chat-suggestions [data-testid="stButton"],
+[class*="st-key-chat-row-"] [data-testid="stButton"],
+[class*="st-key-chat-row-"] [data-testid="stDownloadButton"] { width: auto !important; }
+.st-key-chat-head .chat-panel__title { white-space: nowrap; }
+[class*="st-key-chat-row-"] button { padding: .125rem .5rem; }
+[class*="st-key-chat-row-"] button [data-testid="stIconMaterial"] { font-size: .875rem; }
+/* Table cells wrap between words (the bubble's overflow-wrap would split "Aguardando" in the middle) */
+.chat-norms__table th, .chat-norms__table td { overflow-wrap: normal; word-break: normal; }
+.chat-norms__table td { min-width: 6rem; }

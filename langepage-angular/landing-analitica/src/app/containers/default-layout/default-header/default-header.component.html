@@ -1,0 +1,83 @@
+<!--<c-header class="mb-4 d-print-none" position="sticky">-->
+<ng-container>
+  <c-container [fluid]="true">
+    <button
+      toggle="visible"
+      cHeaderToggler
+      [cSidebarToggle]="sidebarId"
+      class="ps-1"
+      ariaLabel="Alternar menu lateral"
+      title="Alternar menu lateral"
+      >
+      <svg cIcon
+        name="cilMenu"
+        size="lg"
+      ></svg>
+    </button>
+    <c-header-nav class="ms-auto d-flex align-items-center">
+      @if (mockNotice) {
+        <c-nav-item class="d-flex align-items-center">
+          <span class="brand-mock-badge" [attr.title]="mockNotice">
+            Dados simulados<span class="visually-hidden">: {{ mockNotice }}</span>
+          </span>
+        </c-nav-item>
+      }
+      @if (today$ | async; as today) {
+        <c-nav-item>
+          <time
+            class="nav-link header-date text-nowrap"
+            [attr.datetime]="today.iso"
+            [attr.title]="today.long"
+            >
+            <span class="d-none d-md-inline">{{ today.long }}</span>
+            <span class="d-md-none">{{ today.short }}</span>
+          </time>
+        </c-nav-item>
+      }
+      <ng-container *ngTemplateOutlet="themeDropdown"></ng-container>
+    </c-header-nav>
+
+  </c-container>
+  <c-header-divider></c-header-divider>
+  <c-container [fluid]="true">
+    <c-breadcrumb-router class="ms-2"></c-breadcrumb-router>
+  </c-container>
+</ng-container>
+<!--</c-header>-->
+
+<ng-template #themeDropdown>
+  @if ({ mode: colorMode$ | async }; as theme) {
+    <c-dropdown alignment="end" variant="nav-item">
+      <button
+        cButton
+        color=""
+        [caret]="false"
+        cDropdownToggle
+        class="theme-toggle"
+        aria-label="Alterar tema"
+        title="Alterar tema"
+        >
+        <svg cIcon [name]="iconFor(theme.mode)" size="lg"></svg>
+      </button>
+      <ul cDropdownMenu class="pt-0 w-auto">
+        <li>
+          <h6 cDropdownHeader>Tema</h6>
+        </li>
+        @for (option of colorModes; track option) {
+          <li>
+            <button
+              cDropdownItem
+              type="button"
+              class="d-flex align-items-center"
+              [active]="theme.mode === option.value"
+              (click)="setColorMode(option.value)"
+              >
+              <svg cIcon class="me-2" [name]="option.icon" size="lg"></svg>
+              {{ option.label }}
+            </button>
+          </li>
+        }
+      </ul>
+    </c-dropdown>
+  }
+</ng-template>

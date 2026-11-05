@@ -1,0 +1,34 @@
+// Thin scrollbars on the neutral tokens; the dark values follow --brand-* automatically.
+
+@supports (scrollbar-width: thin) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--brand-content-disabled) transparent;
+  }
+}
+
+::-webkit-scrollbar {
+  width: .625rem;
+  height: .625rem;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  margin-block: .25rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--brand-content-disabled);
+  border: 2px solid var(--cui-body-bg);
+  border-radius: var(--brand-radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-content-low);
+}
+
+// Sidebar scrollbar on navy
+.sidebar ::-webkit-scrollbar-thumb {
+  background: rgba(var(--cui-white-rgb), .22);
+  border-color: var(--cui-sidebar-bg);
+}

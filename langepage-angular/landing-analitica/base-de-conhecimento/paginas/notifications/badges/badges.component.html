@@ -1,0 +1,175 @@
+<c-row>
+  <c-col xs="12">
+    <app-docs-callout name="Selos"></app-docs-callout>
+  </c-col>
+  <c-col lg="6">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Selos Angular</strong>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Os selos do Bootstrap se ajustam ao tamanho do elemento pai usando tamanhos de fonte
+          relativos e unidades <code>em</code>.
+        </p>
+        <app-docs-example>
+          <h1>
+            Título de exemplo
+            <c-badge color="secondary">Novo</c-badge>
+          </h1>
+          <h2>
+            Título de exemplo
+            <c-badge color="secondary">Novo</c-badge>
+          </h2>
+          <h3>
+            Título de exemplo
+            <c-badge color="secondary">Novo</c-badge>
+          </h3>
+          <h4>
+            Título de exemplo
+            <c-badge color="secondary">Novo</c-badge>
+          </h4>
+          <h5>
+            Título de exemplo
+            <c-badge color="secondary">Novo</c-badge>
+          </h5>
+          <h6>
+            Título de exemplo
+            <c-badge color="secondary">Novo</c-badge>
+          </h6>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Os selos podem ser usados como parte de links ou botões para exibir um contador.
+        </p>
+        <app-docs-example>
+          <button cButton color="primary">
+            Notificações
+            <c-badge color="secondary">4</c-badge>
+          </button>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Observe que, dependendo de como forem usados, os selos podem ser confusos para usuários de
+          leitores de tela e tecnologias assistivas semelhantes.
+        </p>
+        <p class="text-medium-emphasis small">
+          A menos que o contexto seja claro, considere incluir contexto adicional com um trecho
+          de texto visualmente oculto.
+        </p>
+        <app-docs-example>
+          <button cButton color="primary">
+            Perfil
+            <c-badge color="secondary">9</c-badge>
+            <span class="visually-hidden">mensagens não lidas</span>
+          </button>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col lg="6">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Selos Angular</strong> <small>Variações contextuais</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione qualquer uma das propriedades <code>color</code> abaixo para modificar a aparência de
+          um selo.
+        </p>
+        <app-docs-example>
+          <c-badge class="me-1" color="primary">primário</c-badge>
+          <c-badge class="me-1" color="success">sucesso</c-badge>
+          <c-badge class="me-1" color="danger">perigo</c-badge>
+          <c-badge class="me-1" color="warning">alerta</c-badge>
+          <c-badge class="me-1" color="info">informação</c-badge>
+          <c-badge class="me-1" color="light">claro</c-badge>
+          <c-badge class="me-1" color="dark">escuro</c-badge>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Selos Angular</strong> <small>Selos em pílula</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Aplique a propriedade <code>shape=&#34;rounded-pill&#34;</code> para deixar os selos arredondados.
+        </p>
+        <app-docs-example>
+          <c-badge class="me-1" color="primary" shape="rounded-pill">
+            primário
+          </c-badge>
+          <c-badge class="me-1" color="success" shape="rounded-pill">
+            sucesso
+          </c-badge>
+          <c-badge class="me-1" color="danger" shape="rounded-pill">
+            perigo
+          </c-badge>
+          <c-badge class="me-1" color="warning" shape="rounded-pill">
+            alerta
+          </c-badge>
+          <c-badge class="me-1" color="info" shape="rounded-pill">
+            informação
+          </c-badge>
+          <c-badge class="me-1" color="light" shape="rounded-pill">
+            claro
+          </c-badge>
+          <c-badge class="me-1" color="dark" shape="rounded-pill">
+            escuro
+          </c-badge>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Selos Angular</strong> <small>Posicionado</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Use a propriedade position para modificar um componente e posicioná-lo no canto de um link ou botão.
+        </p>
+        <app-docs-example>
+          <button cButton color="primary" class="position-relative mx-2">
+            Perfil
+            <c-badge color="danger" position="top-start" shape="rounded-pill">99+</c-badge>
+            <span class="visually-hidden">mensagens não lidas</span>
+          </button>
+          <button cButton color="primary" class="position-relative mx-2">
+            Perfil
+            <c-badge color="danger" position="top-end" shape="rounded-pill">99+</c-badge>
+            <span class="visually-hidden">mensagens não lidas</span>
+          </button>
+          <br>
+          <button cButton color="primary" class="position-relative mx-2">
+            Perfil
+            <c-badge color="danger" position="bottom-start" shape="rounded-pill">99+</c-badge>
+            <span class="visually-hidden">mensagens não lidas</span>
+          </button>
+          <button cButton color="primary" class="position-relative mx-2">
+            Perfil
+            <c-badge color="danger" position="bottom-end" shape="rounded-pill">99+</c-badge>
+            <span class="visually-hidden">mensagens não lidas</span>
+          </button>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Selos Angular</strong> <small>Indicador</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Você também pode criar indicadores mais genéricos, sem contador, usando mais alguns utilitários.
+        </p>
+        <app-docs-example>
+          <button cButton color="primary" class="position-relative">
+            Perfil
+            <c-badge color="danger" position="top-end" shape="rounded-circle" class="p-2" cBorder="light">
+              <span class="visually-hidden">mensagens não lidas</span>
+            </c-badge>
+          </button>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+

@@ -1,0 +1,265 @@
+import {
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnDestroy,
+  Output,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { getStyle } from '@coreui/utils';
+import { ChartjsComponent } from '@coreui/angular-chartjs';
+
+import { SegmentCard, SegmentCardsService } from './segment-cards.service';
+
+// Sparkline strokes over the .brand-stat-card gradient (canvas cannot read CSS): white points, 60% white line.
+const WHITE = `rgb(${getStyle('--cui-white-rgb') || '255, 255, 255'})`;
+const LINE = `rgba(${getStyle('--cui-white-rgb') || '255, 255, 255'}, .6)`;
+
+@Component({
+  selector: 'app-widgets-dropdown',
+  templateUrl: './widgets-dropdown.component.html',
+  styleUrls: ['./widgets-dropdown.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default
+})
+export class WidgetsDropdownComponent implements OnInit, AfterContentInit, OnDestroy {
+
+  @HostBinding('class.tone-petrol') get isPetrol(): boolean {
+    return this.tone === 'petrol';
+  }
+
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private segmentCardsService: SegmentCardsService
+  ) {}
+
+  /** Segment whose "a classificar" filter is active on the page (highlighted card), or null. */
+  @Input() activeSegment: string | null = null;
+  /** Color model of the cards: brand blue (default) or petrol (brand cyan-high to navy). */
+  @Input() tone: 'primary' | 'petrol' = 'primary';
+  /** When false the "a classificar" badge is plain text (pages without the segment filter). */
+  @Input() filterable = true;
+  /** Emits the segment id when its "a classificar" badge is clicked (the page toggles the filter). */
+  @Output() readonly toClassifySelect = new EventEmitter<string>();
+
+  /** Segment cards (mock in src/assets/data/dashboard-segments.json until the BFF contract exists). */
+  segments: SegmentCard[] = [];
+  loadError = false;
+  private readonly destroy$ = new Subject<void>();
+
+  data: any[] = [];
+  options: any[] = [];
+  labels = [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro',
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril'
+  ];
+  optionsDefault = {
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        grid: {
+          display: false,
+          drawBorder: false
+        },
+        ticks: {
+          display: false
+        }
+      },
+      y: {
+        min: 30,
+        max: 89,
+        display: false,
+        grid: {
+          display: false
+        },
+        ticks: {
+          display: false
+        }
+      }
+    },
+    elements: {
+      line: {
+        borderWidth: 1,
+        tension: 0.4
+      },
+      point: {
+        radius: 4,
+        hitRadius: 10,
+        hoverRadius: 4
+      }
+    }
+  };
+
+  ngOnInit(): void {
+    this.segmentCardsService.getSegments().pipe(takeUntil(this.destroy$)).subscribe({
+      next: ({ segments }) => {
+        this.segments = segments;
+        this.loadError = false;
+        this.setData();
+      },
+      error: (error) => {
+        console.error('[segment-cards] failed to load', error);
+        this.segments = [];
+        this.loadError = true;
+      }
+    });
+  }
+
+  selectToClassify(segmentId: string): void {
+    this.toClassifySelect.emit(segmentId);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  /** One white sparkline per segment, from its trend values. */
+  private datasetFor(segment: SegmentCard) {
+    return [{
+      label: `Normas · ${segment.label}`,
+      backgroundColor: 'transparent',
+      borderColor: LINE,
+      pointBackgroundColor: WHITE,
+      pointHoverBorderColor: WHITE,
+      data: segment.trend
+    }];
+  }
+
+  ngAfterContentInit(): void {
+    this.changeDetectorRef.detectChanges();
+
+  }
+
+  setData() {
+    this.data = this.segments.map((segment) => ({
+      labels: this.labels.slice(0, segment.trend.length),
+      datasets: this.datasetFor(segment)
+    }));
+    this.setOptions();
+  }
+
+  setOptions() {
+    this.options = [];
+    for (let idx = 0; idx < this.segments.length; idx++) {
+      const options = JSON.parse(JSON.stringify(this.optionsDefault));
+      // Same line-with-points sparkline on every card: only the vertical range follows each card's data,
+      // padded so the line and its points stay inside the card.
+      const values: number[] = this.segments[idx].trend;
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const range = max - min || 1;
+      options.scales.y.min = Math.floor(min - range * 0.3);
+      options.scales.y.max = Math.ceil(max + range * 0.15);
+      this.options.push(options);
+    }
+  }
+}
+
+@Component({
+  selector: 'app-chart-sample',
+  template: '<c-chart type="line" [data]="data" [options]="options" width="300" #chart></c-chart>'
+})
+export class ChartSample implements AfterViewInit {
+
+  constructor() {}
+
+  @ViewChild('chart') chartComponent!: ChartjsComponent;
+
+  colors = {
+    label: 'Meu conjunto de dados',
+    backgroundColor: 'rgba(77,189,116,.2)',
+    borderColor: '#4dbd74',
+    pointHoverBackgroundColor: '#fff'
+  };
+
+  labels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+
+  data = {
+    labels: this.labels,
+    datasets: [{
+      data: [65, 59, 84, 84, 51, 55, 40],
+      ...this.colors,
+      fill: { value: 65 }
+    }]
+  };
+
+  options = {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+    elements: {
+      line: {
+        tension: 0.4
+      }
+    }
+  };
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      const data = () => {
+        return {
+          ...this.data,
+          labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
+          datasets: [{
+            ...this.data.datasets[0],
+            data: [42, 88, 42, 66, 77],
+            fill: { value: 55 }
+          }, { ...this.data.datasets[0], borderColor: '#ffbd47', data: [88, 42, 66, 77, 42] }]
+        };
+      };
+      const newLabels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'];
+      const newData = [42, 88, 42, 66, 77];
+      let { datasets, labels } = { ...this.data };
+      // @ts-ignore
+      const before = this.chartComponent?.chart?.data.datasets.length;
+      console.log('before', before);
+      // console.log('datasets, labels', datasets, labels)
+      // @ts-ignore
+      // this.data = data()
+      this.data = {
+        ...this.data,
+        datasets: [{ ...this.data.datasets[0], data: newData }, {
+          ...this.data.datasets[0],
+          borderColor: '#ffbd47',
+          data: [88, 42, 66, 77, 42]
+        }],
+        labels: newLabels
+      };
+      // console.log('datasets, labels', { datasets, labels } = {...this.data})
+      // @ts-ignore
+      setTimeout(() => {
+        const after = this.chartComponent?.chart?.data.datasets.length;
+        console.log('after', after);
+      });
+    }, 5000);
+  }
+}

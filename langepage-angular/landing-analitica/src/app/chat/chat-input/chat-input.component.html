@@ -1,0 +1,54 @@
+@if (hasInput && node; as current) {
+  <div class="chat-input">
+    @if (current.type === 'free_text') {
+      <form class="chat-compose" (submit)="$event.preventDefault(); send()">
+        <label class="visually-hidden" for="chat-text">{{ texts.inputLabel }}</label>
+        <textarea
+          #textarea
+          id="chat-text"
+          class="chat-compose__text"
+          rows="1"
+          [formControl]="text"
+          [attr.maxlength]="maxChars"
+          [placeholder]="current.input?.placeholder || texts.inputPlaceholder"
+          aria-describedby="chat-count"
+          (keydown)="onKeydown($event)"
+          (input)="autoGrow()"
+        ></textarea>
+        @if (!sending) {
+          <button
+            type="submit"
+            class="chat-send"
+            [disabled]="!canSend"
+            [attr.aria-label]="texts.send"
+            [title]="texts.send"
+            >
+            <svg cIcon name="cilPaperPlane" size="lg" aria-hidden="true"></svg>
+          </button>
+        } @else {
+          <button type="button" class="chat-send" [attr.aria-label]="texts.stop" [title]="texts.stop" (click)="stop.emit()">
+            <span class="chat-stop-icon" aria-hidden="true"></span>
+          </button>
+        }
+        <span id="chat-count" class="chat-count" [class.is-limit]="count >= maxChars">{{ count | number }}/{{ maxChars | number }}</span>
+      </form>
+    }
+    @if (current.type === 'upload') {
+      <div class="chat-upload">
+        <input #fileInput type="file" hidden [accept]="accept" [multiple]="multiple" (change)="onFileChosen($event)" />
+        <button #actionButton type="button" class="chat-option" [disabled]="sending" (click)="openFilePicker()">
+          <svg cIcon name="cilPaperclip" size="lg" aria-hidden="true"></svg>
+          {{ texts.attach }}
+        </button>
+        <p class="chat-input__hint">{{ texts.uploadHint }} {{ texts.pasteHint }}</p>
+        @if (fileErrors.length) {
+          <ul class="chat-input__error" role="alert">
+            @for (error of fileErrors; track error) {
+              <li>{{ error }}</li>
+            }
+          </ul>
+        }
+      </div>
+    }
+  </div>
+}

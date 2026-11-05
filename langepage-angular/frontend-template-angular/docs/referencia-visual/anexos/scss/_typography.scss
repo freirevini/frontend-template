@@ -1,0 +1,90 @@
+// Typography scale on Inter (see $brand-font-family in _brand.scss, registered in angular.json).
+// Base 1rem / 1.5; headings 600 with a slight negative tracking; numbers aligned in tables.
+
+body {
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.card-title {
+  font-weight: 600;
+  letter-spacing: -.01em;
+  color: var(--brand-content-high);
+}
+
+.card-title {
+  font-size: 1.125rem;
+  line-height: 1.35;
+}
+
+// Small helper text under titles, in filters and legends
+.card-subtitle,
+.text-medium-emphasis {
+  color: var(--brand-content-low) !important;
+}
+
+small,
+.small {
+  font-size: .8125rem;
+  line-height: 1.4;
+}
+
+// Numbers: fixed-width digits so columns and KPI values line up
+.table td,
+.table th,
+.fs-4,
+.fs-5,
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.table {
+  --cui-table-color: var(--brand-content-high);
+
+  > thead th {
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--brand-content-low);
+  }
+}
+
+// Breadcrumb: quiet trail, current page emphasized
+.breadcrumb {
+  --cui-breadcrumb-font-size: .875rem;
+  margin-bottom: 0;
+  font-size: .875rem;
+  font-weight: 500;
+}
+
+.breadcrumb-item {
+  a {
+    color: var(--brand-content-low);
+    text-decoration: none;
+    transition: color .15s ease-in-out;
+
+    &:hover {
+      color: var(--brand-primary);
+    }
+  }
+
+  + .breadcrumb-item::before {
+    color: var(--brand-content-disabled);
+  }
+
+  &.active {
+    color: var(--brand-content-high);
+  }
+}
+
+// Links
+a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: .15em;
+}

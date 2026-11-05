@@ -1,0 +1,129 @@
+<c-row>
+  <c-col xs="12">
+    <app-docs-callout name="Abas"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-3">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Abas Angular</strong> <small>sublinhado</small>
+      </c-card-header>
+      <c-card-body>
+        <c-nav variant="tabs">
+          <c-nav-item>
+            <a [cTabContent]="tabContent1" [routerLink] [tabPaneIdx]="0" cNavLink>
+              <svg cIcon class="me-2" name="cilHome"></svg>
+              Início
+            </a>
+          </c-nav-item>
+          <c-nav-item>
+            <a [cTabContent]="tabContent1" [routerLink] [tabPaneIdx]="1" cNavLink>
+              <svg cIcon class="me-2" name="cilUser"></svg>
+              Perfil
+            </a>
+          </c-nav-item>
+          <c-nav-item>
+            <a [cTabContent]="tabContent1" [routerLink] [tabPaneIdx]="2" cNavLink [disabled]="tabContent1.activeTabPaneIdx < 1">
+              <svg cIcon class="me-2" name="cilCode"></svg>
+              Contato
+            </a>
+          </c-nav-item>
+        </c-nav>
+        <c-tab-content #tabContent1="cTabContent" [activeTabPaneIdx]="0" cRounded="bottom">
+          <c-tab-pane class="p-3 preview" role="tabpanel">
+            Este é um conteúdo de exemplo associado à aba <strong>Início</strong>. Clicar em outra aba
+            alternará a visibilidade desta para a próxima. O JavaScript das abas troca classes para controlar a
+            visibilidade e o estilo do conteúdo. Você pode usá-lo com abas, pílulas e qualquer outra navegação
+            baseada em .nav.
+          </c-tab-pane>
+          <c-tab-pane class="p-3 preview" role="tabpanel">
+            Este é um conteúdo de exemplo associado à aba <strong>Perfil</strong>. Clicar em outra aba
+            alternará a visibilidade desta para a próxima. O JavaScript das abas troca classes para controlar a
+            visibilidade e o estilo do conteúdo. Você pode usá-lo com abas, pílulas e qualquer outra navegação
+            baseada em .nav.
+          </c-tab-pane>
+          <c-tab-pane class="p-3 preview" role="tabpanel" *ngIf="tabContent1.activeTabPaneIdx > 0">
+            Este é um conteúdo de exemplo associado à aba <strong>Contato</strong>. Clicar em outra aba
+            alternará a visibilidade desta para a próxima. O JavaScript das abas troca classes para controlar a
+            visibilidade e o estilo do conteúdo. Você pode usá-lo com abas, pílulas e qualquer outra navegação
+            baseada em .nav.
+          </c-tab-pane>
+        </c-tab-content>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-3">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Abas Angular</strong> <small>abas</small>
+      </c-card-header>
+      <c-card-body>
+        <c-nav variant="tabs">
+          <c-nav-item *ngFor="let nav of panes; index as i; first as isFirst; last as isLast">
+            <a [cTabContent]="tabContent2" [disabled]="isLast" [routerLink] [tabPaneIdx]="i"
+               cNavLink>
+              <svg cIcon class="me-2" name="cilHome"></svg>
+              {{nav.name}}
+            </a>
+          </c-nav-item>
+        </c-nav>
+        <c-tab-content #tabContent2="cTabContent" [activeTabPaneIdx]="0" cRounded="bottom">
+          <c-tab-pane *ngFor="let pane of panes; index as i;" class="p-3 preview">
+            Este é um conteúdo de exemplo associado à aba <strong>{{pane.name}}</strong>. Clicar em outra aba
+            alternará a visibilidade desta para a próxima. O JavaScript das abas troca classes para controlar a
+            visibilidade e o estilo do conteúdo. Você pode usá-lo com abas, pílulas e qualquer outra navegação
+            baseada em .nav.
+          </c-tab-pane>
+        </c-tab-content>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-3">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Abas Angular</strong> <small>pílulas</small>
+      </c-card-header>
+      <c-card-body>
+        <c-nav variant="pills">
+          <c-nav-item>
+            <a [cTabContent]="tabContent3" [routerLink] [tabPaneIdx]="0" cNavLink>
+              <svg cIcon class="me-2" name="cilHome"></svg>
+              Início
+            </a>
+          </c-nav-item>
+          <c-nav-item>
+            <a [cTabContent]="tabContent3" [routerLink] [tabPaneIdx]="1" cNavLink>
+              <svg cIcon class="me-2" name="cilUser"></svg>
+              Perfil
+            </a>
+          </c-nav-item>
+          <c-nav-item>
+            <a [cTabContent]="tabContent3" [routerLink] [tabPaneIdx]="2" cNavLink>
+              <svg cIcon class="me-2" name="cilCode"></svg>
+              Contato
+            </a>
+          </c-nav-item>
+        </c-nav>
+        <c-tab-content #tabContent3="cTabContent" cRounded="bottom" [activeTabPaneIdx]="0">
+          <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel">
+            Este é um conteúdo de exemplo associado à aba <strong>Início</strong>. Clicar em outra aba
+            alternará a visibilidade desta para a próxima. O JavaScript das abas troca classes para controlar a
+            visibilidade e o estilo do conteúdo. Você pode usá-lo com abas, pílulas e qualquer outra navegação
+            baseada em .nav.
+          </c-tab-pane>
+          <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel">
+            Este é um conteúdo de exemplo associado à aba <strong>Perfil</strong>. Clicar em outra aba
+            alternará a visibilidade desta para a próxima. O JavaScript das abas troca classes para controlar a
+            visibilidade e o estilo do conteúdo. Você pode usá-lo com abas, pílulas e qualquer outra navegação
+            baseada em .nav.
+          </c-tab-pane>
+          <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel">
+            Este é um conteúdo de exemplo associado à aba <strong>Contato</strong>. Clicar em outra aba
+            alternará a visibilidade desta para a próxima. O JavaScript das abas troca classes para controlar a
+            visibilidade e o estilo do conteúdo. Você pode usá-lo com abas, pílulas e qualquer outra navegação
+            baseada em .nav.
+          </c-tab-pane>
+        </c-tab-content>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

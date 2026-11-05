@@ -1,0 +1,366 @@
+// Dark theme for CoreUI 4.x (which has no built-in color modes), built on the brand tokens.
+// ThemeService sets <html data-theme="light|dark"> (and the template's `dark-theme` class).
+// Dark mode re-points the --brand-*, --app-* and --cui-* CSS variables to the navy-tinted
+// palette from _brand.scss. New components must use CSS variables, never fixed colors.
+
+$dark-hover-bg: rgba(255, 255, 255, .08);
+$dark-shadow: 0 .5rem 1rem rgba(0, 0, 0, .45);
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  // Brand tokens, dark values
+  --brand-primary: #{$brand-dark-primary};
+  --brand-primary-high: #{$brand-dark-primary-high};
+  --brand-primary-low: #{$brand-dark-primary-low};
+  --brand-primary-light: #{$brand-dark-link};
+  --brand-primary-rgb: 107, 124, 240;
+  --brand-highlight: #{$brand-dark-info};
+  --brand-highlight-dark: #{$brand-cyan-dark};
+  --brand-highlight-low: rgba(49, 199, 237, .14);
+  --brand-success: #{$brand-dark-success};
+  --brand-success-low: rgba(54, 191, 54, .14);
+  --brand-warning: #{$brand-dark-warning};
+  --brand-warning-dark: #{$brand-orange};
+  --brand-warning-low: rgba(255, 138, 61, .14);
+  --brand-danger: #{$brand-dark-danger};
+  --brand-danger-dark: #{$brand-red};
+  --brand-danger-low: rgba(240, 86, 107, .14);
+  --brand-content-high: #{$brand-dark-text};
+  --brand-content-pure: #{$brand-dark-text};
+  --brand-content-low: #{$brand-dark-text-medium};
+  --brand-content-disabled: #{$brand-dark-text-disabled};
+  --brand-surface-page: #{$brand-dark-page};
+  --brand-surface-card: #{$brand-dark-card};
+  --brand-surface-mid: #{$brand-dark-alt};
+  --brand-surface-high: #{$brand-dark-border};
+  --brand-border: #{$brand-dark-border};
+  --brand-sidebar: #{$brand-dark-sidebar};
+  --brand-sidebar-deep: #{$brand-dark-sidebar-deep};
+  --brand-elevation-1: 0 4px 4px -2px rgba(0, 0, 0, .5);
+  --brand-elevation-2: 0 4px 12px 0 rgba(0, 0, 0, .4);
+  --brand-elevation-3: 0 16px 32px 0 rgba(0, 0, 0, .55);
+  --brand-elevation-card: 0 2px 8px 0 rgba(0, 0, 0, .3);
+
+  // Charts
+  --app-chat-accent: #{$brand-dark-chat-accent};
+  --app-chart-color: #{$brand-dark-text-medium};
+  --app-chart-grid-color: rgba(255, 255, 255, .08);
+  --app-chart-tooltip-bg: #{$brand-dark-page};
+  --app-chart-tooltip-color: #{$brand-dark-text};
+  // Series stepped for the dark card (#171e28), validated as a set; keep in sync with _brand.scss.
+  --app-series-1: #4d61e0;
+  --app-series-2: #{$brand-cyan-dark};
+  --app-series-3: #2fae2f;
+  --app-series-4: #{$brand-purple};
+  --app-series-reference: #e8475c;
+  --app-wf-total-1: #3448d0;
+  --app-wf-total-2: #5f71ea;
+  --app-wf-total-3: #8c9ae8;
+  --app-wf-decrease-1: #c0162c;
+  --app-wf-decrease-2: #e8475c;
+  --app-wf-decrease-3: #f59aa6;
+  --app-wf-connector: #{$brand-content-low};
+  --app-applicable: #{$brand-dark-link-hover};
+  --app-not-applicable: #{$brand-content-low};
+
+  // CoreUI globals
+  --cui-body-bg: #{$brand-dark-page};
+  --cui-body-bg-rgb: 15, 19, 25;
+  --cui-body-color: #{$brand-dark-text};
+  --cui-body-color-rgb: 238, 241, 245;
+  --cui-border-color: #{$brand-dark-border};
+  --cui-border-color-translucent: rgba(255, 255, 255, .1);
+  --cui-link-color: #{$brand-dark-link};
+  --cui-link-hover-color: #{$brand-dark-link-hover};
+  --cui-highlight-bg: #5c4a12;
+  --cui-primary: #{$brand-dark-primary};
+  --cui-primary-rgb: 107, 124, 240;
+  --cui-info: #{$brand-dark-info};
+  --cui-info-rgb: 49, 199, 237;
+  --cui-success: #{$brand-dark-success};
+  --cui-success-rgb: 54, 191, 54;
+  --cui-warning: #{$brand-dark-warning};
+  --cui-warning-rgb: 255, 138, 61;
+  --cui-danger: #{$brand-dark-danger};
+  --cui-danger-rgb: 240, 86, 107;
+  --cui-light: #{$brand-dark-alt};
+  --cui-light-rgb: 31, 39, 51;
+  --cui-dark: #{$brand-dark-text};
+  --cui-dark-rgb: 238, 241, 245;
+
+  --cui-input-color: #{$brand-dark-text};
+  --cui-input-bg: #{$brand-dark-input};
+  --cui-input-border-color: #{$brand-dark-input-border};
+  --cui-form-select-color: #{$brand-dark-text};
+  --cui-form-select-bg: #{$brand-dark-input};
+  --cui-form-select-border-color: #{$brand-dark-input-border};
+  --cui-input-group-addon-color: #{$brand-dark-text};
+  --cui-input-group-addon-bg: #{$brand-dark-alt};
+  --cui-input-group-addon-border-color: #{$brand-dark-input-border};
+  --cui-form-check-input-bg: #{$brand-dark-input};
+
+  // Layout
+  .sidebar {
+    --cui-sidebar-bg: #{$brand-dark-sidebar};
+    --cui-sidebar-brand-bg: #{$brand-dark-sidebar-deep};
+  }
+
+  .header {
+    --cui-header-bg: #{$brand-dark-card};
+    --cui-header-color: #{$brand-dark-text-medium};
+    --cui-header-border-color: #{$brand-dark-border};
+    --cui-header-hover-color: #{$brand-dark-text};
+    --cui-header-disabled-color: #{$brand-dark-text-disabled};
+    --cui-header-active-color: #{$brand-dark-text};
+    --cui-header-brand-color: #{$brand-dark-text};
+    --cui-header-brand-hover-color: #{$brand-dark-text};
+    --cui-header-toggler-color: #{$brand-dark-text-medium};
+    --cui-header-toggler-hover-color: #{$brand-dark-text};
+    --cui-header-divider-border-color: #{$brand-dark-border};
+  }
+
+  .footer {
+    --cui-footer-bg: #{$brand-dark-sidebar};
+    --cui-footer-color: rgba(255, 255, 255, .72);
+    --cui-footer-border-color: #{$brand-dark-sidebar};
+  }
+
+  // Buttons: primary on dark uses the lighter interactive blue
+  .btn-primary {
+    --cui-btn-bg: #{$brand-dark-primary};
+    --cui-btn-border-color: #{$brand-dark-primary};
+    --cui-btn-hover-bg: #{$brand-dark-primary-high};
+    --cui-btn-hover-border-color: #{$brand-dark-primary-high};
+    --cui-btn-active-bg: #{$brand-dark-primary-high};
+    --cui-btn-active-border-color: #{$brand-dark-primary-high};
+    --cui-btn-disabled-bg: #{$brand-dark-primary};
+    --cui-btn-disabled-border-color: #{$brand-dark-primary};
+    --cui-btn-focus-shadow-rgb: 107, 124, 240;
+  }
+
+  .btn-outline-primary {
+    --cui-btn-color: #{$brand-dark-link};
+    --cui-btn-border-color: #{$brand-dark-primary};
+    --cui-btn-hover-bg: #{$brand-dark-primary};
+    --cui-btn-hover-border-color: #{$brand-dark-primary};
+    --cui-btn-active-bg: #{$brand-dark-primary};
+    --cui-btn-active-border-color: #{$brand-dark-primary};
+    --cui-btn-focus-shadow-rgb: 107, 124, 240;
+  }
+
+  .btn-outline-secondary {
+    --cui-btn-color: #{$brand-dark-text-medium};
+    --cui-btn-border-color: #{$brand-dark-input-border};
+    --cui-btn-hover-color: #{$brand-dark-text};
+    --cui-btn-hover-bg: #{$brand-dark-alt};
+    --cui-btn-hover-border-color: #{$brand-dark-input-border};
+    --cui-btn-active-color: #{$brand-dark-text};
+    --cui-btn-active-bg: #{$brand-dark-alt};
+    --cui-btn-active-border-color: #{$brand-dark-input-border};
+  }
+
+  // Components
+  .card {
+    --cui-card-bg: #{$brand-dark-card};
+    --cui-card-cap-bg: transparent;
+    --cui-card-border-color: #{$brand-dark-border};
+    --cui-card-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
+  }
+
+  .dropdown-menu {
+    --cui-dropdown-bg: #{$brand-dark-card};
+    --cui-dropdown-color: #{$brand-dark-text};
+    --cui-dropdown-border-color: #{$brand-dark-border};
+    --cui-dropdown-box-shadow: #{$dark-shadow};
+    --cui-dropdown-link-color: #{$brand-dark-text};
+    --cui-dropdown-link-hover-color: #{$brand-dark-text};
+    --cui-dropdown-link-hover-bg: #{$dark-hover-bg};
+    --cui-dropdown-link-active-color: #ffffff;
+    --cui-dropdown-link-active-bg: #{$brand-dark-primary};
+    --cui-dropdown-link-disabled-color: #{$brand-dark-text-disabled};
+    --cui-dropdown-header-color: #{$brand-dark-text-medium};
+    --cui-dropdown-divider-bg: #{$brand-dark-border};
+  }
+
+  .nav {
+    --cui-nav-link-disabled-color: #{$brand-dark-text-disabled};
+  }
+
+  .nav-tabs {
+    --cui-nav-tabs-border-color: #{$brand-dark-border};
+    --cui-nav-tabs-link-hover-border-color: #{$brand-dark-border} #{$brand-dark-border} #{$brand-dark-border};
+    --cui-nav-tabs-link-active-color: #{$brand-dark-text};
+    --cui-nav-tabs-link-active-bg: #{$brand-dark-card};
+    --cui-nav-tabs-link-active-border-color: #{$brand-dark-border} #{$brand-dark-border} #{$brand-dark-card};
+  }
+
+  .nav-pills {
+    --cui-nav-pills-link-active-bg: #{$brand-dark-primary};
+  }
+
+  .navbar {
+    --cui-navbar-color: #{$brand-dark-text-medium};
+    --cui-navbar-hover-color: #{$brand-dark-text};
+    --cui-navbar-active-color: #{$brand-dark-text};
+    --cui-navbar-brand-color: #{$brand-dark-text};
+    --cui-navbar-brand-hover-color: #{$brand-dark-text};
+  }
+
+  .accordion {
+    --cui-accordion-color: #{$brand-dark-text};
+    --cui-accordion-bg: #{$brand-dark-card};
+    --cui-accordion-border-color: #{$brand-dark-border};
+    --cui-accordion-btn-color: #{$brand-dark-text};
+    --cui-accordion-active-color: #{$brand-dark-link};
+    --cui-accordion-active-bg: #{$brand-dark-alt};
+  }
+
+  .breadcrumb {
+    --cui-breadcrumb-divider-color: #{$brand-dark-text-medium};
+    --cui-breadcrumb-item-active-color: #{$brand-dark-text-medium};
+  }
+
+  .pagination {
+    --cui-pagination-bg: #{$brand-dark-card};
+    --cui-pagination-border-color: #{$brand-dark-border};
+    --cui-pagination-hover-bg: #{$brand-dark-alt};
+    --cui-pagination-hover-border-color: #{$brand-dark-border};
+    --cui-pagination-focus-bg: #{$brand-dark-alt};
+    --cui-pagination-active-bg: #{$brand-dark-primary};
+    --cui-pagination-active-border-color: #{$brand-dark-primary};
+    --cui-pagination-disabled-color: #{$brand-dark-text-disabled};
+    --cui-pagination-disabled-bg: #{$brand-dark-card};
+    --cui-pagination-disabled-border-color: #{$brand-dark-border};
+  }
+
+  .progress {
+    --cui-progress-bg: #{$brand-dark-alt};
+    --cui-progress-bar-bg: #{$brand-dark-primary};
+  }
+
+  .list-group {
+    --cui-list-group-color: #{$brand-dark-text};
+    --cui-list-group-bg: #{$brand-dark-card};
+    --cui-list-group-border-color: #{$brand-dark-border};
+    --cui-list-group-action-color: #{$brand-dark-text-medium};
+    --cui-list-group-action-hover-color: #{$brand-dark-text};
+    --cui-list-group-action-hover-bg: #{$dark-hover-bg};
+    --cui-list-group-action-active-color: #{$brand-dark-text};
+    --cui-list-group-action-active-bg: #{$brand-dark-alt};
+    --cui-list-group-active-bg: #{$brand-dark-primary};
+    --cui-list-group-active-border-color: #{$brand-dark-primary};
+    --cui-list-group-disabled-color: #{$brand-dark-text-disabled};
+    --cui-list-group-disabled-bg: #{$brand-dark-card};
+  }
+
+  .table {
+    --cui-table-striped-bg: rgba(255, 255, 255, .04);
+    --cui-table-active-bg: rgba(255, 255, 255, .1);
+    --cui-table-hover-bg: rgba(255, 255, 255, .07);
+  }
+
+  .table-light {
+    --cui-table-color: #{$brand-dark-text};
+    --cui-table-bg: #{$brand-dark-alt};
+    --cui-table-border-color: #{$brand-dark-border};
+    --cui-table-striped-color: #{$brand-dark-text};
+    --cui-table-active-color: #{$brand-dark-text};
+    --cui-table-hover-color: #{$brand-dark-text};
+  }
+
+  .toast {
+    --cui-toast-color: #{$brand-dark-text};
+    --cui-toast-bg: rgba(23, 30, 40, .95);
+    --cui-toast-border-color: #{$brand-dark-border};
+    --cui-toast-header-color: #{$brand-dark-text-medium};
+    --cui-toast-header-bg: rgba(23, 30, 40, .95);
+    --cui-toast-header-border-color: #{$brand-dark-border};
+  }
+
+  .modal {
+    --cui-modal-color: #{$brand-dark-text};
+    --cui-modal-bg: #{$brand-dark-card};
+    --cui-modal-border-color: #{$brand-dark-border};
+    --cui-modal-header-border-color: #{$brand-dark-border};
+    --cui-modal-footer-border-color: #{$brand-dark-border};
+  }
+
+  .popover {
+    --cui-popover-bg: #{$brand-dark-card};
+    --cui-popover-border-color: #{$brand-dark-border};
+    --cui-popover-header-bg: #{$brand-dark-alt};
+    --cui-popover-header-color: #{$brand-dark-text};
+    --cui-popover-body-color: #{$brand-dark-text};
+    --cui-popover-arrow-border: #{$brand-dark-border};
+  }
+
+  .offcanvas {
+    --cui-offcanvas-color: #{$brand-dark-text};
+    --cui-offcanvas-bg: #{$brand-dark-card};
+    --cui-offcanvas-border-color: #{$brand-dark-border};
+  }
+
+  .callout {
+    --cui-callout-border-color: #{$brand-dark-border};
+  }
+
+  // Forms: CoreUI 4 uses fixed colors for these states
+  .form-control:disabled,
+  .form-control[readonly],
+  .form-select:disabled {
+    background-color: $brand-dark-alt;
+    border-color: $brand-dark-input-border;
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    border-color: $brand-dark-primary;
+    box-shadow: 0 0 0 .25rem rgba(107, 124, 240, .25);
+  }
+
+  .form-select:not([multiple]):not([size]) {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23c3c8d1' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  }
+
+  .form-check-input {
+    border-color: $brand-dark-input-border;
+  }
+
+  .form-check-input:checked {
+    background-color: $brand-dark-primary;
+    border-color: $brand-dark-primary;
+  }
+
+  .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+  }
+
+  // Utilities with fixed light colors
+  .bg-light {
+    background-color: $brand-dark-page !important;
+  }
+
+  .bg-white {
+    background-color: $brand-dark-card !important;
+  }
+
+  .text-high-emphasis {
+    color: $brand-dark-text !important;
+  }
+
+  .text-medium-emphasis {
+    color: $brand-dark-text-medium !important;
+  }
+
+  .text-disabled {
+    color: $brand-dark-text-disabled !important;
+  }
+
+  // Scrollbar
+  @supports (scrollbar-width: thin) {
+    * {
+      scrollbar-color: #4b5968 transparent;
+    }
+  }
+}

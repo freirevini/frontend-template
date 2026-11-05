@@ -1,0 +1,227 @@
+<div class="fade-in">
+  <c-row ngPreserveWhitespaces>
+    <c-col xs="12">
+      <app-docs-callout name="Carrossel"></app-docs-callout>
+    </c-col>
+    <c-col xs="12">
+      <c-card class="mb-4">
+        <c-card-header>
+          <strong>Carrossel Angular</strong> <small>Somente slides</small>
+        </c-card-header>
+        <c-card-body>
+          <p class="text-medium-emphasis small">Aqui está um carrossel com slides</p>
+          <app-docs-example>
+            <c-carousel (itemChange)="onItemChange($event)" [interval]="7000" transition="slide">
+              <c-carousel-inner>
+                <c-carousel-item *ngFor="let slide of slides[0]">
+                  <img
+                    [src]="slide.src"
+                    alt="{{slide.title}}"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </c-carousel-item>
+              </c-carousel-inner>
+            </c-carousel>
+          </app-docs-example>
+        </c-card-body>
+      </c-card>
+    </c-col>
+    <c-col xs="12">
+      <c-card class="mb-4">
+        <c-card-header>
+          <strong>Carrossel Angular</strong> <small>com controles</small>
+        </c-card-header>
+        <c-card-body>
+          <p class="text-medium-emphasis small">
+            Adicionando os controles de anterior e próximo com o componente <code>c-carousel-controls</code>.
+          </p>
+          <app-docs-example>
+            <c-carousel (itemChange)="onItemChange($event)" [interval]="0">
+              <c-carousel-inner>
+                <c-carousel-item *ngFor="let slide of slides[0]">
+                  <img
+                    [src]="slide.src"
+                    alt="{{slide.title}}"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </c-carousel-item>
+              </c-carousel-inner>
+              <c-carousel-control [routerLink]="[]" caption="Anterior" direction="prev" i18n-caption></c-carousel-control>
+              <c-carousel-control [routerLink]="[]" caption="Próximo" direction="next" i18n-caption></c-carousel-control>
+            </c-carousel>
+          </app-docs-example>
+        </c-card-body>
+      </c-card>
+    </c-col>
+    <c-col xs="12">
+      <c-card class="mb-4">
+        <c-card-header>
+          <strong>Carrossel Angular</strong> <small>com controles personalizados</small>
+        </c-card-header>
+        <c-card-body>
+          <p class="text-medium-emphasis small">
+            Adicionando os controles de anterior e próximo com conteúdo personalizado no componente <code>c-carousel-controls</code>.
+            <app-docs-example>
+              <c-carousel (itemChange)="onItemChange($event)" [interval]="0">
+                <c-carousel-inner>
+                  <c-carousel-item *ngFor="let slide of slides[0]">
+                    <img
+                      [src]="slide.src"
+                      alt="{{slide.title}}"
+                      class="d-block w-100"
+                      loading="lazy"
+                    />
+                  </c-carousel-item>
+                </c-carousel-inner>
+                <c-carousel-control [tabIndex]="0" direction="prev">
+                  <svg cIcon name="cil-chevron-left" size="3xl"></svg>
+                  <span class="visually-hidden">Anterior</span>
+                </c-carousel-control>
+                <c-carousel-control [tabIndex]="0" direction="next">
+                  <svg cIcon name="cil-chevron-right" size="3xl"></svg>
+                  <span class="visually-hidden">Próximo</span>
+                </c-carousel-control>
+              </c-carousel>
+            </app-docs-example>
+        </c-card-body>
+      </c-card>
+    </c-col>
+    <c-col xs="12">
+      <c-card class="mb-4">
+        <c-card-header>
+          <strong>Carrossel Angular</strong> <small>com indicadores</small>
+        </c-card-header>
+        <c-card-body>
+          <p class="text-medium-emphasis small">
+            Você também pode adicionar indicadores ao carrossel, junto com os controles.
+          </p>
+          <app-docs-example>
+            <c-carousel (itemChange)="onItemChange($event)" [activeIndex]="1" [dark]="true" [interval]="5000"
+                        direction="prev">
+              <c-carousel-indicators></c-carousel-indicators>
+              <c-carousel-inner>
+                <c-carousel-item *ngFor="let slide of slides[0]">
+                  <img
+                    [src]="slide.src"
+                    alt="{{slide.title}}"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </c-carousel-item>
+              </c-carousel-inner>
+            </c-carousel>
+          </app-docs-example>
+        </c-card-body>
+      </c-card>
+    </c-col>
+    <c-col xs="12">
+      <c-card class="mb-4">
+        <c-card-header>
+          Carrossel com legendas, controles e indicadores
+        </c-card-header>
+        <c-card-body>
+          <p class="text-medium-emphasis small">
+            Você pode adicionar legendas aos slides com o elemento <code>&lt;c-carousel-caption&gt;</code>
+            dentro de qualquer <code>&lt;c-carousel-item&gt;</code>. Elas podem ser facilmente ocultadas em
+            telas menores, como mostrado abaixo, com utilitários
+            de exibição opcionais.
+            Nós as ocultamos com <code>.d-none</code> e as exibimos novamente em dispositivos de tamanho médio com
+            <code>.d-md-block</code>.
+          </p>
+          <app-docs-example>
+            <c-carousel (itemChange)="onItemChange($event)" [interval]="3000" transition="slide" [wrap]="false">
+              <c-carousel-indicators></c-carousel-indicators>
+              <c-carousel-inner>
+                <c-carousel-item *ngFor="let slide of slides[1]">
+                  <img
+                    alt="{{slide.title}}"
+                    class="d-block w-100"
+                    loading="lazy"
+                    src="{{slide.src}}"
+                  />
+                  <c-carousel-caption class="d-none d-md-block">
+                    <h3>{{slide.title}}</h3>
+                    <p>{{slide.subtitle}}</p>
+                  </c-carousel-caption>
+                </c-carousel-item>
+              </c-carousel-inner>
+              <c-carousel-control [routerLink]="[]" caption="Anterior" direction="prev" i18n-caption></c-carousel-control>
+              <c-carousel-control [routerLink]="[]" caption="Próximo" direction="next" i18n-caption></c-carousel-control>
+            </c-carousel>
+          </app-docs-example>
+        </c-card-body>
+      </c-card>
+    </c-col>
+    <c-col xs="12">
+      <c-card class="mb-4">
+        <c-card-header>
+          <strong>Carrossel Angular</strong> <small>Transição cruzada</small>
+        </c-card-header>
+        <c-card-body>
+          <p class="text-medium-emphasis small">
+            Adicione <code>transition="crossfade"</code> ao seu carrossel para animar os slides
+            com uma transição de esmaecimento em vez de deslizamento.
+          </p>
+          <app-docs-example>
+            <c-carousel (itemChange)="onItemChange($event)" [animate]="false" [interval]="5000" transition="crossfade">
+              <c-carousel-inner>
+                <c-carousel-item *ngFor="let slide of slides[0]">
+                  <img
+                    [src]="slide.src"
+                    alt="{{slide.title}}"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                  <c-carousel-caption class="d-none d-md-block">
+                    <h3>{{slide.title}}</h3>
+                    <p>{{slide.subtitle}}</p>
+                  </c-carousel-caption>
+                </c-carousel-item>
+              </c-carousel-inner>
+              <c-carousel-control [routerLink]="[]" caption="Anterior" direction="prev" i18n-caption></c-carousel-control>
+              <c-carousel-control [routerLink]="[]" caption="Próximo" direction="next" i18n-caption></c-carousel-control>
+            </c-carousel>
+          </app-docs-example>
+        </c-card-body>
+      </c-card>
+    </c-col>
+    <c-col xs="12">
+      <c-card class="mb-4">
+        <c-card-header>
+          <strong>Carrossel Angular</strong> <small>Variante escura</small>
+        </c-card-header>
+        <c-card-body>
+          <p class="text-medium-emphasis small">
+            Adicione a propriedade <code>dark</code> ao <code>c-carousel</code> para obter controles,
+            indicadores e legendas mais escuros. Os controles têm o preenchimento branco padrão invertido
+            com a propriedade CSS <code>filter</code>. Legendas e controles têm variáveis Sass
+            adicionais que personalizam <code>color</code> e <code>background-color</code>.
+          </p>
+          <app-docs-example>
+            <c-carousel (itemChange)="onItemChange($event)" [dark]="true" [interval]="3000" transition="slide">
+              <c-carousel-indicators></c-carousel-indicators>
+              <c-carousel-inner>
+                <c-carousel-item *ngFor="let slide of slides[2]; index as i;">
+                  <img
+                    [src]="slide.src"
+                    alt="{{slide.title}}"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                  <c-carousel-caption class="d-none d-md-block">
+                    <h3>{{slide.title}}</h3>
+                    <p>{{slide.subtitle}}</p>
+                  </c-carousel-caption>
+                </c-carousel-item>
+              </c-carousel-inner>
+              <c-carousel-control [routerLink]="[]" caption="Anterior" direction="prev" i18n-caption></c-carousel-control>
+              <c-carousel-control [routerLink]="[]" caption="Próximo" direction="next" i18n-caption></c-carousel-control>
+            </c-carousel>
+          </app-docs-example>
+        </c-card-body>
+      </c-card>
+    </c-col>
+  </c-row>
+</div>

@@ -1,0 +1,114 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <app-docs-callout name="Indicador de carregamento"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Indicador de carregamento Angular</strong> <small>Borda</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Use os indicadores de borda para sinalizar carregamento de forma leve.
+        </p>
+        <app-docs-example>
+          <c-spinner label="Carregando..."></c-spinner>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          O indicador de borda usa <code>currentColor</code> para sua <code>border-color</code>.
+          Você pode usar qualquer um dos nossos utilitários de cor de texto no indicador padrão.
+        </p>
+        <app-docs-example>
+          <c-spinner label="Carregando..." color="primary"></c-spinner>
+          <c-spinner label="Carregando..." color="secondary"></c-spinner>
+          <c-spinner label="Carregando..." color="success"></c-spinner>
+          <c-spinner label="Carregando..." color="danger"></c-spinner>
+          <c-spinner label="Carregando..." color="warning"></c-spinner>
+          <c-spinner label="Carregando..." color="info"></c-spinner>
+          <c-spinner label="Carregando..." color="light"></c-spinner>
+          <c-spinner label="Carregando..." color="dark"></c-spinner>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Indicador de carregamento Angular</strong> <small>Crescente</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Se você não gosta do indicador de borda, mude para o indicador crescente. Embora ele
+          tecnicamente não gire, ele cresce repetidamente!
+        </p>
+        <app-docs-example>
+          <c-spinner label="Carregando..." variant="grow"></c-spinner>
+        </app-docs-example>
+        <p class="text-medium-emphasis small">
+          Mais uma vez, este indicador é construído com <code>currentColor</code>, então você pode facilmente
+          alterar sua aparência. Aqui ele está em azul, junto com as variantes suportadas.
+        </p>
+        <app-docs-example>
+          <c-spinner label="Carregando..." color="primary" variant="grow"></c-spinner>
+          <c-spinner label="Carregando..." color="secondary" variant="grow"></c-spinner>
+          <c-spinner label="Carregando..." color="success" variant="grow"></c-spinner>
+          <c-spinner label="Carregando..." color="danger" variant="grow"></c-spinner>
+          <c-spinner label="Carregando..." color="warning" variant="grow"></c-spinner>
+          <c-spinner label="Carregando..." color="info" variant="grow"></c-spinner>
+          <c-spinner label="Carregando..." color="light" variant="grow"></c-spinner>
+          <c-spinner label="Carregando..." color="dark" variant="grow"></c-spinner>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Indicador de carregamento Angular</strong> <small>Tamanho</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione a propriedade <code>size=&#34;sm&#34;</code> para criar um indicador menor que pode ser
+          usado rapidamente dentro de outros componentes.
+        </p>
+        <app-docs-example>
+          <c-spinner label="Carregando..." size="sm"></c-spinner>
+          <c-spinner label="Carregando..." size="sm" variant="grow"></c-spinner>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Indicador de carregamento Angular</strong> <small>Botões</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Use indicadores de carregamento dentro de botões para mostrar que uma ação está sendo processada ou
+          em andamento. Você também pode remover o texto do elemento do indicador e usar o texto do botão
+          conforme necessário.
+        </p>
+        <app-docs-example>
+          <button cButton class="m-1" disabled>
+            <c-spinner label="Carregando..." aria-hidden="true" size="sm"></c-spinner>
+          </button>
+          <button cButton class="m-1" disabled>
+            <c-spinner label="Carregando..." aria-hidden="true" size="sm"></c-spinner>
+            Carregando...
+          </button>
+        </app-docs-example>
+        <app-docs-example>
+          <br>
+          <button cButton class="m-1" disabled>
+            <c-spinner label="Carregando..." aria-hidden="true" size="sm" variant="grow"></c-spinner>
+          </button>
+          <button cButton class="m-1" disabled>
+            <c-spinner label="Carregando..." aria-hidden="true" size="sm" variant="grow"></c-spinner>
+            Carregando...
+          </button>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

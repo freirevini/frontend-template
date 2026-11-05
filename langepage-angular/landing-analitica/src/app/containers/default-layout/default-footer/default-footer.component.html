@@ -1,0 +1,14 @@
+<div class="footer-inner">
+  <img class="footer-logo" src="assets/img/brand/brand-logo-white.svg" width="54" height="40" alt="Logotipo da instituição" />
+  <div class="footer-legal">
+    <p class="footer-copy">Copyright &copy; {{ currentYear }} todos os direitos reservados</p>
+    @if (companies.length) {
+      @for (company of companies; track company.cnpj) {
+        <p>
+          <strong>{{ company.name }} - CNPJ: {{ company.cnpj }}</strong><br />
+          {{ company.address }}
+        </p>
+      }
+    }
+  </div>
+</div>

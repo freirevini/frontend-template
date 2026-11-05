@@ -1,0 +1,209 @@
+// Classification cards (app-applicability-chart and app-themes-list), tokens only.
+// Global: the components have no stylesheet of their own (anyComponentStyle budget, docs/portabilidade.md 4.11).
+.classification-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+}
+
+// Applicability pie: doughnut with the total in the center, legend with count and share below.
+.applicability-body {
+  margin-top: 1rem;
+}
+
+.applicability-chart {
+  position: relative;
+  height: 220px;
+}
+
+.applicability-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  strong {
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--brand-content-high);
+    font-variant-numeric: tabular-nums;
+  }
+
+  span {
+    font-size: .8125rem;
+    color: var(--brand-content-low);
+  }
+}
+
+// Legend items are buttons: click to filter the themes list by that class (same states as the theme rows).
+.applicability-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .5rem 1.5rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.applicability-legend-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: .375rem .625rem;
+  text-align: left;
+}
+
+.applicability-legend-label {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  font-size: .8125rem;
+  color: var(--brand-content-low);
+}
+
+.applicability-legend-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--brand-content-high);
+  font-variant-numeric: tabular-nums;
+
+  span {
+    margin-left: .25rem;
+    font-size: .875rem;
+    font-weight: 500;
+    color: var(--brand-content-low);
+  }
+}
+
+// Shared states of the clickable values (legend items and theme rows).
+.applicability-legend-item,
+button.theme-row {
+  width: 100%;
+  color: inherit;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--brand-radius-sm);
+  cursor: pointer;
+  transition: opacity .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+
+  &:hover {
+    background-color: var(--brand-surface-mid);
+  }
+
+  &.is-active {
+    background-color: var(--brand-primary-low);
+    border-color: rgba(var(--brand-primary-rgb), .35);
+  }
+
+  &.is-dimmed {
+    opacity: .45;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+}
+
+button.theme-row {
+  padding: .25rem .375rem;
+  text-align: left;
+}
+
+.classification-key {
+  display: inline-block;
+  width: .75rem;
+  height: .75rem;
+  border-radius: 2px;
+}
+
+// Themes: label | bar | value, sorted largest first; "Outros temas" is a text-only row under a hairline.
+.theme-bars {
+  display: grid;
+  gap: .125rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.theme-row {
+  display: grid;
+  grid-template-columns: minmax(0, 17rem) minmax(4rem, 1fr) 6.5rem;
+  align-items: center;
+  gap: .25rem .75rem;
+  font-size: .8125rem;
+}
+
+.theme-label {
+  overflow: hidden;
+  color: var(--brand-content-high);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.theme-track {
+  display: block;
+  height: .5rem;
+}
+
+.theme-fill {
+  display: block;
+  height: 100%;
+  background-color: var(--app-applicable);
+  border-radius: 0 4px 4px 0;
+
+  &.is-not-applicable {
+    background-color: var(--app-not-applicable);
+  }
+}
+
+.theme-row.is-other {
+  margin-top: .375rem;
+  padding: .625rem .375rem 0;
+  border-top: 1px solid var(--brand-border);
+
+  .theme-label,
+  .theme-value {
+    color: var(--brand-content-low);
+  }
+}
+
+.theme-value {
+  font-weight: 600;
+  color: var(--brand-content-high);
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+
+  span {
+    display: inline-block;
+    min-width: 2.75rem;
+    font-weight: 400;
+    color: var(--brand-content-low);
+  }
+}
+
+// Phones: the theme name goes on its own line above the bar and the value.
+@media (max-width: 575.98px) {
+  .theme-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+
+    .theme-label {
+      grid-column: 1 / -1;
+      white-space: normal;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .applicability-legend-item,
+  button.theme-row {
+    transition: none;
+  }
+}

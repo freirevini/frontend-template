@@ -1,0 +1,12 @@
+# Only tool configuration (ruff, pytest). Dependencies live in requirements*.txt with exact versions (R1, R2).
+[tool.ruff]
+line-length = 160
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

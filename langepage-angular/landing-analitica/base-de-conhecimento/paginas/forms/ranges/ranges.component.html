@@ -1,0 +1,92 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <app-docs-callout name="Intervalo"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Intervalo Angular</strong> <small></small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Crie controles <code>&lt;input type=&#34;range&#34;&gt;</code> personalizados
+          com <code>&lt;input cFormControl type="range"&gt;</code>.
+        </p>
+        <app-docs-example>
+          <label cLabel for="customRange1">Exemplo de intervalo</label>
+          <input cFormControl id="customRange1" type="range" />
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Intervalo Angular</strong> <small>Desabilitado</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Adicione o atributo booleano <code>disabled</code> a um campo para deixá-lo
+          com aparência acinzentada e remover os eventos de ponteiro.
+        </p>
+        <app-docs-example>
+          <label cLabel for="disabledRange">Intervalo desabilitado</label>
+          <input cFormControl disabled id="disabledRange" type="range" />
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Intervalo Angular</strong> <small>Mínimo e máximo</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Campos de intervalo têm valores implícitos de <code>min-0</code> e
+          <code>max-100</code>, respectivamente.
+          Você pode definir novos valores usando os atributos <code>min</code> e
+          <code>max</code>.
+        </p>
+        <app-docs-example>
+          <label cLabel for="customRange2">Exemplo de intervalo</label>
+          <input
+            cFormControl
+            id="customRange2"
+            max="5"
+            min="0"
+            type="range"
+            value="3"
+          />
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Intervalo Angular</strong> <small>Passos</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Por padrão, campos de intervalo &#34;se ajustam&#34; a valores inteiros. Para mudar
+          isso, você pode definir um valor de <code>step</code>. No exemplo abaixo,
+          dobramos o número de passos usando
+          <code>step=&#34;0.5&#34;</code>.
+        </p>
+        <app-docs-example>
+          <label cLabel for="customRange3">Exemplo de intervalo</label>
+          <input
+            cFormControl
+            id="customRange3"
+            max="5"
+            min="0"
+            step="0.5"
+            type="range"
+            value="3"
+          />
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

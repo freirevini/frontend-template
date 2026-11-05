@@ -1,0 +1,39 @@
+// Footer: navy band like the institutional site footer, trimmed to the logo and the legal data, centered (colors come from the --cui-footer-* tokens)
+:host {
+  --cui-footer-padding-y: 1.25rem;
+  --cui-footer-padding-x: 1.5rem;
+  display: block;
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-logo {
+  flex-shrink: 0;
+  width: auto;
+  height: 2.5rem;
+}
+
+.footer-legal {
+  max-width: 60rem;
+  font-size: .75rem;
+  line-height: 1.5;
+
+  p {
+    margin: 0;
+  }
+
+  strong {
+    font-weight: 600;
+    color: rgb(var(--cui-white-rgb));
+  }
+}
+
+.footer-copy {
+  margin-bottom: .25rem;
+}

@@ -1,0 +1,18 @@
+{
+  "name": "landing-analitica-e2e",
+  "version": "0.1.0",
+  "description": "Smoke E2E (Playwright) do painel Agenda Normativa; pacote separado do app.",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "22.19.1"
+  },
+  "engines": {
+    "node": "^22.12.0"
+  }
+}

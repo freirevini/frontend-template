@@ -1,0 +1,179 @@
+// Brand design tokens: single source of truth for colors, radius, elevation and typography.
+// Values come from the institution's public design system (interactive/highlight/success/warning/error,
+// content and surface scales). Light values live on :root here; dark values are set under
+// :root[data-theme="dark"] in _theme-dark.scss (ThemeService toggles the attribute).
+// Components use the CSS variables (--brand-*, --cui-*, --app-*), never fixed colors.
+
+// --- Brand palette (SCSS) ---------------------------------------------------
+$brand-blue:         #223ad2; // primary / interactive pure
+$brand-blue-high:    #192a9a; // hover, pressed
+$brand-blue-deep:    #17278c;
+$brand-blue-light:   #cad0f6;
+$brand-blue-low:     #edeffc; // tinted backgrounds
+$brand-navy:         #0e1650; // sidebar (derived from blue-high)
+$brand-navy-deep:    #0a1040;
+
+$brand-cyan:         #31c7ed; // highlight / secondary pure
+$brand-cyan-dark:    #1099bc;
+$brand-cyan-high:    #0a5c71;
+$brand-cyan-low:     #ecfafd;
+
+$brand-pink:         #e44e83; // tertiary
+$brand-pink-dark:    #dd2264;
+$brand-pink-low:     #fdf2f6;
+$brand-purple:       #ae6ae6; // accent
+
+$brand-green:        #36bf36; // success pure (fills)
+$brand-green-dark:   #288f28; // success for text and buttons (4.2:1 on white)
+$brand-green-high:   #1b601b;
+$brand-green-low:    #effaef;
+
+$brand-orange:       #ff6600; // warning pure
+$brand-orange-dark:  #b84900;
+$brand-orange-high:  #8a3700;
+$brand-orange-low:   #fff3eb;
+
+$brand-red:          #dc1832; // error pure
+$brand-red-dark:     #a51226;
+$brand-red-high:     #931022;
+$brand-red-low:      #fdedef;
+
+// Content (text)
+$brand-content-high:     #20262c;
+$brand-content-pure:     #363f4a;
+$brand-content-low:      #4b5968;
+$brand-content-disabled: #a7b2be;
+
+// Surfaces, light
+$brand-surface-page: #f3f5f7;
+$brand-surface-card: #ffffff;
+$brand-surface-mid:  #eaedf0;
+$brand-surface-high: #dbe0e5;
+$brand-border:       #dbe0e5;
+$brand-input-border: #c5ccd4;
+$brand-overlay:      #0f1319;
+
+// Surfaces and interactive colors, dark (navy-tinted, from the brand overlay color)
+$brand-dark-page:          #0f1319;
+$brand-dark-card:          #171e28;
+$brand-dark-alt:           #1f2733;
+$brand-dark-border:        #2b3542;
+$brand-dark-input:         #121820;
+$brand-dark-input-border:  #3a4556;
+$brand-dark-text:          #eef1f5;
+$brand-dark-text-medium:   #a9b1bd;
+$brand-dark-text-disabled: rgba(255, 255, 255, .38);
+$brand-dark-primary:       #6b7cf0; // 4.6:1 on the dark card
+$brand-dark-primary-high:  #8491f3;
+$brand-dark-primary-low:   rgba(107, 124, 240, .16);
+$brand-dark-chat-accent:   #5568e7; // white text 4.65:1; 4.0:1 on the dark page (assistant chat button, header, own bubbles)
+$brand-dark-link:          #8c9ae8;
+$brand-dark-link-hover:    #a4b0f2;
+$brand-dark-sidebar:       #0c1238;
+$brand-dark-sidebar-deep:  #080d2b;
+$brand-dark-success:       #36bf36;
+$brand-dark-warning:       #ff8a3d;
+$brand-dark-danger:        #f0566b;
+$brand-dark-info:          #31c7ed;
+
+// Radius (brand: xs 4, sm 8, md 16, lg 24, pill)
+$brand-radius-xs:   .25rem;
+$brand-radius-sm:   .5rem;
+$brand-radius-md:   1rem;
+$brand-radius-lg:   1.5rem;
+$brand-radius-pill: 100px;
+
+// Elevation (brand levels 1-3)
+$brand-elevation-1: 0 4px 4px -2px rgba(11, 23, 35, .24);
+$brand-elevation-2: 0 4px 12px 0 rgba(11, 23, 35, .12);
+$brand-elevation-3: 0 16px 32px 0 rgba(11, 23, 35, .32);
+$brand-elevation-card: 0 2px 8px 0 rgba(11, 23, 35, .06); // softer level-2 for resting cards
+
+// Typography (brand base font is Inter; the proprietary display face of the brand is not bundled)
+$brand-font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+// --- CSS custom properties, light theme -------------------------------------
+:root {
+  --brand-primary: #{$brand-blue};
+  --brand-primary-high: #{$brand-blue-high};
+  --brand-primary-low: #{$brand-blue-low};
+  --brand-primary-light: #{$brand-blue-light};
+  --brand-primary-rgb: 34, 58, 210;
+  --brand-highlight: #{$brand-cyan};
+  --brand-highlight-dark: #{$brand-cyan-dark};
+  --brand-highlight-low: #{$brand-cyan-low};
+  --brand-highlight-high: #{$brand-cyan-high};
+  --brand-tertiary: #{$brand-pink};
+  --brand-accent: #{$brand-purple};
+  --brand-success: #{$brand-green-dark};
+  --brand-success-pure: #{$brand-green};
+  --brand-success-low: #{$brand-green-low};
+  --brand-warning: #{$brand-orange};
+  --brand-warning-dark: #{$brand-orange-dark};
+  --brand-warning-low: #{$brand-orange-low};
+  --brand-danger: #{$brand-red};
+  --brand-danger-dark: #{$brand-red-dark};
+  --brand-danger-low: #{$brand-red-low};
+
+  --brand-content-high: #{$brand-content-high};
+  --brand-content-pure: #{$brand-content-pure};
+  --brand-content-low: #{$brand-content-low};
+  --brand-content-disabled: #{$brand-content-disabled};
+
+  --brand-surface-page: #{$brand-surface-page};
+  --brand-surface-card: #{$brand-surface-card};
+  --brand-surface-mid: #{$brand-surface-mid};
+  --brand-surface-high: #{$brand-surface-high};
+  --brand-border: #{$brand-border};
+  --brand-sidebar: #{$brand-navy};
+  --brand-sidebar-deep: #{$brand-navy-deep};
+
+  --brand-radius-xs: #{$brand-radius-xs};
+  --brand-radius-sm: #{$brand-radius-sm};
+  --brand-radius-md: #{$brand-radius-md};
+  --brand-radius-lg: #{$brand-radius-lg};
+  --brand-radius-pill: #{$brand-radius-pill};
+  --brand-elevation-1: #{$brand-elevation-1};
+  --brand-elevation-2: #{$brand-elevation-2};
+  --brand-elevation-3: #{$brand-elevation-3};
+  --brand-elevation-card: #{$brand-elevation-card};
+  --brand-font-family: #{$brand-font-family};
+
+  // Assistant chat accent behind white text (button, panel header, user bubbles): 8.06:1.
+  --app-chat-accent: #{$brand-blue};
+
+  // Charts (Chart.js reads these through ThemeService; canvas cannot use CSS).
+  --app-chart-color: #{$brand-content-low};
+  --app-chart-grid-color: rgba(32, 38, 44, .08);
+  --app-chart-tooltip-bg: #{$brand-content-high};
+  --app-chart-tooltip-color: #ffffff;
+  --app-chart-font-family: #{$brand-font-family};
+
+  // Exported spreadsheets (core/export/xlsx-export.ts): the file is always light, so these keep the light values in
+  // both themes (not redefined in _theme-dark.scss). Header fill and muted text (subtitle, totals rule).
+  --app-export-accent: #{$brand-blue};
+  --app-export-muted: #{$brand-content-low};
+
+  // Categorical series (Tráfego chart), in legend order: Atacado, Corporativo, Plataforma, Varejo,
+  // then the dashed "Normas a Classificar" reference. Validated with the dataviz palette validator
+  // (adjacent pairs, both themes); do not reorder or swap without re-running it.
+  --app-series-1: #{$brand-blue};
+  --app-series-2: #{$brand-cyan-dark};
+  --app-series-3: #{$brand-green-dark};
+  --app-series-4: #{$brand-purple};
+  --app-series-reference: #{$brand-red};
+
+  // Waterfall (Cascata): ordinal ramps, darkest first; validated as ordinal ramps in both themes.
+  --app-wf-total-1: #{$brand-blue-deep};
+  --app-wf-total-2: #{$brand-blue};
+  --app-wf-total-3: #8c9ae8;
+  --app-wf-decrease-1: #{$brand-red-dark};
+  --app-wf-decrease-2: #{$brand-red};
+  --app-wf-decrease-3: #f07a89;
+  --app-wf-connector: #{$brand-content-disabled};
+
+  // Classificação das normas: applicable (navy, apart from the segment blues) vs not applicable (neutral gray).
+  // Same color for the theme bars of the applicable normas; values are always written next to the bars.
+  --app-applicable: #{$brand-navy};
+  --app-not-applicable: #{$brand-content-disabled};
+}

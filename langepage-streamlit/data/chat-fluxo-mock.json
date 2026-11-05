@@ -1,0 +1,413 @@
+{
+  "version": 1,
+  "note": "Dados de demonstração. Normas, trechos e contatos abaixo são fictícios.",
+  "start": "inicio",
+  "welcome": [
+    {
+      "role": "ai",
+      "text": "Sou o Agente da Agenda, especialista em normas regulatórias do setor financeiro. Escolha uma opção para começar."
+    }
+  ],
+  "user": {
+    "firstName": "Vinicius"
+  },
+  "nodes": {
+    "inicio": {
+      "id": "inicio",
+      "type": "menu",
+      "prompt": "O que você precisa?",
+      "options": [
+        {
+          "id": "consultar",
+          "label": "Consultar uma norma"
+        },
+        {
+          "id": "avaliar_arquivo",
+          "label": "Avaliar um documento"
+        },
+        {
+          "id": "normas_classificar",
+          "label": "Normas a Classificar"
+        },
+        {
+          "id": "normas_nao_aderentes",
+          "label": "Listar normas não aderentes"
+        },
+        {
+          "id": "normas_proximas_vigencia",
+          "label": "Listar próximas normas que irão entrar em vigor"
+        }
+      ],
+      "input": {
+        "enabled": false
+      },
+      "canGoBack": false
+    },
+    "consultar_tema": {
+      "id": "consultar_tema",
+      "type": "free_text",
+      "prompt": "Descreva a dúvida sobre a norma.",
+      "input": {
+        "enabled": true,
+        "placeholder": "Digite sua pergunta",
+        "maxChars": 1000
+      },
+      "canGoBack": true
+    },
+    "enviar_arquivo": {
+      "id": "enviar_arquivo",
+      "type": "upload",
+      "prompt": "Envie os PDFs, documentos Word ou prints da norma (até 5 por vez). Para enviar um print copiado, cole com Ctrl+V.",
+      "input": {
+        "enabled": false
+      },
+      "upload": {
+        "accept": [
+          ".pdf",
+          ".doc",
+          ".docx",
+          ".png",
+          ".jpg",
+          ".jpeg",
+          ".webp"
+        ],
+        "maxBytes": 20971520,
+        "maxFiles": 5
+      },
+      "canGoBack": true
+    },
+    "pergunta_sobre_arquivo": {
+      "id": "pergunta_sobre_arquivo",
+      "type": "free_text",
+      "prompt": "O que deseja saber sobre o que foi enviado?",
+      "input": {
+        "enabled": true,
+        "placeholder": "Digite sua pergunta",
+        "maxChars": 1000
+      },
+      "canGoBack": true
+    },
+    "fim": {
+      "id": "fim",
+      "type": "menu",
+      "prompt": "Posso ajudar em mais alguma coisa?",
+      "options": [
+        {
+          "id": "nova",
+          "label": "Nova consulta"
+        }
+      ],
+      "input": {
+        "enabled": false
+      },
+      "canGoBack": false
+    },
+    "normas_classificar": {
+      "id": "normas_classificar",
+      "type": "menu",
+      "prompt": "Normas a classificar (dados de demonstração):",
+      "options": [
+        {
+          "id": "nova",
+          "label": "Nova consulta"
+        }
+      ],
+      "input": {
+        "enabled": false
+      },
+      "canGoBack": true
+    },
+    "normas_nao_aderentes": {
+      "id": "normas_nao_aderentes",
+      "type": "menu",
+      "prompt": "Normas não aderentes (dados de demonstração):",
+      "options": [
+        {
+          "id": "nova",
+          "label": "Nova consulta"
+        }
+      ],
+      "input": {
+        "enabled": false
+      },
+      "canGoBack": true
+    },
+    "normas_proximas_vigencia": {
+      "id": "normas_proximas_vigencia",
+      "type": "menu",
+      "prompt": "Próximas normas a entrar em vigor (dados de demonstração):",
+      "options": [
+        {
+          "id": "nova",
+          "label": "Nova consulta"
+        }
+      ],
+      "input": {
+        "enabled": false
+      },
+      "canGoBack": true
+    }
+  },
+  "transitions": {
+    "inicio": {
+      "consultar": "consultar_tema",
+      "avaliar_arquivo": "enviar_arquivo",
+      "normas_classificar": "normas_classificar",
+      "normas_nao_aderentes": "normas_nao_aderentes",
+      "normas_proximas_vigencia": "normas_proximas_vigencia"
+    },
+    "consultar_tema": {
+      "answered": "fim"
+    },
+    "enviar_arquivo": {
+      "accepted": "pergunta_sobre_arquivo"
+    },
+    "pergunta_sobre_arquivo": {
+      "answered": "fim"
+    },
+    "fim": {
+      "nova": "inicio"
+    },
+    "normas_classificar": {
+      "nova": "inicio"
+    },
+    "normas_nao_aderentes": {
+      "nova": "inicio"
+    },
+    "normas_proximas_vigencia": {
+      "nova": "inicio"
+    }
+  },
+  "back": {
+    "consultar_tema": "inicio",
+    "enviar_arquivo": "inicio",
+    "pergunta_sobre_arquivo": "enviar_arquivo",
+    "normas_classificar": "inicio",
+    "normas_nao_aderentes": "inicio",
+    "normas_proximas_vigencia": "inicio"
+  },
+  "askNode": "consultar_tema",
+  "lists": {
+    "normas_classificar": {
+      "dateLabel": "Recebida em",
+      "items": [
+        {
+          "id": "mock-0003",
+          "title": "Resolução de exemplo nº 0003",
+          "detail": "Aguardando classificação",
+          "segment": "Atacado",
+          "date": "2026-10-20"
+        },
+        {
+          "id": "mock-0010",
+          "title": "Circular de exemplo nº 0010",
+          "detail": "Aguardando classificação",
+          "segment": "Varejo",
+          "date": "2026-10-22"
+        },
+        {
+          "id": "mock-0011",
+          "title": "Instrução de exemplo nº 0011",
+          "detail": "Aguardando classificação",
+          "segment": "Corporativo",
+          "date": "2026-10-24"
+        },
+        {
+          "id": "mock-0014",
+          "title": "Comunicado de exemplo nº 0014",
+          "detail": "Aguardando classificação",
+          "segment": "Varejo",
+          "date": "2026-10-27"
+        }
+      ]
+    },
+    "normas_nao_aderentes": {
+      "dateLabel": "Prazo de adequação",
+      "items": [
+        {
+          "id": "mock-0001",
+          "title": "Resolução de exemplo nº 0001",
+          "detail": "2 requisitos sem aderência",
+          "segment": "Varejo",
+          "date": "2027-01-31"
+        },
+        {
+          "id": "mock-0007",
+          "title": "Instrução de exemplo nº 0007",
+          "detail": "1 requisito sem aderência",
+          "segment": "Plataforma",
+          "date": "2027-02-28"
+        },
+        {
+          "id": "mock-0009",
+          "title": "Circular de exemplo nº 0009",
+          "detail": "3 requisitos sem aderência",
+          "segment": "Atacado",
+          "date": "2027-04-30"
+        }
+      ]
+    },
+    "normas_proximas_vigencia": {
+      "dateLabel": "Vigência",
+      "items": [
+        {
+          "id": "mock-0002",
+          "title": "Resolução de exemplo nº 0002",
+          "detail": "Altera regras de prazo de adequação",
+          "segment": "Corporativo",
+          "date": "2027-03-01"
+        },
+        {
+          "id": "mock-0012",
+          "title": "Circular de exemplo nº 0012",
+          "detail": "Novo leiaute de envio de informações",
+          "segment": "Varejo",
+          "date": "2027-07-01"
+        },
+        {
+          "id": "mock-0015",
+          "title": "Resolução de exemplo nº 0015",
+          "detail": "Revoga a Resolução de exemplo nº 0001",
+          "segment": "Atacado",
+          "date": "2027-09-01"
+        }
+      ]
+    }
+  },
+  "contacts": {
+    "geral": [
+      {
+        "name": "Compliance",
+        "area": "Normas regulatórias",
+        "channel": "contato@compliance.com.br"
+      }
+    ]
+  },
+  "maxClarificationRounds": 3,
+  "textScenarios": [
+    {
+      "id": "fora_do_escopo",
+      "keywords": [
+        "futebol",
+        "clima",
+        "receita de bolo",
+        "filme",
+        "piada"
+      ],
+      "message": {
+        "role": "ai",
+        "status": "out_of_scope",
+        "text": "Só posso ajudar com normas regulatórias do setor financeiro. Pode reformular a pergunta sobre esse tema?"
+      }
+    },
+    {
+      "id": "resposta_com_fontes",
+      "keywords": [
+        "prazo",
+        "vigência",
+        "vigencia",
+        "resolução",
+        "resolucao",
+        "circular"
+      ],
+      "message": {
+        "role": "ai",
+        "status": "answer",
+        "text": "Segundo a **Resolução de exemplo nº 0001** (dado de demonstração), o prazo de adequação é de **180 dias** a partir da publicação.\n\n- Vale para instituições do segmento 2.\n- A norma anterior fica revogada no mesmo prazo.",
+        "citations": [
+          {
+            "sourceId": "mock-0001",
+            "excerpt": "Art. 5º As instituições terão prazo de 180 dias para adequação."
+          },
+          {
+            "sourceId": "mock-0002",
+            "excerpt": "Art. 9º Fica revogada a norma anterior ao término do prazo do art. 5º."
+          }
+        ]
+      }
+    }
+  ],
+  "fallbacks": {
+    "needMoreInfo": {
+      "role": "ai",
+      "status": "need_more_info",
+      "text": "Preciso de mais detalhes para responder com segurança.",
+      "questions": [
+        "Qual é a norma ou o tema (por exemplo, o número da resolução)?",
+        "Qual segmento ou instituição você quer consultar?"
+      ],
+      "quickReplies": [
+        "Prazo de adequação da Resolução de exemplo nº 0001",
+        "Vigência da Circular de exemplo nº 0012"
+      ]
+    },
+    "notInData": {
+      "role": "ai",
+      "status": "not_in_data",
+      "text": "Não encontrei essa informação nos dados disponíveis. Se tiver a norma em PDF ou print, escolha \"Avaliar um documento\"."
+    },
+    "roundsExceeded": {
+      "role": "ai",
+      "status": "not_in_data",
+      "text": "Não consegui chegar a uma resposta segura. Fale com a equipe responsável:",
+      "contactsRef": "geral"
+    },
+    "minWordsForAnswer": 3,
+    "outOfScopeLimit": {
+      "role": "ai",
+      "status": "out_of_scope",
+      "text": "Não consigo ajudar com esse assunto. Se precisar, fale com a equipe responsável:",
+      "contactsRef": "geral"
+    }
+  },
+  "fileScenarios": {
+    "accepted": {
+      "result": {
+        "id": "mock-arquivo-1",
+        "accepted": true,
+        "metadata": {
+          "documentKind": "norma_integral",
+          "issuer": "desconhecido",
+          "normIdentifier": "Resolução de exemplo nº 0001"
+        }
+      },
+      "messages": [
+        {
+          "role": "ai",
+          "text": "Recebi o documento e ele parece ser uma **norma regulatória** (demonstração)."
+        }
+      ],
+      "normIdentifiers": [
+        "Resolução de exemplo nº 0001",
+        "Circular de exemplo nº 0010",
+        "Instrução de exemplo nº 0007",
+        "Resolução de exemplo nº 0002",
+        "Circular de exemplo nº 0012"
+      ]
+    },
+    "rejected": {
+      "result": {
+        "id": "mock-arquivo-2",
+        "accepted": false,
+        "reason": "O arquivo não parece ser uma norma do setor financeiro."
+      },
+      "messages": [
+        {
+          "role": "ai",
+          "status": "out_of_scope",
+          "text": "O arquivo não parece ser uma norma do setor financeiro. Envie o PDF ou o print de uma norma ou de um trecho dela."
+        }
+      ],
+      "filenameKeywords": [
+        "recusa",
+        "invalido",
+        "inválido"
+      ]
+    },
+    "summary": {
+      "role": "ai",
+      "text": "Avaliei **{total} documentos** (demonstração): {accepted} parecem normas regulatórias e {rejected} não foram aceitos. Veja o resultado de cada um abaixo."
+    }
+  },
+  "maxOutOfScope": 3
+}

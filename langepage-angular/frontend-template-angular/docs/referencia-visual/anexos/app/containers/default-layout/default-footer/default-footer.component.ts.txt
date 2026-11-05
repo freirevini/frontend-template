@@ -1,0 +1,33 @@
+import { Component } from '@angular/core';
+import { FooterComponent } from '@coreui/angular';
+
+/**
+ * Legal entities shown in the footer. Company names, CNPJ and addresses come from the environment configuration and are
+ * never versioned; the values below are neutral placeholders.
+ */
+export const FOOTER_COMPANIES = [
+  {
+    name: 'RAZAO_SOCIAL_1',
+    cnpj: 'CNPJ_1',
+    address: 'ENDERECO_1'
+  },
+  {
+    name: 'RAZAO_SOCIAL_2',
+    cnpj: 'CNPJ_2',
+    address: 'ENDERECO_2'
+  }
+] as const;
+
+@Component({
+  selector: 'app-default-footer',
+  templateUrl: './default-footer.component.html',
+  styleUrls: ['./default-footer.component.scss'],
+})
+export class DefaultFooterComponent extends FooterComponent {
+  readonly currentYear = new Date().getFullYear();
+  readonly companies = FOOTER_COMPANIES;
+
+  constructor() {
+    super();
+  }
+}

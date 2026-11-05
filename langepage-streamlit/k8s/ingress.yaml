@@ -1,0 +1,34 @@
+# PLACEHOLDER: substituir pelo Ingress do Cookiecutter do Titan (ADR-001). Anotações no padrão ingress-nginx;
+# conferir com o controlador do GKE corporativo. Host e TLS vêm da esteira, nunca deste arquivo (R6).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: agenda-normativa
+  labels:
+    app: agenda-normativa
+  annotations:
+    # WebSocket do Streamlit (/_stcore/stream): HTTP/1.1 com Upgrade/Connection repassados
+    nginx.ingress.kubernetes.io/proxy-http-version: "1.1"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+    # Sessão aberta enquanto a aba estiver aberta
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    # Upload do chat: até 20 MB por conversa
+    nginx.ingress.kubernetes.io/proxy-body-size: "20m"
+    # Mais de uma réplica: mesma sessão no mesmo pod
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "agenda-normativa-affinity"
+spec:
+  rules:
+    - host: SUBSTITUIR-HOST-DO-AMBIENTE
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: agenda-normativa
+                port:
+                  name: http

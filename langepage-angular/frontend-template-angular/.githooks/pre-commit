@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# .githooks/pre-commit — instalado com: npm run hooks:install   (uma vez por clone)
+# Checagens rápidas (segundos). Build e testes ficam em `npm run verify`, antes de declarar pronto.
+set -e
+node scripts/docs-check.js
+bash .rules/check.sh

@@ -1,0 +1,160 @@
+<c-row>
+  <c-col xs="12">
+    <app-docs-callout name="Espaço reservado"></app-docs-callout>
+  </c-col>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Espaço reservado Angular</strong>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          No exemplo abaixo, pegamos um componente de cartão típico e o recriamos com
+          espaços reservados aplicados para criar um &#34;cartão carregando&#34;. O tamanho e as proporções
+          são os mesmos entre os dois.
+        </p>
+        <app-docs-example>
+          <div class="d-flex justify-content-around p-3">
+            <c-card style="width: 18rem;">
+              <img cCardImg="top" loading="lazy" src="./assets/images/angular.jpg" />
+              <c-card-body>
+                <h5 cCardTitle>Título do cartão</h5>
+                <p cCardText>
+                  Um texto rápido de exemplo para complementar o título do cartão e compor a maior parte do
+                  conteúdo do cartão.
+                </p>
+                <a cButton cCol="7" routerLink="./">Ir para algum lugar</a>
+              </c-card-body>
+            </c-card>
+            <c-card style="width: 18rem;">
+              <svg aria-label="Espaço reservado"
+                   cCardImg="top"
+                   focusable="false"
+                   height="162"
+                   preserveAspectRatio="xMidYMid slice"
+                   role="img"
+                   width="100%"
+                   xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>Espaço reservado</title>
+                <rect fill="#868e96" height="100%" width="100%"></rect>
+              </svg>
+              <c-card-body>
+                <h5 cCardTitle cPlaceholderAnimation="glow">
+                  <span cCol="6" cPlaceholder></span>
+                </h5>
+                <p cCardText cPlaceholderAnimation="glow">
+                  <span cCol xs="7" cPlaceholder class="me-1"></span>
+                  <span cCol="4" cPlaceholder class="me-1"></span>
+                  <span cCol="4" cPlaceholder class="me-1"></span>
+                  <span cCol="6" cPlaceholder class="me-1"></span>
+                  <span cCol="8" cPlaceholder class="me-1"></span>
+                </p>
+                <p cPlaceholderAnimation="glow">
+                  <a cButton cCol="7" cPlaceholder color="primary" disabled routerLink="./"></a>
+                </p>
+              </c-card-body>
+            </c-card>
+          </div>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Espaço reservado Angular</strong>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Crie espaços reservados com a diretiva <code>cPlaceholder</code> e uma diretiva de coluna
+          de grade cCol (por exemplo, <code>cCol="6"</code>) para definir a <code>width</code>. Eles podem
+          substituir o texto dentro de um elemento ou ser adicionados como modificador a um componente
+          existente.
+        </p>
+        <app-docs-example>
+          <p aria-hidden="true">
+            <span cCol="6" cPlaceholder></span>
+          </p>
+          <button cButton cCol="4" cPlaceholder disabled></button>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Espaço reservado Angular</strong> <small> Largura</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Você pode alterar a <code>width</code> por meio de classes de coluna da grade, utilitários de largura ou
+          estilos inline.
+        </p>
+        <app-docs-example>
+          <span cCol="6" cPlaceholder></span>
+          <span cPlaceholder class="w-75"></span>
+          <span cPlaceholder style="width: 30%;"></span>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Espaço reservado Angular</strong> <small> Cor</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Por padrão, o <code>cPlaceholder</code> usa <code>currentColor</code>. Isso
+          pode ser substituído por uma cor personalizada ou uma classe utilitária.
+        </p>
+        <app-docs-example>
+          <span cCol="12" cPlaceholder></span>
+
+          <span cBgColor="primary" cCol="12" cPlaceholder></span>
+          <span cBgColor="secondary" cCol="12" cPlaceholder></span>
+          <span cBgColor="success" cCol="12" cPlaceholder></span>
+          <span cBgColor="danger" cCol="12" cPlaceholder></span>
+          <span cBgColor="warning" cCol="12" cPlaceholder></span>
+          <span cBgColor="info" cCol="12" cPlaceholder></span>
+          <span cBgColor="light" cCol="12" cPlaceholder></span>
+          <span cBgColor="dark" cCol="12" cPlaceholder></span>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Espaço reservado Angular</strong> <small> Tamanhos</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          O tamanho dos <code>&lt;CPlaceholder&gt;</code>s é baseado no estilo tipográfico do
+          elemento pai. Personalize-os com a prop <code>size</code>: <code>lg</code>,
+          <code>sm</code> ou <code>xs</code>.
+        </p>
+        <app-docs-example>
+          <span cCol="12" cPlaceholder cPlaceholderSize="lg"></span>
+          <span cCol="12" cPlaceholder></span>
+          <span cCol="12" cPlaceholder cPlaceholderSize="sm"></span>
+          <span cCol="12" cPlaceholder cPlaceholderSize="xs"></span>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Espaço reservado Angular</strong> <small> Animação</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Anime os espaços reservados com <code>cPlaceholderAnimation=&#34;glow&#34;</code> ou
+          <code>cPlaceholderAnimation=&#34;wave&#34;</code> para transmitir melhor a percepção de algo
+          sendo carregado <em>ativamente</em>.
+        </p>
+        <app-docs-example>
+          <p cPlaceholderAnimation="glow">
+            <span cCol="12" cPlaceholder></span>
+          </p>
+
+          <p cPlaceholderAnimation="wave">
+            <span cCol="12" cPlaceholder></span>
+          </p>
+        </app-docs-example>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

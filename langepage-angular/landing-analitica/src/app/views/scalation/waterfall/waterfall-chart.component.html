@@ -1,0 +1,149 @@
+<c-card #card class="mb-4" aria-labelledby="waterfall-title">
+  <c-card-body>
+    <div class="waterfall-header">
+      <div>
+        <h4 class="card-title mb-0" id="waterfall-title">Cascata do resultado</h4>
+        @if (subtitle) {
+          <div class="small text-medium-emphasis">{{ subtitle }}</div>
+        }
+      </div>
+      <div class="waterfall-toggles">
+        <div class="filter-bar" role="group" aria-label="Unidade dos valores">
+          <button
+            type="button"
+            class="filter-chip"
+            [class.is-active]="unit === 'currency'"
+            [attr.aria-pressed]="unit === 'currency'"
+            (click)="setUnit('currency')"
+          >R$</button>
+          <button
+            type="button"
+            class="filter-chip"
+            [class.is-active]="unit === 'percent'"
+            [attr.aria-pressed]="unit === 'percent'"
+            (click)="setUnit('percent')"
+          >% da receita</button>
+        </div>
+        <div class="filter-bar" role="group" aria-label="Forma de exibição">
+          <button
+            type="button"
+            class="filter-chip"
+            [class.is-active]="view === 'chart'"
+            [attr.aria-pressed]="view === 'chart'"
+            (click)="setView('chart')"
+            >
+            <svg cIcon name="cilChartLine" size="sm" aria-hidden="true"></svg>
+            Gráfico
+          </button>
+          <button
+            type="button"
+            class="filter-chip"
+            [class.is-active]="view === 'table'"
+            [attr.aria-pressed]="view === 'table'"
+            (click)="setView('table')"
+            >
+            <svg cIcon name="cilList" size="sm" aria-hidden="true"></svg>
+            Tabela
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <app-period-filter
+      class="mt-3"
+      id="waterfall-period"
+      label="Período da cascata"
+      [period]="period"
+      [range]="range"
+      [bounds]="bounds"
+      (selectionChange)="onPeriodChange($event)"
+    ></app-period-filter>
+
+    @switch (state) {
+      @case ('loading') {
+        <div class="waterfall-placeholder text-medium-emphasis">
+          <c-spinner size="sm" label="Carregando..." class="me-2"></c-spinner>
+          Carregando dados...
+        </div>
+      }
+      @case ('error') {
+        <div class="waterfall-placeholder text-medium-emphasis" role="alert">
+          <app-api-error-text [error]="loadProblem" fallback="Não foi possível carregar os dados da cascata."></app-api-error-text>
+        </div>
+      }
+      @case ('ready') {
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mt-3 mb-2">
+          <div class="waterfall-result">
+            <span class="text-medium-emphasis small">Resultado</span>
+            <strong class="ms-2">{{ resultLabel }}</strong>
+            @if (unit === 'currency') {
+              <span class="text-medium-emphasis small ms-1">({{ resultShare }} da receita bruta)</span>
+            }
+          </div>
+          <ul class="waterfall-legend" aria-label="Legenda">
+            @for (item of legend; track item) {
+              <li>
+                <span class="waterfall-swatch" [style.background-color]="item.color" aria-hidden="true"></span>
+                {{ item.label }}
+              </li>
+            }
+            <li>
+              <span class="waterfall-connector" aria-hidden="true"></span>
+              Saldo entre etapas
+            </li>
+          </ul>
+        </div>
+        @if (view === 'chart') {
+          <div class="waterfall-chart" role="img" [attr.aria-label]="ariaSummary">
+            <!-- No [redraw]: CoreUI 5 destroys the chart on redraw and never draws it again (E-011). -->
+            <c-chart
+              type="bar"
+              [data]="chartData"
+              [options]="chartOptions"
+              [plugins]="chartPlugins"
+              [customTooltips]="false"
+              [height]="320"
+            ></c-chart>
+          </div>
+        }
+        @if (view === 'table' && model) {
+          <div class="table-responsive">
+            <table cTable [hover]="true" [small]="true" class="mb-0 align-middle">
+              <caption class="visually-hidden">Cascata do resultado por etapa e componente, {{ data?.period }}</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Etapa</th>
+                  <th scope="col">Componente</th>
+                  <th scope="col" class="text-end">Valor</th>
+                  <th scope="col" class="text-end">% da receita bruta</th>
+                  <th scope="col" class="text-end">Saldo após a etapa</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (column of model.columns; track column) {
+                  @for (segment of column.segments; track segment; let isFirst = $first) {
+                    <tr>
+                      @if (isFirst) {
+                        <th scope="rowgroup" [attr.rowspan]="column.segments.length">
+                          {{ column.step.label }}
+                        </th>
+                      }
+                      <td>{{ segment.partLabel }}</td>
+                      <td class="text-end waterfall-number">{{ currencyOf(segment.value, segment.kind === 'decrease') }}</td>
+                      <td class="text-end waterfall-number">{{ shareOfBase(segment.value, segment.kind === 'decrease') }}</td>
+                      @if (isFirst) {
+                        <td class="text-end waterfall-number fw-semibold" [attr.rowspan]="column.segments.length">
+                          {{ currencyOf(column.end) }}
+                        </td>
+                      }
+                    </tr>
+                  }
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      }
+    }
+  </c-card-body>
+</c-card>

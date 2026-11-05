@@ -1,0 +1,10 @@
+<div class="footer-inner">
+  <img class="footer-logo" src="assets/img/brand/brand-logo-white.svg" width="54" height="40" alt="NOME_DA_MARCA" />
+  <div class="footer-legal">
+    <p class="footer-copy">Copyright &copy; {{ currentYear }} todos os direitos reservados</p>
+    <p *ngFor="let company of companies">
+      <strong>{{ company.name }} - CNPJ: {{ company.cnpj }}</strong><br />
+      {{ company.address }}
+    </p>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+// Colors come from the brand tokens (--brand-*, --app-*, --cui-*): no local color definitions.
+:host {
+  display: block;
+}
+
+// Title + period subtitle on the left; view chips and export on the right (wrap on narrow widths).
+.emails-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .75rem 1rem;
+}
+
+.emails-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem 1rem;
+}
+
+.emails-export {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  border-radius: var(--brand-radius-pill);
+}
+
+.emails-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+}
+
+// Indicators: three figures with a hairline between them, 2 x 2 friendly on phones.
+.emails-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin: 1.25rem 0 .75rem;
+}
+
+.emails-stat {
+  min-width: 8rem;
+
+  dt {
+    font-size: .8125rem;
+    font-weight: 400;
+    color: var(--brand-content-low);
+  }
+
+  dd {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--brand-content-high);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.emails-stat-note {
+  margin-left: .375rem;
+  font-size: .75rem;
+  font-weight: 400;
+  color: var(--brand-content-low);
+}
+
+.emails-swatch {
+  display: inline-block;
+  flex-shrink: 0;
+  width: .75rem;
+  height: .75rem;
+  border-radius: 2px;
+}
+
+.emails-chart {
+  position: relative;
+  height: 300px;
+}
+
+.emails-table {
+  font-variant-numeric: tabular-nums;
+
+  .is-dimmed {
+    opacity: .45;
+  }
+
+  tfoot th,
+  tfoot td {
+    font-weight: 600;
+    border-top: 2px solid var(--brand-border);
+  }
+}
+
+// Phones: indicators two per row.
+@media (max-width: 575.98px) {
+  .emails-stat {
+    flex: 1 1 40%;
+  }
+}
+
